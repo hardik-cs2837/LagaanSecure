@@ -1,0 +1,22 @@
+[
+  { "commodity": "Onion", "state": "Maharashtra", "market": "Lasalgaon", "min_price": 800, "max_price": 1500, "modal_price": 1100 },
+  { "commodity": "Onion", "state": "Karnataka", "market": "Hubli", "min_price": 750, "max_price": 1400, "modal_price": 1050 },
+  { "commodity": "Onion", "state": "Madhya Pradesh", "market": "Indore", "min_price": 700, "max_price": 1300, "modal_price": 1000 },
+  { "commodity": "Tomato", "state": "Karnataka", "market": "Kolar", "min_price": 500, "max_price": 2000, "modal_price": 1200 },
+  { "commodity": "Tomato", "state": "Maharashtra", "market": "Pune", "min_price": 600, "max_price": 1800, "modal_price": 1100 },
+  { "commodity": "Tomato", "state": "Andhra Pradesh", "market": "Madanapalle", "min_price": 450, "max_price": 1600, "modal_price": 1000 },
+  { "commodity": "Wheat", "state": "Punjab", "market": "Amritsar", "min_price": 2000, "max_price": 2400, "modal_price": 2200 },
+  { "commodity": "Wheat", "state": "Haryana", "market": "Karnal", "min_price": 1950, "max_price": 2350, "modal_price": 2150 },
+  { "commodity": "Wheat", "state": "Uttar Pradesh", "market": "Lucknow", "min_price": 1900, "max_price": 2300, "modal_price": 2100 },
+  { "commodity": "Rice", "state": "West Bengal", "market": "Burdwan", "min_price": 1800, "max_price": 2500, "modal_price": 2100 },
+  { "commodity": "Rice", "state": "Andhra Pradesh", "market": "Guntur", "min_price": 1850, "max_price": 2600, "modal_price": 2200 },
+  { "commodity": "Rice", "state": "Tamil Nadu", "market": "Thanjavur", "min_price": 1750, "max_price": 2450, "modal_price": 2050 },
+  { "commodity": "Potato", "state": "Uttar Pradesh", "market": "Agra", "min_price": 400, "max_price": 900, "modal_price": 650 },
+  { "commodity": "Potato", "state": "West Bengal", "market": "Hooghly", "min_price": 450, "max_price": 950, "modal_price": 700 },
+  { "commodity": "Soybean", "state": "Madhya Pradesh", "market": "Indore", "min_price": 4000, "max_price": 5200, "modal_price": 4600 },
+  { "commodity": "Cotton", "state": "Gujarat", "market": "Rajkot", "min_price": 5500, "max_price": 7000, "modal_price": 6200 },
+  { "commodity": "Maize", "state": "Bihar", "market": "Purnia", "min_price": 1800, "max_price": 2200, "modal_price": 2000 },
+  { "commodity": "Sugarcane", "state": "Uttar Pradesh", "market": "Meerut", "min_price": 300, "max_price": 350, "modal_price": 320 },
+  { "commodity": "Garlic", "state": "Madhya Pradesh", "market": "Mandsaur", "min_price": 6000, "max_price": 12000, "modal_price": 9000 },
+  { "commodity": "Mustard", "state": "Rajasthan", "market": "Jaipur", "min_price": 5000, "max_price": 6000, "modal_price": 5500 }
+]

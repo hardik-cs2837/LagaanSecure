@@ -1,12 +1,13 @@
 const bcrypt = require('bcryptjs');
-const { sequelize, User, Listing, Deal, Notification, PriceCache, FpoGroup } = require('../models');
+const { sequelize, User, Listing, Deal, Notification, PriceCache, FpoGroup, BulkRequirement } = require('../models');
 
 async function seed() {
   console.log('🌱 Starting comprehensive database seeding for KisaanConnect Demo...');
 
   await sequelize.sync({ alter: true });
 
-  // Clean existing tables
+  // Clean existing tables in foreign key order
+  if (BulkRequirement) await BulkRequirement.destroy({ where: {} });
   await Notification.destroy({ where: {} });
   await Deal.destroy({ where: {} });
   await Listing.destroy({ where: {} });
@@ -348,7 +349,53 @@ async function seed() {
     ]
   });
 
-  console.log('✅ SEEDING COMPLETE! Populated 4 farmers, 3 verified buyers, 1 FPO group, 5 listings, 3 fully audited deals.');
+  // 6. Create Institutional Bulk Requirements
+  console.log('6. Creating Institutional Bulk Procurement Requirements...');
+  if (BulkRequirement) {
+    await BulkRequirement.bulkCreate([
+      {
+        buyer_id: buyer1.id,
+        buyer_name: 'FreshMart National Supply Chain Ltd',
+        business_type: 'supermarket',
+        crop_name: 'Onion',
+        quantity_quintals: 250,
+        target_price_min: 1400,
+        target_price_max: 1550,
+        quality_grade: 'A',
+        delivery_location: 'Bhiwandi Central Fulfillment Center, Maharashtra',
+        required_by_date: '2026-09-12',
+        additional_specs: 'Cleaned, moisture <11%, 50kg aerated mesh packaging required'
+      },
+      {
+        buyer_id: buyer2.id,
+        buyer_name: 'Reliance Retail Agri Sourcing',
+        business_type: 'processor',
+        crop_name: 'Wheat',
+        quantity_quintals: 500,
+        target_price_min: 2400,
+        target_price_max: 2600,
+        quality_grade: 'A',
+        delivery_location: 'Nagpur Milling Facility, Maharashtra',
+        required_by_date: '2026-09-20',
+        additional_specs: 'Sharbati / Lokwan Grade A with zero foreign matter'
+      },
+      {
+        buyer_id: buyer3.id,
+        buyer_name: 'BigBasket Direct Sourcing Hub',
+        business_type: 'restaurant_chain',
+        crop_name: 'Tomato',
+        quantity_quintals: 120,
+        target_price_min: 1200,
+        target_price_max: 1350,
+        quality_grade: 'A',
+        delivery_location: 'Pune Cold Hub, Maharashtra',
+        required_by_date: '2026-09-08',
+        additional_specs: 'Firm ripe hybrid tomatoes in plastic crates'
+      }
+    ]);
+  }
+
+  console.log('✅ SEEDING COMPLETE! Populated 4 farmers, 3 verified buyers, 1 FPO group, 5 listings, 3 bulk tenders, 3 fully audited deals.');
 }
 
 if (require.main === module) {

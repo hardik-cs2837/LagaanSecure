@@ -52,6 +52,21 @@ export const prices = {
   getAvailableCommodities: () => api.get('/prices'),
 };
 
+export const demand = {
+  getForecast: (crop) => api.get('/demand/forecast', { params: { crop } }),
+  getAllForecasts: () => api.get('/demand/all'),
+};
+
+export const matching = {
+  getBestBuyers: (crop, quantity, location) =>
+    api.get('/matching/best-buyers', { params: { crop, quantity, location } }),
+};
+
+export const bulkRequirements = {
+  getRequirements: (params) => api.get('/bulk-requirements', { params }),
+  createRequirement: (data) => api.post('/bulk-requirements', data),
+};
+
 export const markupCheck = {
   checkMarkup: (listingId, enteredPrice) =>
     api.post(`/listings/${listingId}/markup-check`, { enteredPrice }),
@@ -75,6 +90,7 @@ export const notifications = {
 
 export const advisor = {
   getAdvice: (data) => api.post('/advisor/explain', data),
+  chat: (message, context, language) => api.post('/advisor/chat', { message, context, language }),
 };
 
 export default api;

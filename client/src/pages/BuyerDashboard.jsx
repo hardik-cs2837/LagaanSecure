@@ -9,6 +9,8 @@ import NearestMarketSuggestion from '../components/NearestMarketSuggestion';
 import BuyerBadge from '../components/BuyerBadge';
 import StorageDirectoryModal from '../components/StorageDirectoryModal';
 import MultiStopRouteModal from '../components/MultiStopRouteModal';
+import BulkRequirementsModal from '../components/BulkRequirementsModal';
+import BulkRequirementsSection from '../components/BulkRequirementsSection';
 
 const getCropEmoji = (cropName) => {
   const name = cropName?.toLowerCase() || '';
@@ -36,6 +38,7 @@ export default function BuyerDashboard() {
   // Modals
   const [showStorageModal, setShowStorageModal] = useState(false);
   const [showRouteModal, setShowRouteModal] = useState(false);
+  const [showBulkModal, setShowBulkModal] = useState(false);
 
   // Filters
   const [search, setSearch] = useState('');
@@ -121,6 +124,12 @@ export default function BuyerDashboard() {
           </div>
           <div className="flex items-center gap-2 flex-wrap">
             <button
+              onClick={() => setShowBulkModal(true)}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5"
+            >
+              📢 {t('bulk.post_req_btn', 'Post Bulk Tender')}
+            </button>
+            <button
               onClick={() => setShowRouteModal(true)}
               className="bg-primary-800/80 hover:bg-primary-900 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl border border-primary-500/30 transition shadow-sm flex items-center gap-1.5"
             >
@@ -146,6 +155,12 @@ export default function BuyerDashboard() {
         
         {/* Demand & Supply Arrival Volume Indicators */}
         <DemandSupplyIndicators />
+
+        {/* Institutional Bulk Requirements Section */}
+        <BulkRequirementsSection 
+          onOpenPostModal={() => setShowBulkModal(true)} 
+          isBuyer={true} 
+        />
 
         {/* Search & Filter Section */}
         <form onSubmit={handleSearch} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
@@ -392,6 +407,13 @@ export default function BuyerDashboard() {
         isOpen={showRouteModal}
         onClose={() => setShowRouteModal(false)}
         userLocation={user?.location || 'Nashik Hub'}
+      />
+
+      {/* Post Bulk Procurement Requirements Modal */}
+      <BulkRequirementsModal
+        isOpen={showBulkModal}
+        onClose={() => setShowBulkModal(false)}
+        onSuccess={fetchListings}
       />
     </div>
   );

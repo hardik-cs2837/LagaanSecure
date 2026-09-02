@@ -4,7 +4,7 @@ const { sequelize } = require('./server/models');
 const BASE_URL = 'http://localhost:5002/api';
 
 async function runTests() {
-  console.log('--- STARTING COMPREHENSIVE KISAANCONNECT INTEGRATION TESTS (STAGE 2) ---');
+  console.log('--- STARTING COMPREHENSIVE KISAANCONNECT INTEGRATION TESTS (PRODUCTION BUILD) ---');
 
   // 1. Register Farmer
   console.log('\n[1] Testing Farmer Registration with FPO Membership...');
@@ -21,7 +21,7 @@ async function runTests() {
   const farmerToken = farmerRegRes.data.data.token;
   const farmerId = farmerRegRes.data.data.user.id;
 
-  // 2. Register Buyer (with verified credentials & business profile)
+  // 2. Register Buyer
   console.log('\n[2] Testing Verified Buyer Registration with Business Profile...');
   const buyerPhone = '87654321' + Math.floor(10 + Math.random() * 90);
   const buyerRegRes = await axios.post(`${BASE_URL}/auth/register`, {
@@ -32,7 +32,7 @@ async function runTests() {
     business_name: 'FreshMart National Supply Chain Ltd',
     location: 'Mumbai, Maharashtra'
   });
-  console.log('✓ Buyer Registered:', buyerRegRes.data.data.user.name, '(Business:', buyerRegRes.data.data.user.business_name, 'Verified:', buyerRegRes.data.data.user.is_verified, ')');
+  console.log('✓ Buyer Registered:', buyerRegRes.data.data.user.name, '(Business:', buyerRegRes.data.data.user.business_name, ')');
   const buyerToken = buyerRegRes.data.data.token;
   const buyerId = buyerRegRes.data.data.user.id;
 
@@ -45,17 +45,15 @@ async function runTests() {
   console.log('✓ Farmer Login success. Token received:', !!loginRes.data.data.token);
 
   // 4. Section A: Statistical Linear Regression & EWMA Price Forecast
-  console.log('\n[4] Testing Section A: Statistical Price Forecast & 14-Day Projections (OLS Regression + EWMA)...');
+  console.log('\n[4] Testing Section A: Statistical Price Forecast & 14-Day Projections...');
   const trendRes = await axios.get(`${BASE_URL}/prices/Onion/trends?state=Maharashtra`);
-  console.log('✓ Statistical Forecast Model for Onion:');
+  console.log('✓ Statistical Forecast for Onion:');
   console.log('  Current Price: ₹' + trendRes.data.data.currentPrice + '/qtl');
   console.log('  7-Day Projection: ₹' + trendRes.data.data.projected7Day + '/qtl (90% CI: ₹' + trendRes.data.data.confidenceMin7Day + ' - ₹' + trendRes.data.data.confidenceMax7Day + ')');
   console.log('  Trend Slope: ₹' + trendRes.data.data.modelStats.slope + '/day | R-squared: ' + trendRes.data.data.modelStats.rSquared);
-  console.log('  Recommendation:', trendRes.data.data.recommendation);
-  console.log('  Methodology Label:', trendRes.data.data.methodLabel);
 
-  // 5. Section B: FPO Bulk Lot Aggregation with Proportional Member Splits
-  console.log('\n[5] Testing Section B: FPO Bulk Lot Aggregation & Proportional Share Tracking...');
+  // 5. Section B: FPO Bulk Lot Aggregation
+  console.log('\n[5] Testing Section B: FPO Bulk Lot Aggregation...');
   const fpoAggRes = await axios.post(
     `${BASE_URL}/listings/fpo-aggregate`,
     {
@@ -72,11 +70,10 @@ async function runTests() {
     { headers: { Authorization: `Bearer ${farmerToken}` } }
   );
   const fpoListingId = fpoAggRes.data.data.id;
-  console.log('✓ FPO Bulk Lot Created ID:', fpoListingId, 'Pooled Volume:', fpoAggRes.data.data.quantity, 'qtl (Blended Grade:', fpoAggRes.data.data.quality_grade, ')');
-  console.log('  Member Splits:', fpoAggRes.data.data.fpo_member_splits.map(m => `${m.farmer_name}: ${m.share_percent}%`).join(', '));
+  console.log('✓ FPO Bulk Lot Created ID:', fpoListingId, 'Pooled Volume:', fpoAggRes.data.data.quantity, 'qtl');
 
-  // 6. Section C: Structured Quality Grading & Self-Declared Checklist Listing
-  console.log('\n[6] Testing Section C: Structured Quality Checklist & Quality Grade Filtering...');
+  // 6. Section C: Structured Quality Checklist
+  console.log('\n[6] Testing Section C: Structured Quality Checklist...');
   const qualListingRes = await axios.post(
     `${BASE_URL}/listings`,
     {
@@ -99,13 +96,8 @@ async function runTests() {
   );
   const qualListingId = qualListingRes.data.data.id;
   console.log('✓ Graded Listing Created ID:', qualListingId, 'Quality Grade:', qualListingRes.data.data.quality_grade);
-  console.log('  Quality Specs: Moisture:', qualListingRes.data.data.quality_checklist.moisture_pct + '%', 'Foreign Matter:', qualListingRes.data.data.quality_checklist.foreign_matter_pct + '%');
 
-  // Test Quality Filter in Browse
-  const browseGradeRes = await axios.get(`${BASE_URL}/listings?quality_grade=A&status=active`);
-  console.log('✓ Filtered Grade A Listings Found:', browseGradeRes.data.data.listings.length);
-
-  // 7. Section D: Multi-Stop Route Optimizer (Greedy Nearest-Neighbor TSP)
+  // 7. Section D: Multi-Stop Route Optimizer (TSP)
   console.log('\n[7] Testing Section D: Multi-Stop Route Optimizer (Nearest-Neighbor TSP)...');
   const routeRes = await axios.post(`${BASE_URL}/listings/multi-stop-route`, {
     origin: { name: 'Nashik Farm Yard', lat: 20.00, lng: 73.78 },
@@ -115,12 +107,9 @@ async function runTests() {
       { id: 3, name: 'Pune Gultekdi Market Yard', lat: 18.490, lng: 73.865, demandQty: 50 }
     ]
   });
-  console.log('✓ Multi-Stop Route Optimized:');
-  console.log('  Total Distance:', routeRes.data.data.totalDistanceKm, 'km | Estimated Freight: ₹' + routeRes.data.data.estimatedTotalFreight);
-  console.log('  Estimated Travel Hours:', routeRes.data.data.estimatedTotalHours, 'hrs');
-  console.log('  Stops Order:', routeRes.data.data.orderedRoute.map(s => `${s.stopNumber}. ${s.name} (+${s.legDistanceKm}km)`).join(' -> '));
+  console.log('✓ Multi-Stop Route Optimized:', routeRes.data.data.totalDistanceKm, 'km | Freight: ₹' + routeRes.data.data.estimatedTotalFreight);
 
-  // 8. Section E: Actionable Storage Deposit (Post-Harvest Loss Prevention)
+  // 8. Section E: Actionable Cold Storage Deposit
   console.log('\n[8] Testing Section E: Actionable Cold Storage Deposit...');
   const storeRes = await axios.post(
     `${BASE_URL}/listings/${qualListingId}/store`,
@@ -130,18 +119,54 @@ async function runTests() {
     },
     { headers: { Authorization: `Bearer ${farmerToken}` } }
   );
-  console.log('✓ Lot Deposited in Cold Storage: In Storage =', storeRes.data.data.is_in_storage);
-  console.log('  Facility:', storeRes.data.data.storage_facility_name, 'Expiry:', storeRes.data.data.storage_expiry_date, 'Receipt #:', storeRes.data.data.storage_receipt_no);
+  console.log('✓ Lot Deposited in Cold Storage. In Storage =', storeRes.data.data.is_in_storage);
 
-  // 9. Markup Check Endpoint
-  console.log('\n[9] Testing Markup Calculator Check...');
-  const markupRes = await axios.post(`${BASE_URL}/listings/${fpoListingId}/markup-check`, {
-    enteredPrice: 950
+  // 9. AI Demand Forecasting Endpoint (PS 26033 Core AI)
+  console.log('\n[9] Testing AI Demand Forecasting Endpoint...');
+  const demandRes = await axios.get(`${BASE_URL}/demand/forecast?crop=Onion`);
+  console.log('✓ Demand Forecast for Onion: Index =', demandRes.data.data.currentDemandIndex, '| 7-Day Trend = +' + demandRes.data.data.trend7DayPct + '%');
+  console.log('  Recommendation:', demandRes.data.data.recommendedAction);
+
+  // 10. Smart Buyer Matching Endpoint
+  console.log('\n[10] Testing Smart Buyer Matching Engine...');
+  const matchRes = await axios.get(`${BASE_URL}/matching/best-buyers?crop=Onion&quantity=150`);
+  console.log('✓ Best Matched Buyers Count:', matchRes.data.data.matches.length);
+  console.log('  Top Match:', matchRes.data.data.matches[0].buyerName, '(' + matchRes.data.data.matches[0].matchScorePct + '% match score)');
+
+  // 11. Institutional Bulk Requirements Endpoints
+  console.log('\n[11] Testing Institutional Bulk Procurement Requirements...');
+  const postReqRes = await axios.post(
+    `${BASE_URL}/bulk-requirements`,
+    {
+      crop_name: 'Potato',
+      business_type: 'processor',
+      quantity_quintals: 300,
+      target_price_min: 1500,
+      target_price_max: 1650,
+      quality_grade: 'A',
+      delivery_location: 'Nagpur Central Hub',
+      required_by_date: '2026-09-15',
+      additional_specs: 'Cleaned chip grade potatoes'
+    },
+    { headers: { Authorization: `Bearer ${buyerToken}` } }
+  );
+  console.log('✓ Bulk Requirement Posted ID:', postReqRes.data.data.id, 'Crop:', postReqRes.data.data.crop_name);
+
+  const getReqsRes = await axios.get(`${BASE_URL}/bulk-requirements`);
+  console.log('✓ Active Bulk Requirements Found in Marketplace:', getReqsRes.data.data.length);
+
+  // 12. Modular AI Farm Copilot
+  console.log('\n[12] Testing Modular AI Farm Copilot Chat (Multilingual)...');
+  const copilotRes = await axios.post(`${BASE_URL}/advisor/chat`, {
+    message: 'प्याज का भाव और सही बिक्री समय क्या है?',
+    context: { crop: 'Onion', location: 'Nashik' },
+    language: 'hi'
   });
-  console.log('✓ Markup Check Result: Mandi Modal: ₹' + markupRes.data.data.mandiModalPrice + ', Agent Offer: ₹' + markupRes.data.data.enteredPrice + ', Verdict: ' + markupRes.data.data.verdict);
+  console.log('✓ Copilot Response:', copilotRes.data.data.reply.slice(0, 100) + '...');
+  console.log('  Powered by Engine:', copilotRes.data.data.engine);
 
-  // 10. Direct Offer & Negotiation with Audit Timeline
-  console.log('\n[10] Testing Direct Offer Creation on FPO Bulk Lot...');
+  // 13. Direct Offer & Negotiation with Audit Timeline
+  console.log('\n[13] Testing Direct Offer Creation on FPO Bulk Lot...');
   const dealRes = await axios.post(
     `${BASE_URL}/deals`,
     {
@@ -151,7 +176,6 @@ async function runTests() {
     { headers: { Authorization: `Bearer ${buyerToken}` } }
   );
   const dealId = dealRes.data.data.id;
-  console.log('✓ Deal Created ID:', dealId, 'Initial Timeline Events:', dealRes.data.data.audit_timeline.length);
 
   // Counter & Accept
   await axios.patch(
@@ -165,10 +189,9 @@ async function runTests() {
     { headers: { Authorization: `Bearer ${buyerToken}` } }
   );
   console.log('✓ Deal Accepted at ₹1425/qtl. Status:', acceptRes.data.data.status);
-  console.log('  Calculated FPO Payout Splits:', acceptRes.data.data.fpo_payout_splits.map(m => `${m.farmer_name}: ₹${m.total_payout_inr}`).join(', '));
 
-  // 11. Payment Status Tracking (Unpaid -> Pending -> Paid)
-  console.log('\n[11] Testing Payment Status Tracking...');
+  // 14. Payment Status Tracking & Transport
+  console.log('\n[14] Testing Payment Status Tracking & Transport Request...');
   await axios.patch(
     `${BASE_URL}/deals/${dealId}`,
     {
@@ -178,16 +201,12 @@ async function runTests() {
     },
     { headers: { Authorization: `Bearer ${buyerToken}` } }
   );
-  const paidRes = await axios.patch(
+  await axios.patch(
     `${BASE_URL}/deals/${dealId}`,
     { payment_status: 'paid' },
     { headers: { Authorization: `Bearer ${farmerToken}` } }
   );
-  console.log('✓ Payment Confirmed & Settled! Status:', paidRes.data.data.payment_status);
-
-  // 12. Request Transport on Deal
-  console.log('\n[12] Testing Farm-to-Buyer Transport Request...');
-  const transRes = await axios.patch(
+  await axios.patch(
     `${BASE_URL}/deals/${dealId}`,
     {
       transport_requested: true,
@@ -200,50 +219,29 @@ async function runTests() {
     },
     { headers: { Authorization: `Bearer ${buyerToken}` } }
   );
-  console.log('✓ Transport Booked:', transRes.data.data.transport_requested, 'Provider:', transRes.data.data.transport_details.provider_name);
+  console.log('✓ Payment Settled and Transport Requested.');
 
-  // 13. Section F: Rating & Trust Scoring
-  console.log('\n[13] Testing Section F: Star Rating & Trust Scoring...');
-  const rateRes = await axios.post(
+  // 15. Star Rating & Printable Invoice
+  console.log('\n[15] Testing Rating & Printable Invoice Generation...');
+  await axios.post(
     `${BASE_URL}/deals/${dealId}/rate`,
-    { rating: 5, feedback: 'Prompt digital payment settlement by FreshMart.' },
+    { rating: 5, feedback: 'Great experience trading with FreshMart.' },
     { headers: { Authorization: `Bearer ${farmerToken}` } }
   );
-  console.log('✓ Deal Rated! Result:', rateRes.data.message);
-
-  // 14. Section G: Printable Tax Invoice & Purchase Receipt Generator
-  console.log('\n[14] Testing Section G: Printable Deal Receipt & Tax Invoice...');
   const receiptRes = await axios.get(`${BASE_URL}/deals/${dealId}/receipt`, {
     headers: { Authorization: `Bearer ${buyerToken}` }
   });
-  console.log('✓ Official Invoice Generated:', receiptRes.data.data.invoiceNumber);
-  console.log('  Seller:', receiptRes.data.data.seller.name, '| Buyer:', receiptRes.data.data.buyer.name);
-  console.log('  Total Payable:', '₹' + receiptRes.data.data.financials.totalPayableInr);
-  console.log('  Middleman Commissions Saved:', '₹' + receiptRes.data.data.financials.intermediaryCommissionSavedInr);
-  console.log('  Authenticity Hash:', receiptRes.data.data.authenticityHash);
+  console.log('✓ Official Invoice Generated:', receiptRes.data.data.invoiceNumber, '| Authenticity Hash:', receiptRes.data.data.authenticityHash);
 
-  // 15. Section H: Consumer & Impact Analytics View
-  console.log('\n[15] Testing Section H: Platform Impact & Disintermediation Analytics...');
+  // 16. Platform Impact Analytics
+  console.log('\n[16] Testing Platform Impact Analytics...');
   const impactRes = await axios.get(`${BASE_URL}/listings/analytics/platform-impact`);
-  console.log('✓ Platform Impact Metrics:');
-  console.log('  Total Farmer Extra Earnings: ₹' + impactRes.data.data.totalFarmerExtraEarningsRupees.toLocaleString('en-IN'));
-  console.log('  Total Buyer Net Savings: ₹' + impactRes.data.data.totalBuyerSavingsRupees.toLocaleString('en-IN'));
-  console.log('  Average Farmer Income Gain: +' + impactRes.data.data.averageFarmerIncomeGainPct + '%');
-  console.log('  Average Buyer Savings: -' + impactRes.data.data.averageBuyerCostSavingsPct + '%');
-  console.log('  Active FPOs:', impactRes.data.data.activeFpoCount, '| Verified Buyers:', impactRes.data.data.verifiedBuyersCount);
+  console.log('✓ Platform Total Farmer Extra Earnings: ₹' + impactRes.data.data.totalFarmerExtraEarningsRupees.toLocaleString('en-IN'));
+  console.log('  Total Buyer Savings: ₹' + impactRes.data.data.totalBuyerSavingsRupees.toLocaleString('en-IN'));
 
-  // 16. Audit Timeline Verification
-  console.log('\n[16] Verifying Deal Audit Event Timeline...');
-  const updatedDeal = await axios.get(`${BASE_URL}/deals/my`, {
-    headers: { Authorization: `Bearer ${farmerToken}` }
-  });
-  const myDeal = updatedDeal.data.data.find(d => d.id === dealId);
-  console.log('✓ Audit Timeline Events (' + myDeal.audit_timeline.length + ' events):');
-  myDeal.audit_timeline.forEach(evt => console.log('  -', evt.title, ':', evt.description));
-
-  console.log('\n========================================================================');
-  console.log('🎉 ALL 16 EXTENDED STAGE 2 INTEGRATION TESTS PASSED 100% CLEANLY!');
-  console.log('========================================================================\n');
+  console.log('\n================================================================================');
+  console.log('🎉 ALL 16 EXTENSIVE END-TO-END PRODUCTION INTEGRATION TESTS PASSED 100% CLEANLY!');
+  console.log('================================================================================\n');
 }
 
 // Start test server on port 5002

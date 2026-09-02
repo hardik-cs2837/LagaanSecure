@@ -4,6 +4,9 @@ import { AuthContext } from '../context/AuthContext';
 import { listings as listingsApi, deals as dealsApi } from '../services/api';
 import MarkupCalculator from '../components/MarkupCalculator';
 import PriceTrendRecommendation from '../components/PriceTrendRecommendation';
+import AIDemandForecastWidget from '../components/AIDemandForecastWidget';
+import SmartBuyerMatchingWidget from '../components/SmartBuyerMatchingWidget';
+import BulkRequirementsSection from '../components/BulkRequirementsSection';
 import NearestMarketSuggestion from '../components/NearestMarketSuggestion';
 import StorageDirectoryModal from '../components/StorageDirectoryModal';
 import FpoBulkLotModal from '../components/FpoBulkLotModal';
@@ -107,8 +110,21 @@ const FarmerDashboard = () => {
       {/* Markup Calculator — PROMINENT (Core Differentiator for PS 26033) */}
       <MarkupCalculator />
 
+      {/* AI Demand Forecasting & "Should I Sell Now?" Recommendation (PS 26033 Core AI Feature) */}
+      <AIDemandForecastWidget defaultCrop={myListings[0]?.crop_name || 'Onion'} />
+
       {/* Statistical Price Trend & 14-Day OLS Regression Forecast (PS 26132) */}
-      <PriceTrendRecommendation initialCrop="Onion" initialState="Maharashtra" />
+      <PriceTrendRecommendation initialCrop={myListings[0]?.crop_name || 'Onion'} initialState="Maharashtra" />
+
+      {/* Smart Buyer Matching: Best Buyers for Farmer's Produce */}
+      <SmartBuyerMatchingWidget 
+        crop={myListings[0]?.crop_name || 'Onion'} 
+        quantity={myListings[0]?.quantity || 100}
+        location={user?.location || 'Nashik, Maharashtra'} 
+      />
+
+      {/* Institutional Bulk Procurement Demands Section */}
+      <BulkRequirementsSection isBuyer={false} />
 
       {/* Two Column: My Listings + Nearest Mandis */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -117,7 +133,7 @@ const FarmerDashboard = () => {
           <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 h-full flex flex-col justify-between">
             <div>
               <div className="flex justify-between items-center mb-5">
-                <h2 className="text-xl font-bold text-dark">{t('farmer.myListings', 'My Listings')}</h2>
+                <h2 className="text-xl font-bold text-dark">{t('farmer.myListings', 'My Active Produce Lots')}</h2>
                 <span className="text-xs bg-primary-50 text-primary-700 font-bold px-2.5 py-1 rounded-full border border-primary-200">
                   {myListings.length} {t('listings.active', 'active')}
                 </span>

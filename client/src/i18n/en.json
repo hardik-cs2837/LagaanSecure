@@ -301,5 +301,28 @@
     "title": "Disintermediation & Impact Analytics",
     "subtitle": "Live transparency dashboard measuring direct farmer income enhancements, consumer price savings, and FPO aggregation outcomes under PS 26033 & PS 26132.",
     "chart_title": "Value Unlocked per Commodity via Direct Trade (INR)"
+  },
+  "demand": {
+    "title": "AI Demand Forecasting & Sell Timing",
+    "subtitle": "Forward-looking demand projections, arrival trends & storage window advice (PS 26033)",
+    "current_demand": "Current Demand Index",
+    "forecast_curve": "Forward Demand Shift",
+    "storage_window": "Post-Harvest Shelf Life",
+    "smart_action_title": "Smart Sell Timing Recommendation (\"Should I Sell Now?\")",
+    "key_drivers": "Underlying Market Drivers & Arrival Dynamics"
+  },
+  "matching": {
+    "title": "Best Matched Direct Buyers for Your Produce",
+    "subtitle": "Ranked by price readiness, on-time settlement reliability & logistics proximity"
+  },
+  "bulk": {
+    "section_title": "Institutional Bulk Procurement Demands",
+    "section_subtitle": "Direct procurement inquiries from hotels, retail chains, food processors & bulk buyers",
+    "post_req_btn": "Post Bulk Tender",
+    "modal_title": "Post Institutional Bulk Purchase Requirement",
+    "modal_subtitle": "Tender direct farm procurement with transparent price parameters",
+    "publish_btn": "Publish Bulk Requirement",
+    "posted_success": "Bulk institutional tender published successfully!",
+    "supply_now": "Supply to this Buyer"
   }
 }

@@ -11,6 +11,9 @@ import StorageDirectoryModal from '../components/StorageDirectoryModal';
 import MultiStopRouteModal from '../components/MultiStopRouteModal';
 import BulkRequirementsModal from '../components/BulkRequirementsModal';
 import BulkRequirementsSection from '../components/BulkRequirementsSection';
+import { motion } from 'framer-motion';
+import { Button } from '../components/ui/Button';
+import ListingCard from '../components/ListingCard';
 
 const getCropEmoji = (cropName) => {
   const name = cropName?.toLowerCase() || '';
@@ -102,54 +105,56 @@ export default function BuyerDashboard() {
     fetchListings();
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 md:pb-10">
+    <motion.div 
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 min-h-screen"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* Header */}
-      <div className="bg-primary-700 text-white p-6 rounded-b-3xl shadow-md">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl md:text-3xl font-bold">{t('buyer.welcome', 'Welcome')}, {user?.name}!</h1>
-              <BuyerBadge 
-                isVerified={user?.is_verified ?? true} 
-                businessName={user?.business_name} 
-                ratingAvg={user?.rating_avg || 4.9}
-                dealsCompleted={user?.deals_completed_count || 18}
-                size="sm" 
-              />
-            </div>
-            <p className="text-primary-100 mt-1 text-sm md:text-base">
-              {t('buyer.dashboard_subtitle', 'Source direct fresh agricultural produce with verified credentials & zero middleman markups.')}
-            </p>
+      <motion.div variants={itemVariants} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row md:items-start justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-3 flex-wrap mb-2">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-dark tracking-tight">{t('buyer.welcome', 'Welcome')}, {user?.name}!</h1>
+            <BuyerBadge 
+              isVerified={user?.is_verified ?? true} 
+              businessName={user?.business_name} 
+              ratingAvg={user?.rating_avg || 4.9}
+              dealsCompleted={user?.deals_completed_count || 18}
+              size="sm" 
+            />
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <button
-              onClick={() => setShowBulkModal(true)}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5"
-            >
-              📢 {t('bulk.post_req_btn', 'Post Bulk Tender')}
-            </button>
-            <button
-              onClick={() => setShowRouteModal(true)}
-              className="bg-primary-800/80 hover:bg-primary-900 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl border border-primary-500/30 transition shadow-sm flex items-center gap-1.5"
-            >
-              🗺️ {t('routes.route_planner_btn', 'Route Optimizer')}
-            </button>
-            <button
-              onClick={() => setShowStorageModal(true)}
-              className="bg-primary-800/80 hover:bg-primary-900 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl border border-primary-500/30 transition shadow-sm flex items-center gap-1.5"
-            >
-              🏬 {t('storage.btn', 'Storage')}
-            </button>
-            <Link
-              to="/deals"
-              className="bg-accent-500 hover:bg-accent-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5"
-            >
-              🤝 {t('buyer.myDeals', 'My Deals')} ({myDeals.length})
-            </Link>
-          </div>
+          <p className="text-gray-500 text-sm font-medium">
+            {t('buyer.dashboard_subtitle', 'Source direct fresh agricultural produce with verified credentials & zero middleman markups.')}
+          </p>
         </div>
-      </div>
+        <div className="flex items-center gap-3 flex-wrap">
+          <button onClick={() => setShowBulkModal(true)} className="px-4 py-2 bg-emerald-600 text-white font-bold rounded-xl text-sm">
+            📢 {t('bulk.post_req_btn', 'Post Bulk Tender')}
+          </button>
+          <button onClick={() => setShowRouteModal(true)} className="px-4 py-2 border border-primary-200 text-primary-700 font-bold rounded-xl text-sm">
+            🚚 {t('routes.route_planner_btn', 'Route Optimizer')}
+          </button>
+          <button onClick={() => setShowStorageModal(true)} className="px-4 py-2 border border-blue-200 text-blue-700 font-bold rounded-xl text-sm">
+            ❄️ {t('storage.btn', 'Storage')}
+          </button>
+          <Link to="/deals">
+            <button className="px-4 py-2 bg-gray-900 text-white font-bold rounded-xl text-sm">
+              📋 My Procurement Deals
+            </button>
+          </Link>
+        </div>
+      </motion.div>
 
       <div className="max-w-6xl mx-auto px-4 mt-6 space-y-6">
         
@@ -283,86 +288,7 @@ export default function BuyerDashboard() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {items.map(listing => (
-                <div key={listing.id} className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition flex flex-col justify-between">
-                  <div className="p-5">
-                    {/* Top Row */}
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-3xl">{getCropEmoji(listing.crop_name)}</span>
-                        <div>
-                          <span className={`px-2.5 py-0.5 text-xs font-extrabold rounded-full ${
-                            listing.quality_grade === 'A' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' :
-                            listing.quality_grade === 'B' ? 'bg-yellow-100 text-yellow-800 border border-yellow-300' :
-                            'bg-orange-100 text-orange-800 border border-orange-300'
-                          }`}>
-                            {t('listings.quality', 'Grade')} {listing.quality_grade}
-                          </span>
-                          {listing.is_fpo_pool && (
-                            <span className="ml-1.5 px-2 py-0.5 text-[10px] font-extrabold bg-amber-100 text-amber-900 rounded-full border border-amber-300">
-                              👥 FPO
-                            </span>
-                          )}
-                          {listing.is_in_storage && (
-                            <span className="ml-1.5 px-2 py-0.5 text-[10px] font-extrabold bg-blue-100 text-blue-900 rounded-full border border-blue-300">
-                              🏬 In Storage
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <span className="px-2.5 py-0.5 text-xs font-bold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">
-                        {listing.status === 'active' ? t('listings.active', 'Active') : t('listings.sold', 'Sold')}
-                      </span>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-dark mt-2 mb-1">{listing.crop_name}</h3>
-                    
-                    {/* Structured Quality Checklist Badges (if present) */}
-                    {listing.quality_checklist && (
-                      <div className="my-2 bg-emerald-50/70 p-2 rounded-xl border border-emerald-200 flex items-center justify-between text-[10px] text-emerald-900 font-semibold">
-                        <span>💧 Moisture: {listing.quality_checklist.moisture_pct || 11}%</span>
-                        <span>🌾 Impurity: {listing.quality_checklist.foreign_matter_pct || 0.5}%</span>
-                        <span>📐 {listing.quality_checklist.grain_size_uniformity?.split(' ')[0] || 'Uniform'}</span>
-                      </div>
-                    )}
-
-                    <div className="space-y-2 mt-3 text-xs text-gray-600">
-                      <p className="flex justify-between border-b border-gray-50 pb-1.5">
-                        <span className="text-gray-400">{t('listings.quantity', 'Quantity')}</span>
-                        <span className="font-bold text-dark text-sm">{listing.quantity} {listing.unit}</span>
-                      </p>
-                      <p className="flex justify-between border-b border-gray-50 pb-1.5">
-                        <span className="text-gray-400">{t('listings.price', 'Farmer Price')}</span>
-                        <span className="font-extrabold text-primary-700 text-sm">
-                          {listing.price_per_unit || listing.price ? `₹${listing.price_per_unit || listing.price}/${listing.unit}` : t('deals.pending', 'Open to offers')}
-                        </span>
-                      </p>
-                      <p className="flex justify-between border-b border-gray-50 pb-1.5">
-                        <span className="text-gray-400">{t('listings.location', 'Location')}</span>
-                        <span className="font-medium text-dark truncate max-w-[60%] text-right">{listing.location}</span>
-                      </p>
-                      <p className="flex justify-between items-center pb-1">
-                        <span className="text-gray-400">{t('listings.farmerInfo', 'Farmer / Source')}</span>
-                        <span className="font-bold text-dark flex items-center gap-1">
-                          👨‍🌾 {listing.farmer?.name || 'Farmer'}
-                          {listing.farmer?.fpo_name && (
-                            <span className="text-[10px] bg-primary-50 text-primary-700 px-1.5 py-0.2 rounded font-semibold">
-                              {listing.farmer.fpo_name}
-                            </span>
-                          )}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="p-4 bg-gray-50 border-t border-gray-100">
-                    <Link 
-                      to={`/listings/${listing.id}`} 
-                      className="flex items-center justify-center w-full h-12 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl transition shadow-sm text-sm"
-                    >
-                      {t('deals.makeOffer', 'View Details & Make Offer')}
-                    </Link>
-                  </div>
-                </div>
+                <ListingCard key={listing.id} listing={listing} showOfferButton={true} />
               ))}
             </div>
           )}
@@ -415,6 +341,6 @@ export default function BuyerDashboard() {
         onClose={() => setShowBulkModal(false)}
         onSuccess={fetchListings}
       />
-    </div>
+    </motion.div>
   );
 }

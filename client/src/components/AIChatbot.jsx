@@ -20,7 +20,7 @@ export default function AIChatbot() {
       text: i18n.language === 'hi'
         ? '👨‍🌾 नमस्ते! मैं आपका किसान सहायक (Kisaan Copilot) हूँ। मुझसे मंडी भाव, बिचौलियों की मार्जिन गणना, बिक्री समय या ढुलाई के बारे में पूछें।'
         : "👨‍🌾 Hello! I am your Kisaan Copilot. Ask me about live mandi benchmarks, intermediary markup elimination, optimal sell timing ('Should I Sell Now?'), or rural logistics route planning.",
-      engine: 'KisaanConnect Agricultural Expert Engine'
+      engine: 'Lagaan Secure Agricultural Expert Engine'
     }
   ]);
   const [input, setInput] = useState('');
@@ -52,7 +52,7 @@ export default function AIChatbot() {
       );
 
       const botReply = res.data?.data?.reply || "I'm analyzing the latest agricultural market data. Please verify your crop and location.";
-      const engine = res.data?.data?.engine || 'KisaanConnect Agricultural Copilot';
+      const engine = res.data?.data?.engine || 'Lagaan Secure Agricultural Copilot';
 
       setMessages((prev) => [
         ...prev,

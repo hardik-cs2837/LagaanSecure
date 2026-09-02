@@ -1,30 +1,31 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { listings as listingsApi, deals as dealsApi } from '../services/api';
+import api from '../services/api';
 import MarkupCalculator from '../components/MarkupCalculator';
 import PriceTrendRecommendation from '../components/PriceTrendRecommendation';
 import AIDemandForecastWidget from '../components/AIDemandForecastWidget';
 import SmartBuyerMatchingWidget from '../components/SmartBuyerMatchingWidget';
 import BulkRequirementsSection from '../components/BulkRequirementsSection';
-import NearestMarketSuggestion from '../components/NearestMarketSuggestion';
 import StorageDirectoryModal from '../components/StorageDirectoryModal';
 import FpoBulkLotModal from '../components/FpoBulkLotModal';
 import MultiStopRouteModal from '../components/MultiStopRouteModal';
-import AIChatbot from '../components/AIChatbot';
 import ListingCard from '../components/ListingCard';
 import DealCard from '../components/DealCard';
-import { Link } from 'react-router-dom';
+import NearestMarketSuggestion from '../components/NearestMarketSuggestion';
+import AIChatbot from '../components/AIChatbot';
+import { motion } from 'framer-motion';
+import { Button } from '../components/ui/Button';
 
 const FarmerDashboard = () => {
-  const { t } = useTranslation();
   const { user } = useContext(AuthContext);
+  const { t } = useTranslation();
   const [myListings, setMyListings] = useState([]);
   const [myDeals, setMyDeals] = useState([]);
   const [loadingListings, setLoadingListings] = useState(true);
   const [loadingDeals, setLoadingDeals] = useState(true);
-
-  // Modals
+  
   const [showStorageModal, setShowStorageModal] = useState(false);
   const [showFpoModal, setShowFpoModal] = useState(false);
   const [showRouteModal, setShowRouteModal] = useState(false);
@@ -36,13 +37,10 @@ const FarmerDashboard = () => {
 
   const fetchMyListings = async () => {
     try {
-      const { data } = await listingsApi.getListings({ status: 'active' });
-      const farmerListings = (data.data?.listings || []).filter(
-        (l) => l.farmer_id === user?.id
-      );
-      setMyListings(farmerListings);
-    } catch {
-      setMyListings([]);
+      const res = await api.get('/listings/my');
+      setMyListings(res.data.data);
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoadingListings(false);
     }
@@ -50,62 +48,82 @@ const FarmerDashboard = () => {
 
   const fetchMyDeals = async () => {
     try {
-      const { data } = await dealsApi.getMyDeals();
-      setMyDeals(data.data || []);
-    } catch {
-      setMyDeals([]);
+      const res = await api.get('/deals/my');
+      setMyDeals(res.data.data);
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoadingDeals(false);
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 space-y-6 sm:space-y-8">
-      {/* Welcome Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <motion.div 
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* Header & Quick Actions */}
+      <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-start justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
         <div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <h1 className="text-2xl sm:text-3xl font-black text-dark">
+          <div className="flex items-center gap-3 flex-wrap">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-dark tracking-tight">
               {t('farmer.welcome', 'Welcome back')}, {user?.name || 'Kisaan'} 👋
             </h1>
             {user?.fpo_name && (
-              <span className="bg-primary-100 text-primary-900 text-xs font-black px-3 py-1 rounded-full border border-primary-300">
-                👥 {user.fpo_name}
+              <span className="bg-primary-50 text-primary-800 text-xs font-bold px-3 py-1 rounded-full border border-primary-200 uppercase tracking-wider">
+                FPO: {user.fpo_name}
               </span>
             )}
           </div>
-          <p className="text-gray-500 mt-1 text-sm sm:text-base">
+          <p className="text-gray-500 mt-2 text-sm sm:text-base font-medium">
             {t('farmer.subtitle', "Here's what's happening with your crops today.")}
           </p>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
-          <button
+        <div className="flex items-center gap-3 flex-wrap">
+          <Button
+            variant="secondary"
             onClick={() => setShowFpoModal(true)}
-            className="bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5"
+            className="shadow-sm border-amber-200 text-amber-700 hover:bg-amber-50"
           >
-            👥 {t('fpo.create_bulk_btn', 'Pool FPO Bulk Lot')}
-          </button>
-          <button
+            🚜 Pool FPO Bulk Lot
+          </Button>
+          <Button
+            variant="secondary"
             onClick={() => setShowRouteModal(true)}
-            className="bg-accent-600 hover:bg-accent-700 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5"
+            className="shadow-sm border-indigo-200 text-indigo-700 hover:bg-indigo-50"
           >
-            🗺️ {t('routes.route_planner_btn', 'Multi-Stop Route')}
-          </button>
-          <button
+            🚚 Multi-Stop Route
+          </Button>
+          <Button
+            variant="secondary"
             onClick={() => setShowStorageModal(true)}
-            className="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5"
+            className="shadow-sm border-blue-200 text-blue-700 hover:bg-blue-50"
           >
-            🏬 {t('storage.btn', 'Cold Storage')}
-          </button>
-          <Link
-            to="/listings/create"
-            className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5"
-          >
-            + {t('farmer.addListing', 'Add Lot')}
+            ❄️ Cold Storage
+          </Button>
+          <Link to="/listings/create">
+            <Button>
+              + {t('farmer.addListing', 'Add Lot')}
+            </Button>
           </Link>
         </div>
-      </div>
+      </motion.div>
 
       {/* Markup Calculator */}
       <MarkupCalculator />
@@ -241,7 +259,7 @@ const FarmerDashboard = () => {
 
       {/* AI Chatbot Floating Widget */}
       <AIChatbot />
-    </div>
+    </motion.div>
   );
 };
 

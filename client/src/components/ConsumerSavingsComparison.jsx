@@ -104,12 +104,12 @@ export default function ConsumerSavingsComparison({
             </div>
           </div>
 
-          {/* DIRECT KISAANCONNECT TRADE */}
+          {/* DIRECT Lagaan Secure TRADE */}
           <div className="bg-emerald-50/70 rounded-2xl p-5 border-2 border-emerald-300 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between pb-3 border-b border-emerald-200">
                 <span className="font-extrabold text-emerald-900 text-sm md:text-base flex items-center gap-1.5">
-                  ✅ {t('savings.kisaan_direct', 'Direct KisaanConnect Trade')}
+                  ✅ {t('savings.kisaan_direct', 'Direct Lagaan Secure Trade')}
                 </span>
                 <span className="text-xs bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded font-bold">
                   Zero Intermediaries

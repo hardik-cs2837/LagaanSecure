@@ -97,7 +97,7 @@ const MarkupCalculator = () => {
           ? `This offer of ₹${price}/quintal for ${crop} is at or above the mandi modal price of ₹${mp}/quintal. This is a fair deal!`
           : diff <= 10
             ? `This offer is ${diff.toFixed(1)}% below the mandi price. You might negotiate for a bit more.`
-            : `Caution: This offer is ${diff.toFixed(1)}% below the mandi price of ₹${mp}/quintal. You're losing ₹${mp - Number(price)} per quintal. Consider selling directly on KisaanConnect.`,
+            : `Caution: This offer is ${diff.toFixed(1)}% below the mandi price of ₹${mp}/quintal. You're losing ₹${mp - Number(price)} per quintal. Consider selling directly on Lagaan Secure.`,
       });
     } finally {
       setLoading(false);
@@ -276,7 +276,7 @@ const MarkupCalculator = () => {
                 onClick={() => navigate('/listings/create')}
                 className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 px-6 rounded-xl min-h-[56px] text-lg transition-all shadow-md hover:shadow-lg"
               >
-                🌾 {t('markup.sellDirect', 'Sell Directly on KisaanConnect')}
+                🌾 {t('markup.sellDirect', 'Sell Directly on Lagaan Secure')}
               </button>
             )}
           </div>

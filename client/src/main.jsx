@@ -13,7 +13,7 @@ const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'dummy-client-id
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={googleClientId}>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <AuthProvider>
           <App />
           <Toaster position="top-center" />

@@ -4,7 +4,7 @@ const { sequelize } = require('./server/models');
 const BASE_URL = 'http://localhost:5002/api';
 
 async function runTests() {
-  console.log('--- STARTING COMPREHENSIVE KISAANCONNECT INTEGRATION TESTS (PRODUCTION BUILD) ---');
+  console.log('--- STARTING COMPREHENSIVE Lagaan Secure INTEGRATION TESTS (PRODUCTION BUILD) ---');
 
   // 1. Register Farmer
   console.log('\n[1] Testing Farmer Registration with FPO Membership...');
@@ -231,7 +231,7 @@ async function runTests() {
   const receiptRes = await axios.get(`${BASE_URL}/deals/${dealId}/receipt`, {
     headers: { Authorization: `Bearer ${buyerToken}` }
   });
-  console.log('✓ Official Invoice Generated:', receiptRes.data.data.invoiceNumber, '| Authenticity Hash:', receiptRes.data.data.authenticityHash);
+  console.log(`✓ Official Invoice Generated: ${receiptRes.data.data.invoiceNumber} | Authenticity Hash: ${receiptRes.data.data.authenticityHash}`);
 
   // 16. Platform Impact Analytics
   console.log('\n[16] Testing Platform Impact Analytics...');

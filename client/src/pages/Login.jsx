@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { GoogleLogin } from '@react-oauth/google';
+import { motion } from 'framer-motion';
+import { Button } from '../components/ui/Button';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -11,44 +13,65 @@ const Login = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState(null);
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const data = await googleLogin(credentialResponse.credential);
-      if (data.user?.role === 'farmer') {
-        navigate('/farmer/dashboard');
-      } else {
-        navigate('/buyer/dashboard');
-      }
+      navigate(data.user?.role === 'farmer' ? '/farmer/dashboard' : '/buyer/dashboard');
     } catch (e) {
       console.error(e);
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const executeLogin = async (phoneStr, passStr, loaderSetter) => {
+    loaderSetter(true);
     try {
-      const data = await login(phone, password);
-      const user = data.user;
-      if (user?.role === 'farmer') {
-        navigate('/farmer/dashboard');
-      } else {
-        navigate('/buyer/dashboard');
-      }
+      const data = await login(phoneStr, passStr);
+      navigate(data.user?.role === 'farmer' ? '/farmer/dashboard' : '/buyer/dashboard');
     } catch {
       // Error handled by AuthContext
     } finally {
-      setLoading(false);
+      loaderSetter(false);
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    executeLogin(phone, password, setLoading);
+  };
+
+  const handleDemo = (role) => {
+    const p = role === 'farmer' ? '9876543210' : '9123456780';
+    setDemoLoading(role);
+    executeLogin(p, 'password123', () => setDemoLoading(null));
+  };
+
   return (
-    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center px-4 py-12 bg-cream">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8">
+    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center px-4 py-12 bg-background relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-primary-100 blur-3xl opacity-50" />
+        <div className="absolute top-[60%] -right-[10%] w-[40%] h-[60%] rounded-full bg-accent-100 blur-3xl opacity-40" />
+      </div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-md w-full bg-white rounded-2xl shadow-card p-8 z-10 border border-gray-100"
+      >
         <div className="text-center mb-8">
-          <div className="text-5xl mb-4">🌾</div>
-          <h2 className="text-2xl font-bold text-dark">{t('auth.login', 'Login to your account')}</h2>
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+            className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner"
+          >
+            🌱
+          </motion.div>
+          <h2 className="text-2xl font-bold text-dark">{t('auth.login', 'Welcome back')}</h2>
+          <p className="text-gray-500 mt-2 text-sm">Enter your details to access your account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -62,7 +85,7 @@ const Login = () => {
               onChange={(e) => setPhone(e.target.value)}
               placeholder="e.g. 9876543210"
               required
-              className="w-full p-3 border-2 border-gray-200 rounded-xl min-h-[48px] text-lg focus:outline-none focus:border-primary-500"
+              className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
             />
           </div>
 
@@ -76,57 +99,61 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
-              className="w-full p-3 border-2 border-gray-200 rounded-xl min-h-[48px] text-lg focus:outline-none focus:border-primary-500"
+              className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 text-white font-bold py-4 rounded-xl min-h-[56px] text-lg transition-colors"
-          >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                </svg>
-                {t('common.loading', 'Loading...')}
-              </span>
-            ) : (
-              t('nav.login', 'Login')
-            )}
-          </button>
+          <Button type="submit" isLoading={loading} className="w-full" size="lg">
+            {t('nav.login', 'Login')}
+          </Button>
         </form>
 
-        <div className="mt-6">
+        <div className="mt-8">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500 font-medium text-xs tracking-wider uppercase">Demo Access</span>
             </div>
           </div>
-          <div className="mt-6 flex justify-center">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={() => console.log('Google Login Failed')}
-              useOneTap
-              theme="outline"
-              size="large"
-              shape="pill"
-            />
+          <div className="mt-6 grid grid-cols-2 gap-3">
+            <Button 
+              variant="secondary" 
+              onClick={() => handleDemo('farmer')}
+              isLoading={demoLoading === 'farmer'}
+              disabled={demoLoading !== null}
+            >
+              As Farmer
+            </Button>
+            <Button 
+              variant="secondary" 
+              onClick={() => handleDemo('buyer')}
+              isLoading={demoLoading === 'buyer'}
+              disabled={demoLoading !== null}
+            >
+              As Buyer
+            </Button>
           </div>
         </div>
 
-        <p className="text-center mt-6 text-gray-600">
+        <div className="mt-8 pt-6 border-t border-gray-100 flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => console.log('Google Login Failed')}
+            useOneTap
+            theme="outline"
+            shape="pill"
+          />
+        </div>
+
+        <p className="text-center mt-6 text-gray-600 text-sm">
           {t('auth.noAccount', "Don't have an account?")}{' '}
-          <Link to="/register" className="text-primary-600 hover:text-primary-700 font-medium">
-            {t('auth.registerLink', 'Register here')}
+          <Link to="/register" className="text-primary-600 hover:text-primary-700 font-semibold transition-colors">
+            {t('auth.registerLink', 'Create one')}
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

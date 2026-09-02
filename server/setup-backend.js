@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const baseDir = 'c:/Users/HP/Desktop/KisanConnect/server';
+const baseDir = 'c:/Users/HP/Desktop/Lagaan Secure/server';
 
 const files = {
   'package.json': `{
   "name": "kisaan-connect-backend",
   "version": "1.0.0",
-  "description": "Backend for KisaanConnect",
+  "description": "Backend for Lagaan Secure",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -445,12 +445,12 @@ const getAdvice = async ({ mandiPrice, enteredPrice, crop }) => {
     const loss = mandiPrice - enteredPrice;
     return {
       percentDifference: diffPercent.toFixed(1),
-      verdict: \`Caution: This offer is \${diffPercent.toFixed(1)}% below the mandi price of ₹\${mandiPrice}/quintal. You're potentially losing ₹\${loss} per quintal. Consider negotiating or selling directly through KisaanConnect.\`
+      verdict: \`Caution: This offer is \${diffPercent.toFixed(1)}% below the mandi price of ₹\${mandiPrice}/quintal. You're potentially losing ₹\${loss} per quintal. Consider negotiating or selling directly through Lagaan Secure.\`
     };
   } else {
     return {
       percentDifference: diffPercent.toFixed(1),
-      verdict: \`Warning: This offer is significantly below market rate (\${diffPercent.toFixed(1)}% less than ₹\${mandiPrice}/quintal). The intermediary markup is very high. We strongly recommend exploring direct buyer connections on KisaanConnect.\`
+      verdict: \`Warning: This offer is significantly below market rate (\${diffPercent.toFixed(1)}% less than ₹\${mandiPrice}/quintal). The intermediary markup is very high. We strongly recommend exploring direct buyer connections on Lagaan Secure.\`
     };
   }
 };

@@ -13,7 +13,7 @@
     "createListing": "Add Listing"
   },
   "landing": {
-    "title": "KisaanConnect",
+    "title": "Lagaan Secure",
     "subtitle": "Direct Farm to Table",
     "description": "Connecting farmers directly with buyers. Fair prices, fresh produce, no middlemen.",
     "farmerBtn": "I am a Farmer 🌾",
@@ -103,7 +103,7 @@
     "atMarket": "At/Above Market Rate",
     "belowMarket": "Below Market",
     "potentialLoss": "Potential Loss Per Quintal",
-    "sellDirect": "Sell Directly on KisaanConnect"
+    "sellDirect": "Sell Directly on Lagaan Secure"
   },
   "deals": {
     "makeOffer": "Make Offer",
@@ -127,7 +127,7 @@
   },
   "advisor": {
     "title": "AI Fair-Price Advisor",
-    "welcome": "Hi! I'm the KisaanConnect Fair-Price Advisor. Tell me the crop and the price you've been offered, and I'll help you understand if it's fair.",
+    "welcome": "Hi! I'm the Lagaan Secure Fair-Price Advisor. Tell me the crop and the price you've been offered, and I'll help you understand if it's fair.",
     "askQuestion": "Ask about a price...",
     "placeholder": "e.g. Is ₹1800 fair for wheat?",
     "thinking": "Analyzing..."
@@ -180,7 +180,7 @@
     "farmer_receives": "Farmer receives (Village Agent cut)",
     "consumer_pays": "End Buyer / Consumer pays",
     "leakage_warning": "Middlemen siphon ₹{{amt}}/quintal without adding produce value",
-    "kisaan_direct": "Direct KisaanConnect Trade",
+    "kisaan_direct": "Direct Lagaan Secure Trade",
     "farmer_direct_earning": "Farmer Direct Earning",
     "buyer_direct_cost": "Buyer / Consumer Cost",
     "more_income": "More",

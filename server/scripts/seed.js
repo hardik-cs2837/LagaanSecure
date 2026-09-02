@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const { sequelize, User, Listing, Deal, Notification, PriceCache, FpoGroup, BulkRequirement } = require('../models');
 
 async function seed() {
-  console.log('🌱 Starting comprehensive database seeding for KisaanConnect Demo...');
+  console.log('🌱 Starting comprehensive database seeding for Lagaan Secure Demo...');
 
   // Clean existing tables in foreign key order
   if (BulkRequirement) await BulkRequirement.destroy({ where: {} });

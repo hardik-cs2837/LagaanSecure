@@ -71,7 +71,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    service: 'KisaanConnect Backend REST API',
+    service: 'Lagaan Secure Backend REST API',
     description: 'Direct Farmer-to-Buyer Agricultural Marketplace'
   });
 });
@@ -85,7 +85,7 @@ if (require.main === module) {
   sequelize.authenticate().then(() => {
     console.log('Database connected successfully');
     app.listen(PORT, () => {
-      console.log(`KisaanConnect Server running on port ${PORT}`);
+      console.log(`Lagaan Secure Server running on port ${PORT}`);
       // Start background price refresh job
       priceRefreshJob();
     });

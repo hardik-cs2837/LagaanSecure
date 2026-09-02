@@ -331,7 +331,7 @@ router.get('/:id/receipt', verifyToken, async (req, res, next) => {
     const totalAmount = subtotal;
 
     const invoiceData = {
-      invoiceNumber: `KC-INV-${deal.id.toString().padStart(6, '0')}`,
+      invoiceNumber: `LS-INV-${deal.id.toString().padStart(6, '0')}`,
       dealId: deal.id,
       date: deal.created_at,
       settlementDate: deal.updated_at,

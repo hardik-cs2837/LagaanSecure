@@ -1,14 +1,17 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import LanguageToggle from './LanguageToggle';
 import NotificationPanel from './NotificationPanel';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from './ui/Button';
 
 const Navbar = () => {
   const { t } = useTranslation();
   const { isAuthenticated, isFarmer, isBuyer, logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
 
@@ -23,7 +26,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
-              <span className="text-2xl font-bold text-primary-600">🌾 KisaanConnect</span>
+              <span className="text-2xl font-bold text-primary-600">🌾 Lagaan Secure</span>
             </Link>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
@@ -69,11 +72,19 @@ const Navbar = () => {
                 </div>
               </>
             ) : (
-              <>
+              <div className="flex items-center gap-3">
                 <LanguageToggle />
-                <Link to="/login" className="text-dark hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium min-h-[44px] flex items-center">{t('nav.login')}</Link>
-                <Link to="/register" className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-xl text-sm font-medium min-h-[44px] flex items-center transition-colors">{t('nav.register')}</Link>
-              </>
+                <Link to="/login">
+                  <Button variant="ghost">
+                    {t('nav.login')}
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button>
+                    {t('nav.register')}
+                  </Button>
+                </Link>
+              </div>
             )}
           </div>
           {/* Mobile hamburger */}

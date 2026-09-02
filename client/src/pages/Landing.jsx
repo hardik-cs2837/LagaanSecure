@@ -70,7 +70,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Visual Supply Chain Comparison: Traditional vs KisaanConnect */}
+      {/* Visual Supply Chain Comparison: Traditional vs Lagaan Secure */}
       <section className="max-w-6xl mx-auto px-4 -mt-10 relative z-10">
         <div className="bg-white rounded-3xl shadow-xl border border-gray-200 p-6 md:p-10 space-y-6">
           <div className="text-center max-w-2xl mx-auto">
@@ -78,7 +78,7 @@ export default function Landing() {
               {t('landing.comparison_title', 'Why Middlemen Inflate Prices & Erode Farmer Value')}
             </h2>
             <p className="text-xs md:text-sm text-gray-500 mt-1">
-              Visualizing the traditional multi-tier APMC supply chain vs KisaanConnect's direct link
+              Visualizing the traditional multi-tier APMC supply chain vs Lagaan Secure's direct link
             </p>
           </div>
 
@@ -122,11 +122,11 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* KisaanConnect Direct Platform */}
+            {/* Lagaan Secure Direct Platform */}
             <div className="bg-emerald-50/70 p-6 rounded-2xl border-2 border-emerald-300 flex flex-col justify-between space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-emerald-950 uppercase tracking-wider">
-                  ✅ KisaanConnect Direct Platform
+                  ✅ Lagaan Secure Direct Platform
                 </span>
                 <span className="text-xs font-bold bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded">
                   Zero Intermediaries

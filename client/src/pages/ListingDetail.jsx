@@ -254,7 +254,7 @@ export default function ListingDetail() {
           ) : (
             <div className="w-full h-44 bg-gradient-to-r from-emerald-800 to-primary-700 flex flex-col items-center justify-center text-white p-4">
               <span className="text-6xl select-none">🌾</span>
-              <p className="text-emerald-100 text-xs font-semibold mt-2">KisaanConnect Direct Farm Lot</p>
+              <p className="text-emerald-100 text-xs font-semibold mt-2">Lagaan Secure Direct Farm Lot</p>
             </div>
           )}
 

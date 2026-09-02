@@ -70,7 +70,7 @@ export default function DealReceiptModal({ isOpen, onClose, dealId }) {
               {/* Receipt Header */}
               <div className="flex justify-between items-start border-b-2 border-gray-900 pb-4">
                 <div>
-                  <h2 className="text-2xl font-black text-primary-800 tracking-tight">KisaanConnect</h2>
+                  <h2 className="text-2xl font-black text-primary-800 tracking-tight">Lagaan Secure</h2>
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
                     Direct Farmer-to-Buyer Trade Settlement
                   </p>

@@ -90,7 +90,7 @@ router.get('/analytics/demand-supply', async (req, res, next) => {
         totalListings: allActive.length,
         cropBreakdown: summary,
         isSimulatedArrivalTrend: true,
-        source: 'Live KisaanConnect platform listings aggregation'
+        source: 'Live Lagaan Secure platform listings aggregation'
       }
     });
   } catch (err) { next(err); }

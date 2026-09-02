@@ -1,6 +1,6 @@
-# KisaanConnect
+# Lagaan Secure
 
-KisaanConnect is a secure, production-ready AgriTech platform that connects farmers and FPOs directly with institutional buyers, eliminating multi-layered intermediary commissions. It enables fair price discovery, AI-driven demand forecasting, institutional bulk procurement, and multi-stop logistics routing.
+Lagaan Secure is a secure, production-ready AgriTech platform that connects farmers and FPOs directly with institutional buyers, eliminating multi-layered intermediary commissions. It enables fair price discovery, AI-driven demand forecasting, institutional bulk procurement, and multi-stop logistics routing.
 
 ## 🌟 Features
 
@@ -58,7 +58,7 @@ Open your terminal and run:
 
 ```bash
 git clone https://github.com/your-username/kisaanconnect.git
-cd KisaanConnect
+cd Lagaan Secure
 ```
 
 If you use VS Code, you can open the project folder by typing:
@@ -217,14 +217,14 @@ Want to see how it works? Follow this flow:
 ### STEP 13 — WINDOWS NOTES
 
 * Use **PowerShell** or **Git Bash** for running terminal commands.
-* If a script command fails on Windows, ensure you are running `npm run` from the correct directory (`KisaanConnect` for backend, `KisaanConnect/client` for frontend).
+* If a script command fails on Windows, ensure you are running `npm run` from the correct directory (`Lagaan Secure` for backend, `Lagaan Secure/client` for frontend).
 
 ---
 
 ### STEP 14 — PROJECT STRUCTURE
 
 ```text
-KisaanConnect/
+Lagaan Secure/
 ├── client/              → React frontend code
 │   ├── src/components/  → Reusable UI widgets
 │   ├── src/pages/       → Major screens (Dashboards, Marketplace)

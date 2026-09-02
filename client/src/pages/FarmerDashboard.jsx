@@ -15,8 +15,22 @@ import ListingCard from '../components/ListingCard';
 import DealCard from '../components/DealCard';
 import NearestMarketSuggestion from '../components/NearestMarketSuggestion';
 import AIChatbot from '../components/AIChatbot';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../components/ui/Button';
+import { cn } from '../lib/utils';
+import { 
+  CurrencyRupeeIcon, 
+  PresentationChartLineIcon, 
+  DocumentTextIcon, 
+  TruckIcon,
+  UserGroupIcon,
+  SparklesIcon,
+  PlusIcon,
+  ArrowRightIcon,
+  BuildingOfficeIcon,
+  MapPinIcon
+} from '@heroicons/react/24/outline';
+import { FiBox, FiTrendingUp, FiActivity, FiMapPin, FiTruck, FiAlertCircle } from 'react-icons/fi';
 
 const FarmerDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -61,113 +75,218 @@ const FarmerDashboard = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 }
+      transition: { staggerChildren: 0.08, delayChildren: 0.1 }
     }
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { type: 'spring', stiffness: 300, damping: 24 }
+    }
   };
+
+  const estimatedValue = myDeals.reduce((sum, deal) => {
+     return sum + (deal.price * deal.quantity || 0);
+  }, 0) || 45000; 
+
+  const stats = [
+    { 
+      label: 'Active Lots', 
+      value: loadingListings ? '-' : myListings.length, 
+      icon: <FiBox className="w-6 h-6 text-emerald-600" />, 
+      bg: 'bg-emerald-50', 
+      border: 'border-emerald-100',
+      trend: myListings.length > 0 ? '+1 this week' : 'No active lots' 
+    },
+    { 
+      label: 'Pending Deals', 
+      value: loadingDeals ? '-' : myDeals.length, 
+      icon: <FiActivity className="w-6 h-6 text-blue-600" />, 
+      bg: 'bg-blue-50', 
+      border: 'border-blue-100',
+      trend: myDeals.length > 0 ? 'Requires action' : 'All caught up' 
+    },
+    { 
+      label: 'Est. Revenue', 
+      value: `₹${estimatedValue.toLocaleString()}`, 
+      icon: <CurrencyRupeeIcon className="w-6 h-6 text-indigo-600" />, 
+      bg: 'bg-indigo-50', 
+      border: 'border-indigo-100',
+      trend: '+12% vs last month' 
+    },
+  ];
 
   return (
     <motion.div 
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       {/* Header & Quick Actions */}
-      <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-start justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <div>
+      <motion.div variants={itemVariants} className="flex flex-col xl:flex-row xl:items-end justify-between gap-6">
+        <div className="space-y-2">
           <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-dark tracking-tight">
-              {t('farmer.welcome', 'Welcome back')}, {user?.name || 'Kisaan'} 👋
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+              {t('farmer.welcome', 'Welcome back')},{' '}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-500">
+                {user?.name || 'Kisaan'}
+              </span> 👋
             </h1>
             {user?.fpo_name && (
-              <span className="bg-primary-50 text-primary-800 text-xs font-bold px-3 py-1 rounded-full border border-primary-200 uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-200 uppercase tracking-wider shadow-sm">
+                <UserGroupIcon className="w-3.5 h-3.5" />
                 FPO: {user.fpo_name}
               </span>
             )}
           </div>
-          <p className="text-gray-500 mt-2 text-sm sm:text-base font-medium">
-            {t('farmer.subtitle', "Here's what's happening with your crops today.")}
+          <p className="text-slate-500 text-base font-medium max-w-2xl">
+            {t('farmer.subtitle', "Here's what's happening with your crops today. Track deals, forecast demand, and manage your lots.")}
           </p>
         </div>
 
-        <div className="flex items-center gap-3 flex-wrap">
-          <Button
-            variant="secondary"
+        <div className="flex flex-wrap items-center gap-3">
+          <button
             onClick={() => setShowFpoModal(true)}
-            className="shadow-sm border-amber-200 text-amber-700 hover:bg-amber-50"
+            className="group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-amber-700 bg-white border border-amber-200 rounded-xl hover:bg-amber-50 hover:border-amber-300 transition-all shadow-sm overflow-hidden"
           >
-            🚜 Pool FPO Bulk Lot
-          </Button>
-          <Button
-            variant="secondary"
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <UserGroupIcon className="w-4 h-4 text-amber-500" />
+            <span>Pool FPO Lot</span>
+          </button>
+          
+          <button
             onClick={() => setShowRouteModal(true)}
-            className="shadow-sm border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+            className="group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-indigo-700 bg-white border border-indigo-200 rounded-xl hover:bg-indigo-50 hover:border-indigo-300 transition-all shadow-sm overflow-hidden"
           >
-            🚚 Multi-Stop Route
-          </Button>
-          <Button
-            variant="secondary"
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <FiTruck className="w-4 h-4 text-indigo-500" />
+            <span>Multi-Stop Route</span>
+          </button>
+
+          <button
             onClick={() => setShowStorageModal(true)}
-            className="shadow-sm border-blue-200 text-blue-700 hover:bg-blue-50"
+            className="group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-blue-700 bg-white border border-blue-200 rounded-xl hover:bg-blue-50 hover:border-blue-300 transition-all shadow-sm overflow-hidden"
           >
-            ❄️ Cold Storage
-          </Button>
-          <Link to="/listings/create">
-            <Button>
-              + {t('farmer.addListing', 'Add Lot')}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <BuildingOfficeIcon className="w-4 h-4 text-blue-500" />
+            <span>Cold Storage</span>
+          </button>
+
+          <Link to="/listings/create" className="shrink-0">
+            <Button className="shadow-md hover:shadow-lg transition-all bg-emerald-600 hover:bg-emerald-700 text-white border-transparent px-5 py-2.5 rounded-xl flex items-center gap-2 font-semibold">
+              <PlusIcon className="w-4 h-4 stroke-2" />
+              {t('farmer.addListing', 'Add Lot')}
             </Button>
           </Link>
         </div>
       </motion.div>
 
-      {/* Markup Calculator */}
-      <MarkupCalculator />
+      {/* Stats Row */}
+      <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {stats.map((stat, idx) => (
+          <div key={idx} className={cn("relative overflow-hidden bg-white p-6 rounded-2xl border shadow-sm group hover:shadow-md transition-all duration-300", stat.border)}>
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-500 transform group-hover:scale-110 group-hover:rotate-12">
+               {stat.icon}
+            </div>
+            <div className="flex items-center gap-4">
+              <div className={cn("p-3 rounded-xl", stat.bg)}>
+                {stat.icon}
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-slate-500">{stat.label}</p>
+                <h3 className="text-2xl font-bold text-slate-900 mt-1 tracking-tight">
+                  {stat.value}
+                </h3>
+              </div>
+            </div>
+            <div className="mt-4 flex items-center text-xs font-medium text-slate-500">
+              <FiTrendingUp className="w-3.5 h-3.5 mr-1.5 text-emerald-500" />
+              {stat.trend}
+            </div>
+          </div>
+        ))}
+      </motion.div>
 
-      {/* AI Demand Forecasting & "Should I Sell Now?" Recommendation */}
-      <AIDemandForecastWidget defaultCrop={myListings[0]?.crop_name || 'Onion'} />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <motion.div variants={itemVariants}>
+          <MarkupCalculator />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <AIDemandForecastWidget defaultCrop={myListings[0]?.crop_name || 'Onion'} />
+        </motion.div>
+      </div>
 
-      {/* Statistical Price Trend Forecast */}
-      <PriceTrendRecommendation initialCrop={myListings[0]?.crop_name || 'Onion'} initialState="Maharashtra" />
+      <motion.div variants={itemVariants}>
+        <PriceTrendRecommendation initialCrop={myListings[0]?.crop_name || 'Onion'} initialState="Maharashtra" />
+      </motion.div>
 
-      {/* Smart Buyer Matching: Best Buyers for Farmer's Produce */}
-      <SmartBuyerMatchingWidget 
-        crop={myListings[0]?.crop_name || 'Onion'} 
-        quantity={myListings[0]?.quantity || 100}
-        location={user?.location || 'Nashik, Maharashtra'} 
-      />
+      <motion.div variants={itemVariants}>
+        <SmartBuyerMatchingWidget 
+          crop={myListings[0]?.crop_name || 'Onion'} 
+          quantity={myListings[0]?.quantity || 100}
+          location={user?.location || 'Nashik, Maharashtra'} 
+        />
+      </motion.div>
 
-      {/* Institutional Bulk Procurement Demands Section */}
-      <BulkRequirementsSection isBuyer={false} />
+      <motion.div variants={itemVariants}>
+        <BulkRequirementsSection isBuyer={false} />
+      </motion.div>
 
       {/* Two Column: My Listings + Nearest Mandis */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: My Listings */}
         <div className="lg:col-span-7">
-          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 h-full flex flex-col justify-between">
-            <div>
-              <div className="flex justify-between items-center mb-5">
-                <h2 className="text-xl font-bold text-dark">{t('farmer.myListings', 'My Active Produce Lots')}</h2>
-                <span className="text-xs bg-primary-50 text-primary-700 font-bold px-2.5 py-1 rounded-full border border-primary-200">
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 sm:p-8 h-full flex flex-col relative overflow-hidden">
+            {/* Subtle background mesh/pattern */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-full blur-3xl -mr-32 -mt-32 opacity-50 pointer-events-none" />
+            
+            <div className="relative z-10 flex-1">
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h2 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                    <DocumentTextIcon className="w-5 h-5 text-emerald-600" />
+                    {t('farmer.myListings', 'My Active Lots')}
+                  </h2>
+                  <div className="h-1 w-10 bg-gradient-to-r from-emerald-500 to-transparent mt-2 rounded-full" />
+                </div>
+                <span className="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-full border border-emerald-200 shadow-sm">
                   {myListings.length} {t('listings.active', 'active')}
                 </span>
               </div>
 
               {loadingListings ? (
                 <div className="space-y-4">
-                  {[1, 2].map((i) => (
-                    <div key={i} className="animate-pulse bg-gray-100 rounded-2xl h-24" />
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="animate-pulse flex space-x-4 p-4 border border-slate-100 rounded-2xl bg-slate-50">
+                       <div className="rounded-xl bg-slate-200 h-20 w-20"></div>
+                       <div className="flex-1 space-y-4 py-1">
+                         <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+                         <div className="space-y-2">
+                           <div className="h-3 bg-slate-200 rounded w-5/6"></div>
+                           <div className="h-3 bg-slate-200 rounded w-1/2"></div>
+                         </div>
+                       </div>
+                    </div>
                   ))}
                 </div>
               ) : myListings.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-52 text-center">
-                  <div className="text-5xl mb-3">🌾</div>
-                  <h3 className="text-base font-bold text-dark">{t('farmer.noListings', 'No active produce listings')}</h3>
-                  <p className="text-gray-500 text-xs mt-1 max-w-sm">{t('farmer.noListingsDesc', 'Create a listing to start receiving direct offers from verified buyers with zero middleman commissions.')}</p>
+                <div className="flex flex-col items-center justify-center h-64 text-center bg-slate-50/50 rounded-2xl border border-dashed border-slate-200 px-6">
+                  <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4 shadow-sm">
+                    <FiBox className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900">{t('farmer.noListings', 'No active produce listings')}</h3>
+                  <p className="text-slate-500 text-sm mt-2 max-w-sm">{t('farmer.noListingsDesc', 'Create a listing to start receiving direct offers from verified buyers with zero middleman commissions.')}</p>
+                  <Link
+                    to="/listings/create"
+                    className="mt-6 inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-semibold text-sm shadow-sm transition-all"
+                  >
+                    <PlusIcon className="w-4 h-4" />
+                    {t('farmer.create_first_lot', 'Create Your First Lot')}
+                  </Link>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -177,14 +296,15 @@ const FarmerDashboard = () => {
                 </div>
               )}
             </div>
-
-            {myListings.length === 0 && (
-              <div className="pt-4 mt-4 border-t border-gray-100 text-center">
+            
+            {myListings.length > 0 && (
+              <div className="pt-6 mt-6 border-t border-slate-100 text-center relative z-10">
                 <Link
                   to="/listings/create"
-                  className="inline-block bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-sm transition"
+                  className="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold text-sm transition-colors"
                 >
-                  + {t('farmer.create_first_lot', 'Create Your First Produce Lot')}
+                  <PlusIcon className="w-4 h-4" />
+                  Add another lot
                 </Link>
               </div>
             )}
@@ -192,48 +312,59 @@ const FarmerDashboard = () => {
         </div>
 
         {/* Right Column: Nearest Mandis & Market Channels */}
-        <div className="lg:col-span-5 space-y-6">
+        <div className="lg:col-span-5 space-y-8">
           <NearestMarketSuggestion userLocation={user?.location || 'Nashik, Maharashtra'} />
         </div>
-      </div>
+      </motion.div>
 
       {/* Incoming Offers & Deals */}
-      <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="text-xl font-bold text-dark">{t('farmer.incomingOffers', 'Incoming Direct Buyer Offers')}</h2>
-            <p className="text-xs text-gray-500 mt-0.5">Manage price negotiations, confirm payments & schedule farm haulage</p>
+      <motion.div variants={itemVariants} className="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 sm:p-8 relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl -ml-32 -mb-32 opacity-50 pointer-events-none" />
+        
+        <div className="relative z-10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <h2 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                <SparklesIcon className="w-5 h-5 text-blue-600" />
+                {t('farmer.incomingOffers', 'Incoming Direct Buyer Offers')}
+              </h2>
+              <div className="h-1 w-10 bg-gradient-to-r from-blue-500 to-transparent mt-2 rounded-full mb-2" />
+              <p className="text-sm text-slate-500 font-medium">Manage price negotiations, confirm payments & schedule farm haulage</p>
+            </div>
+            <Link to="/deals" className="inline-flex items-center gap-1 text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg">
+              {t('common.view_all', 'View All Deals')} 
+              <ArrowRightIcon className="w-4 h-4" />
+            </Link>
           </div>
-          <Link to="/deals" className="text-xs font-bold text-primary-600 hover:underline">
-            {t('common.view_all', 'View All Deals')} →
-          </Link>
-        </div>
 
-        {loadingDeals ? (
-          <div className="space-y-4">
-            {[1, 2].map((i) => (
-              <div key={i} className="animate-pulse bg-gray-100 rounded-2xl h-20" />
-            ))}
-          </div>
-        ) : myDeals.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-32 text-center bg-gray-50 rounded-2xl border border-gray-100">
-            <p className="text-gray-500 text-sm font-medium">{t('farmer.noOffers', 'No incoming offers right now.')}</p>
-            <p className="text-gray-400 text-xs mt-1">Offers will appear here as soon as buyers discover your produce lots.</p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {myDeals.slice(0, 4).map((deal) => (
-              <DealCard
-                key={deal.id}
-                deal={deal}
-                userRole="farmer"
-                userId={user?.id}
-                onUpdate={fetchMyDeals}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+          {loadingDeals ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="animate-pulse bg-slate-50 border border-slate-100 rounded-2xl h-32" />
+              ))}
+            </div>
+          ) : myDeals.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-48 text-center bg-slate-50/80 rounded-2xl border border-dashed border-slate-200">
+              <FiAlertCircle className="w-10 h-10 text-slate-300 mb-3" />
+              <p className="text-slate-700 font-semibold">{t('farmer.noOffers', 'No incoming offers right now.')}</p>
+              <p className="text-slate-500 text-sm mt-1 max-w-sm">Offers will appear here as soon as buyers discover your produce lots.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {myDeals.slice(0, 4).map((deal) => (
+                <div key={deal.id} className="transition-transform hover:-translate-y-1 duration-300">
+                  <DealCard
+                    deal={deal}
+                    userRole="farmer"
+                    userId={user?.id}
+                    onUpdate={fetchMyDeals}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </motion.div>
 
       {/* Storage Facilities Directory Modal */}
       <StorageDirectoryModal 

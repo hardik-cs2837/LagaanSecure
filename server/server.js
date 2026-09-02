@@ -18,6 +18,8 @@ const advisorRoutes = require('./routes/advisor');
 const demandRoutes = require('./routes/demand');
 const matchingRoutes = require('./routes/matching');
 const bulkRequirementsRoutes = require('./routes/bulkRequirements');
+const adminRoutes = require('./routes/admin');
+const disputesRoutes = require('./routes/disputes');
 
 const app = express();
 
@@ -65,6 +67,8 @@ app.use('/api/advisor', advisorRoutes);
 app.use('/api/demand', demandRoutes);
 app.use('/api/matching', matchingRoutes);
 app.use('/api/bulk-requirements', bulkRequirementsRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/disputes', disputesRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

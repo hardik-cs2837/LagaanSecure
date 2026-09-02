@@ -10,7 +10,9 @@
     "language": "Language",
     "prices": "Mandi Prices",
     "deals": "My Deals",
-    "createListing": "Add Listing"
+    "createListing": "Add Listing",
+    "admin": "Admin",
+    "disputes": "Disputes"
   },
   "landing": {
     "title": "Lagaan Secure",
@@ -324,5 +326,79 @@
     "publish_btn": "Publish Bulk Requirement",
     "posted_success": "Bulk institutional tender published successfully!",
     "supply_now": "Supply to this Buyer"
+  },
+  "admin": {
+    "title": "Admin Dashboard & Governance",
+    "subtitle": "Real-time telemetry, database metrics, external API health & trade monitoring",
+    "kpis": {
+      "heading": "Database System KPIs",
+      "totalUsers": "Total Users",
+      "activeListings": "Active Listings",
+      "completedDeals": "Completed Deals",
+      "platformVolume": "Platform Volume"
+    },
+    "health": {
+      "title": "Government API & External Services Health Monitor",
+      "subtitle": "Live operational telemetry for mandi feeds, AI inference engines & core infrastructure",
+      "checkHealth": "Run Health Check",
+      "checkSuccess": "Health check completed! Services operational.",
+      "mandiApi": "Government Mandi API (eNAM/Agmarknet)",
+      "aiService": "Gemini AI Advisor & Demand Forecast Engine",
+      "authService": "JWT & Authentication Service",
+      "database": "Core Relational Database (Sequelize DB)",
+      "operational": "Operational",
+      "degraded": "Degraded",
+      "down": "Down",
+      "latency": "Latency",
+      "uptime": "Uptime"
+    },
+    "transactions": {
+      "title": "Real-Time Transaction Monitoring",
+      "subtitle": "Live audit log of direct farm produce purchase agreements and escrow payment statuses",
+      "noTransactionsTitle": "No Matching Transactions Found",
+      "noTransactionsDesc": "Try adjusting your search query or status filter to locate specific trade records."
+    }
+  },
+  "disputes": {
+    "title": "Dispute & Grievance Management",
+    "subtitle": "Buyer-farmer trade grievance center with step-by-step status tracking",
+    "raiseNew": "Raise New Grievance",
+    "workflowTitle": "Grievance Resolution Tracking Lifecycle",
+    "filterAll": "All Grievances",
+    "statusOpen": "Open",
+    "statusUnderReview": "Under Review",
+    "statusActionRequired": "Action Required",
+    "statusResolved": "Resolved",
+    "noDisputesTitle": "No Trade Grievances Found",
+    "noDisputesDesc": "All direct trade transactions are proceeding smoothly without open grievances matching this filter.",
+    "raiseNewModalTitle": "Raise Trade Grievance / Dispute",
+    "selectDeal": "Select Associated Deal",
+    "category": "Dispute Category",
+    "description": "Detailed Grievance Description",
+    "descriptionPlaceholder": "Provide full details of the quality mismatch, arrival delays, missing weight, or payment issues...",
+    "submitBtn": "Submit Grievance",
+    "selectDealError": "Please select an associated deal",
+    "enterDescriptionError": "Please provide a detailed description of the grievance",
+    "raisedSuccess": "Trade grievance submitted successfully!",
+    "updatedSuccess": "Dispute status updated successfully!",
+    "updateStatus": "Update Dispute Status",
+    "resolutionNotes": "Resolution Notes / Official Response",
+    "resolutionPlaceholder": "Enter mutual agreement, refund/rebate terms, or resolution summary..."
+  },
+  "emptyStates": {
+    "noListingsTitle": "No Produce Listings Found",
+    "noListingsDesc": "There are currently no listings matching your criteria.",
+    "noDealsTitle": "No Deals Found",
+    "noDealsDesc": "No deal records match the current filter.",
+    "noDisputesTitle": "No Trade Grievances Found",
+    "noDisputesDesc": "Great news! There are no open or past grievances to report.",
+    "noTransactionsTitle": "No Transactions Found",
+    "noTransactionsDesc": "No platform transactions match your search filter."
+  },
+  "skeletons": {
+    "loadingKpis": "Loading system metrics...",
+    "loadingHealth": "Checking service health...",
+    "loadingTransactions": "Fetching transaction log...",
+    "loadingDisputes": "Loading grievances..."
   }
 }

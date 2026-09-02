@@ -104,6 +104,8 @@ const Navbar = () => {
                     <NavLink to="/deals" isActive={location.pathname === '/deals'}>{t('nav.deals')}</NavLink>
                   </>
                 )}
+                <NavLink to="/disputes" isActive={location.pathname === '/disputes'}>{t('nav.disputes', 'Disputes')}</NavLink>
+                <NavLink to="/admin" isActive={location.pathname === '/admin'}>⚙️ {t('nav.admin', 'Admin')}</NavLink>
                 <NavLink to="/impact" isActive={location.pathname === '/impact'}>
                   <span className="flex items-center gap-1">📊 {t('nav.impact', 'Impact Analytics')}</span>
                 </NavLink>
@@ -265,6 +267,8 @@ const Navbar = () => {
                     <MobileNavLink to="/buyer/dashboard" onClick={() => setIsOpen(false)} isActive={location.pathname === '/buyer/dashboard'}>{t('nav.dashboard')}</MobileNavLink>
                   )}
                   <MobileNavLink to="/deals" onClick={() => setIsOpen(false)} isActive={location.pathname === '/deals'}>{t('nav.deals')}</MobileNavLink>
+                  <MobileNavLink to="/disputes" onClick={() => setIsOpen(false)} isActive={location.pathname === '/disputes'}>⚖️ {t('nav.disputes', 'Disputes')}</MobileNavLink>
+                  <MobileNavLink to="/admin" onClick={() => setIsOpen(false)} isActive={location.pathname === '/admin'}>⚙️ {t('nav.admin', 'Admin')}</MobileNavLink>
                   <MobileNavLink to="/impact" onClick={() => setIsOpen(false)} isActive={location.pathname === '/impact'} className="text-primary-700 font-semibold bg-primary-50/50">📊 {t('nav.impact', 'Impact Analytics')}</MobileNavLink>
                   <MobileNavLink to="/notifications" onClick={() => setIsOpen(false)} isActive={location.pathname === '/notifications'}>{t('nav.notifications')}</MobileNavLink>
                   

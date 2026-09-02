@@ -10,7 +10,9 @@
     "language": "ਭਾਸ਼ਾ",
     "prices": "ਮੰਡੀ ਭਾਅ",
     "deals": "ਮੇਰੇ ਸੌਦੇ",
-    "createListing": "ਫਸਲ ਜੋੜੋ"
+    "createListing": "ਫਸਲ ਜੋੜੋ",
+    "admin": "ਐਡਮਿਨ (Admin)",
+    "disputes": "ਸ਼ਿਕਾਇਤ ਨਿਪਟਾਰਾ"
   },
   "landing": {
     "title": "ਲਗਾਨ ਸਕਿਓਰ",
@@ -35,5 +37,79 @@
     "addListing": "ਫਸਲ ਜੋੜੋ",
     "myListings": "ਮੇਰੀਆਂ ਫਸਲਾਂ",
     "mandiPrices": "ਮੰਡੀ ਭਾਅ"
+  },
+  "admin": {
+    "title": "ਐਡਮਿਨ ਡੈਸ਼ਬੋਰਡ",
+    "subtitle": "ਰੀਅਲ-ਟਾਈਮ ਟੈਲੀਮੈਟਰੀ, ਡਾਟਾਬੇਸ ਮੈਟ੍ਰਿਕਸ, ਏਪੀਆਈ ਸਿਹਤ ਅਤੇ ਵਪਾਰ ਨਿਗਰਾਨੀ",
+    "kpis": {
+      "heading": "ਡਾਟਾਬੇਸ ਸਿਸਟਮ KPIs",
+      "totalUsers": "ਕੁੱਲ ਵਰਤੋਂਕਾਰ",
+      "activeListings": "ਸਰਗਰਮ ਫਸਲਾਂ",
+      "completedDeals": "ਪੂਰੇ ਹੋਏ ਸੌਦੇ",
+      "platformVolume": "ਕੁੱਲ ਮਾਤਰਾ (ਕੁਇੰਟਲ)"
+    },
+    "health": {
+      "title": "ਸਰਕਾਰੀ ਏਪੀਆਈ ਅਤੇ ਬਾਹਰੀ ਸੇਵਾ ਸਿਹਤ ਮਾਨੀਟਰ",
+      "subtitle": "ਮੰਡੀ ਭਾਅ, AI ਮਾਡਲਾਂ ਅਤੇ ਬੁਨਿਆਦੀ ਢਾਂਚੇ ਦੀ ਲਾਈਵ ਸਥਿਤੀ",
+      "checkHealth": "ਸਿਹਤ ਜਾਂਚ ਚਲਾਓ",
+      "checkSuccess": "ਜਾਂਚ ਪੂਰੀ ਹੋਈ! ਸਾਰੀਆਂ ਸੇਵਾਵਾਂ ਚਾਲੂ ਹਨ।",
+      "mandiApi": "ਸਰਕਾਰੀ ਮੰਡੀ ਏਪੀਆਈ (eNAM)",
+      "aiService": "ਜੈਮਿਨੀ AI ਸਲਾਹਕਾਰ ਅਤੇ ਮੰਗ ਅਨੁਮਾਨ",
+      "authService": "JWT ਪ੍ਰਮਾਣੀਕਰਨ ਸੇਵਾ",
+      "database": "ਮੁੱਖ ਡਾਟਾਬੇਸ (Sequelize DB)",
+      "operational": "ਚਾਲੂ",
+      "degraded": "ਹੌਲੀ",
+      "down": "ਬੰਦ",
+      "latency": "ਦੇਰੀ",
+      "uptime": "ਚੱਲਣ ਦਾ ਸਮਾਂ"
+    },
+    "transactions": {
+      "title": "ਰੀਅਲ-ਟਾਈਮ ਲੈਣ-ਦੇਣ ਨਿਗਰਾਨੀ",
+      "subtitle": "ਸਿੱਧੇ ਖਰੀਦ ਸਮਝੌਤਿਆਂ ਅਤੇ ਭੁਗਤਾਨ ਸਥਿਤੀਆਂ ਦਾ ਲਾਈਵ ਆਡਿਟ ਲੌਗ",
+      "noTransactionsTitle": "ਕੋਈ ਲੈਣ-ਦੇਣ ਨਹੀਂ ਮਿਲਿਆ",
+      "noTransactionsDesc": "ਖੋਜ ਜਾਂ ਫਿਲਟਰ ਬਦਲ ਕੇ ਦੋਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
+    }
+  },
+  "disputes": {
+    "title": "ਸ਼ਿਕਾਇਤ ਅਤੇ ਵਿਵਾਦ ਪ੍ਰਬੰਧਨ",
+    "subtitle": "ਕਿਸਾਨ-ਖਰੀਦਦਾਰ ਸ਼ਿਕਾਇਤ ਨਿਵਾਰਨ ਕੇਂਦਰ",
+    "raiseNew": "ਨਵੀਂ ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ",
+    "workflowTitle": "ਸ਼ਿਕਾਇਤ ਨਿਪਟਾਰਾ ਪ੍ਰਕਿਰਿਆ",
+    "filterAll": "ਸਾਰੀਆਂ ਸ਼ਿਕਾਇਤਾਂ",
+    "statusOpen": "ਖੁੱਲ੍ਹੀ (Open)",
+    "statusUnderReview": "ਜਾਂਚ ਅਧੀਨ (Under Review)",
+    "statusActionRequired": "ਕਾਰਵਾਈ ਲੋੜੀਂਦੀ (Action Required)",
+    "statusResolved": "ਹੱਲ ਹੋ ਗਈ (Resolved)",
+    "noDisputesTitle": "ਕੋਈ ਸ਼ਿਕਾਇਤ ਨਹੀਂ ਮਿਲੀ",
+    "noDisputesDesc": "ਸਾਰੇ ਵਪਾਰ ਸੁਚਾਰੂ ਢੰਗ ਨਾਲ ਚੱਲ ਰਹੇ ਹਨ।",
+    "raiseNewModalTitle": "ਨਵੀਂ ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ",
+    "selectDeal": "ਸੰਬੰਧਿਤ ਸੌਦਾ ਚੁਣੋ",
+    "category": "ਸ਼ਿਕਾਇਤ ਦੀ ਕਿਸਮ",
+    "description": "ਸ਼ਿਕਾਇਤ ਦਾ ਪੂਰਾ ਵੇਰਵਾ",
+    "descriptionPlaceholder": "ਗੁਣਵੱਤਾ, ਦੇਰੀ, ਜਾਂ ਭੁਗਤਾਨ ਸਬੰਧੀ ਵੇਰਵਾ ਦਿਓ...",
+    "submitBtn": "ਸ਼ਿਕਾਇਤ ਜਮ੍ਹਾਂ ਕਰੋ",
+    "selectDealError": "ਕਿਰਪਾ ਕਰਕੇ ਸੰਬੰਧਿਤ ਸੌਦਾ ਚੁਣੋ",
+    "enterDescriptionError": "ਕਿਰਪਾ ਕਰਕੇ ਸ਼ਿਕਾਇਤ ਦਾ ਵੇਰਵਾ ਦਿਓ",
+    "raisedSuccess": "ਸ਼ਿਕਾਇਤ ਸਫਲਤਾਪੂਰਵਕ ਦਰਜ ਕੀਤੀ ਗਈ!",
+    "updatedSuccess": "ਸਥਿਤੀ ਅਪਡੇਟ ਕੀਤੀ ਗਈ!",
+    "updateStatus": "ਸਥਿਤੀ ਅਪਡੇਟ ਕਰੋ",
+    "resolutionNotes": "ਹੱਲ ਵੇਰਵਾ / ਜਵਾਬ",
+    "resolutionPlaceholder": "ਆਪਸੀ ਸਹਿਮਤੀ ਜਾਂ ਹੱਲ ਦੇ ਨੋਟ ਦਰਜ ਕਰੋ..."
+  },
+  "emptyStates": {
+    "noListingsTitle": "ਕੋਈ ਫਸਲ ਨਹੀਂ ਮਿਲੀ",
+    "noListingsDesc": "ਤੁਹਾਡੇ ਫਿਲਟਰ ਨਾਲ ਮੇਲ ਖਾਂਦੀ ਕੋਈ ਫਸਲ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।",
+    "noDealsTitle": "ਕੋਈ ਸੌਦੇ ਨਹੀਂ ਮਿਲੇ",
+    "noDealsDesc": "ਕੋਈ ਸੌਦੇ ਦੇ ਰਿਕਾਰਡ ਨਹੀਂ ਹਨ।",
+    "noDisputesTitle": "ਕੋਈ ਸ਼ਿਕਾਇਤਾਂ ਨਹੀਂ ਮਿਲੀਆਂ",
+    "noDisputesDesc": "ਕੋਈ ਖੁੱਲ੍ਹੀ ਜਾਂ ਪੁਰਾਣੀ ਸ਼ਿਕਾਇਤ ਨਹੀਂ ਹੈ।",
+    "noTransactionsTitle": "ਕੋਈ ਲੈਣ-ਦੇਣ ਨਹੀਂ ਮਿਲਿਆ",
+    "noTransactionsDesc": "ਕੋਈ ਲੈਣ-ਦੇਣ ਰਿਕਾਰਡ ਨਹੀਂ ਮਿਲਿਆ।"
+  },
+  "skeletons": {
+    "loadingKpis": "ਸਿਸਟਮ ਮੈਟ੍ਰਿਕਸ ਲੋਡ ਹੋ ਰਹੇ ਹਨ...",
+    "loadingHealth": "ਸੇਵਾ ਸਿਹਤ ਦੀ ਜਾਂਚ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
+    "loadingTransactions": "ਲੈਣ-ਦੇਣ ਲੌਗ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+    "loadingDisputes": "ਸ਼ਿਕਾਇਤਾਂ ਲੋਡ ਹੋ ਰਹੀਆਂ ਹਨ..."
   }
 }

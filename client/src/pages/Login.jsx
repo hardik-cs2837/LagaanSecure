@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { GoogleLogin } from '@react-oauth/google';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../components/ui/Button';
 
 // SVG Icons
@@ -16,6 +16,25 @@ const PhoneIcon = () => (
 const LockIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+  </svg>
+);
+
+const EyeIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+  </svg>
+);
+
+const EyeOffIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.05 10.05 0 014.122-.971c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21M3 3l18 18" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
   </svg>
 );
 
@@ -55,12 +74,38 @@ const floatingAnimation2 = {
 
 const Login = () => {
   const { t } = useTranslation();
-  const { login, googleLogin } = useContext(AuthContext);
+  const { login, googleLogin, forgotPassword, verifyOtp, resetPassword } = useContext(AuthContext);
   const navigate = useNavigate();
+  
+  // Login Form States
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [demoLoading, setDemoLoading] = useState(null);
+
+  // Forgot Password Modal States
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [forgotStep, setForgotStep] = useState(1); // 1: Identifier, 2: OTP, 3: New Password
+  const [forgotIdentifier, setForgotIdentifier] = useState('');
+  const [forgotOtp, setForgotOtp] = useState('');
+  const [forgotNewPassword, setForgotNewPassword] = useState('');
+  const [forgotConfirmPassword, setForgotConfirmPassword] = useState('');
+  const [showForgotNewPassword, setShowForgotNewPassword] = useState(false);
+  const [showForgotConfirmPassword, setShowForgotConfirmPassword] = useState(false);
+  const [forgotLoading, setForgotLoading] = useState(false);
+  const [forgotError, setForgotError] = useState('');
+  const [resendTimer, setResendTimer] = useState(0);
+
+  useEffect(() => {
+    let interval = null;
+    if (resendTimer > 0) {
+      interval = setInterval(() => setResendTimer((prev) => prev - 1), 1000);
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [resendTimer]);
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
@@ -94,6 +139,97 @@ const Login = () => {
     const p = role === 'farmer' ? '9876543210' : '9123456780';
     setDemoLoading(role);
     executeLogin(p, 'password123', () => setDemoLoading(null));
+  };
+
+  // Forgot Password Step 1: Send OTP
+  const handleForgotSendOtp = async (e) => {
+    e.preventDefault();
+    if (!forgotIdentifier.trim()) {
+      setForgotError(t('auth.identifierRequired', 'Please enter your phone number or email.'));
+      return;
+    }
+    setForgotError('');
+    setForgotLoading(true);
+    try {
+      await forgotPassword(forgotIdentifier);
+      setForgotStep(2);
+      setResendTimer(60);
+    } catch (err) {
+      setForgotError(err.message);
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
+  // Resend OTP handler
+  const handleResendOtp = async () => {
+    if (resendTimer > 0) return;
+    setForgotError('');
+    setForgotLoading(true);
+    try {
+      await forgotPassword(forgotIdentifier);
+      setResendTimer(60);
+    } catch (err) {
+      setForgotError(err.message);
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
+  // Forgot Password Step 2: Verify OTP
+  const handleForgotVerifyOtp = async (e) => {
+    e.preventDefault();
+    if (!forgotOtp.trim()) {
+      setForgotError(t('auth.otpRequired', 'Please enter the 6-digit OTP code.'));
+      return;
+    }
+    setForgotError('');
+    setForgotLoading(true);
+    try {
+      await verifyOtp(forgotIdentifier, forgotOtp);
+      setForgotStep(3);
+    } catch (err) {
+      setForgotError(err.message);
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
+  // Forgot Password Step 3: Reset Password
+  const handleForgotResetPassword = async (e) => {
+    e.preventDefault();
+    if (forgotNewPassword.length < 6) {
+      setForgotError(t('auth.passwordLengthError', 'New password must be at least 6 characters.'));
+      return;
+    }
+    if (forgotNewPassword !== forgotConfirmPassword) {
+      setForgotError(t('auth.passwordMismatchError', 'Passwords do not match.'));
+      return;
+    }
+    setForgotError('');
+    setForgotLoading(true);
+    try {
+      await resetPassword(forgotIdentifier, forgotOtp, forgotNewPassword);
+      // Auto-fill phone field if identifier is phone number
+      if (/^\d{10}$/.test(forgotIdentifier)) {
+        setPhone(forgotIdentifier);
+      }
+      closeForgotModal();
+    } catch (err) {
+      setForgotError(err.message);
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
+  const closeForgotModal = () => {
+    setShowForgotModal(false);
+    setForgotStep(1);
+    setForgotIdentifier('');
+    setForgotOtp('');
+    setForgotNewPassword('');
+    setForgotConfirmPassword('');
+    setForgotError('');
   };
 
   return (
@@ -214,16 +350,32 @@ const Login = () => {
                     <LockIcon />
                   </div>
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     required
-                    className="w-full pl-11 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all shadow-sm"
+                    className="w-full pl-11 pr-11 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all shadow-sm"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-emerald-600 transition-colors"
+                  >
+                    {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                  </button>
                 </div>
                 <div className="flex justify-end mt-2">
-                  <a href="#" className="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors">Forgot password?</a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setForgotIdentifier(phone);
+                      setShowForgotModal(true);
+                    }}
+                    className="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors hover:underline"
+                  >
+                    {t('auth.forgotPassword', 'Forgot password?')}
+                  </button>
                 </div>
               </motion.div>
 
@@ -331,6 +483,217 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Interactive Forgot Password 3-Step Modal */}
+      <AnimatePresence>
+        {showForgotModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 relative border border-gray-100"
+            >
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={closeForgotModal}
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors"
+              >
+                <CloseIcon />
+              </button>
+
+              {/* Modal Header & Progress Indicator */}
+              <div className="mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className={`flex-1 h-1.5 rounded-full transition-colors ${forgotStep >= 1 ? 'bg-emerald-600' : 'bg-gray-200'}`} />
+                  <div className={`flex-1 h-1.5 rounded-full transition-colors ${forgotStep >= 2 ? 'bg-emerald-600' : 'bg-gray-200'}`} />
+                  <div className={`flex-1 h-1.5 rounded-full transition-colors ${forgotStep >= 3 ? 'bg-emerald-600' : 'bg-gray-200'}`} />
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
+                    {forgotStep === 1 ? '1' : forgotStep === 2 ? '2' : '3'}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      {forgotStep === 1 && t('auth.forgotTitle', 'Forgot Password')}
+                      {forgotStep === 2 && t('auth.verifyTitle', 'Enter Verification Code')}
+                      {forgotStep === 3 && t('auth.resetTitle', 'Set New Password')}
+                    </h3>
+                    <p className="text-xs text-gray-500">
+                      {forgotStep === 1 && t('auth.step1Sub', 'Step 1 of 3: Enter registered Email or Phone')}
+                      {forgotStep === 2 && t('auth.step2Sub', 'Step 2 of 3: Verify 6-digit OTP code')}
+                      {forgotStep === 3 && t('auth.step3Sub', 'Step 3 of 3: Create your new password')}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {forgotError && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium">
+                  {forgotError}
+                </div>
+              )}
+
+              {/* Step 1: Identifier Entry */}
+              {forgotStep === 1 && (
+                <form onSubmit={handleForgotSendOtp} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      {t('auth.phoneOrEmail', 'Phone Number or Email')}
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={forgotIdentifier}
+                        onChange={(e) => setForgotIdentifier(e.target.value)}
+                        placeholder="e.g. 9876543210 or user@example.com"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex gap-3">
+                    <button
+                      type="button"
+                      onClick={closeForgotModal}
+                      className="flex-1 py-2.5 border border-gray-300 text-gray-700 text-sm font-semibold rounded-xl hover:bg-gray-50 transition-colors"
+                    >
+                      {t('common.cancel', 'Cancel')}
+                    </button>
+                    <Button
+                      type="submit"
+                      isLoading={forgotLoading}
+                      className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl"
+                    >
+                      {t('auth.sendCode', 'Send OTP Code')}
+                    </Button>
+                  </div>
+                </form>
+              )}
+
+              {/* Step 2: OTP Verification */}
+              {forgotStep === 2 && (
+                <form onSubmit={handleForgotVerifyOtp} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      {t('auth.otpLabel', '6-Digit Verification Code')}
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={6}
+                      value={forgotOtp}
+                      onChange={(e) => setForgotOtp(e.target.value.replace(/\D/g, ''))}
+                      placeholder="e.g. 123456"
+                      className="w-full text-center tracking-[0.5em] text-xl font-mono py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
+                      required
+                    />
+                    <p className="text-[11px] text-gray-500 mt-1">
+                      Code sent to <strong className="text-gray-700">{forgotIdentifier}</strong>
+                    </p>
+                  </div>
+
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-500">Didn't get the code?</span>
+                    {resendTimer > 0 ? (
+                      <span className="text-gray-400 font-medium">Resend in {resendTimer}s</span>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={handleResendOtp}
+                        disabled={forgotLoading}
+                        className="text-emerald-600 hover:text-emerald-700 font-semibold hover:underline"
+                      >
+                        Resend OTP
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="pt-2 flex gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setForgotStep(1)}
+                      className="py-2.5 px-4 border border-gray-300 text-gray-700 text-sm font-semibold rounded-xl hover:bg-gray-50 transition-colors"
+                    >
+                      {t('common.back', 'Back')}
+                    </button>
+                    <Button
+                      type="submit"
+                      isLoading={forgotLoading}
+                      className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl"
+                    >
+                      {t('auth.verifyCode', 'Verify OTP')}
+                    </Button>
+                  </div>
+                </form>
+              )}
+
+              {/* Step 3: New Password */}
+              {forgotStep === 3 && (
+                <form onSubmit={handleForgotResetPassword} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      {t('auth.newPassword', 'New Password')}
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showForgotNewPassword ? 'text' : 'password'}
+                        value={forgotNewPassword}
+                        onChange={(e) => setForgotNewPassword(e.target.value)}
+                        placeholder="Min 6 characters"
+                        className="w-full pl-4 pr-11 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowForgotNewPassword(!showForgotNewPassword)}
+                        className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-emerald-600 transition-colors"
+                      >
+                        {showForgotNewPassword ? <EyeOffIcon /> : <EyeIcon />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      {t('auth.confirmPassword', 'Confirm New Password')}
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showForgotConfirmPassword ? 'text' : 'password'}
+                        value={forgotConfirmPassword}
+                        onChange={(e) => setForgotConfirmPassword(e.target.value)}
+                        placeholder="Re-enter password"
+                        className="w-full pl-4 pr-11 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowForgotConfirmPassword(!showForgotConfirmPassword)}
+                        className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-emerald-600 transition-colors"
+                      >
+                        {showForgotConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex gap-3">
+                    <Button
+                      type="submit"
+                      isLoading={forgotLoading}
+                      className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl"
+                    >
+                      {t('auth.resetBtn', 'Reset Password')}
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

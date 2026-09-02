@@ -10,7 +10,9 @@
     "language": "ভাষা",
     "prices": "মন্ডি দর",
     "deals": "আমার চুক্তি",
-    "createListing": "ফসল যোগ করুন"
+    "createListing": "ফসল যোগ করুন",
+    "admin": "এডমিন (Admin)",
+    "disputes": "অভিযোগ সমাধান"
   },
   "landing": {
     "title": "লগান সিকিউর",
@@ -35,5 +37,79 @@
     "addListing": "ফসল যোগ করুন",
     "myListings": "আমার ফসল",
     "mandiPrices": "মন্ডি দর"
+  },
+  "admin": {
+    "title": "এডমিন ড্যাশবোর্ড",
+    "subtitle": "রিয়েল-টাইম টেলিমেট্রি, ডাটাবেস মেট্রিক্স, API হেলথ এবং বাণিজ্য নজরদারি",
+    "kpis": {
+      "heading": "ডাটাবেস সিস্টেম KPIs",
+      "totalUsers": "মোট ব্যবহারকারী",
+      "activeListings": "সক্রিয় ফসল",
+      "completedDeals": "সম্পন্ন চুক্তি",
+      "platformVolume": "মোট পরিমাণ (কুইন্টাল)"
+    },
+    "health": {
+      "title": "সরকারি API এবং বাহ্যিক পরিষেবা স্বাস্থ্য মনিটর",
+      "subtitle": "মন্ডি ফিড, AI মডেল এবং পরিকাঠামোর সরাসরি অবস্থা",
+      "checkHealth": "পরীক্ষা চালান",
+      "checkSuccess": "পরীক্ষা সম্পন্ন! সমস্ত পরিষেবা চালু রয়েছে।",
+      "mandiApi": "সরকারি মান্ডি API (eNAM)",
+      "aiService": "জেমিনি AI উপদেষ্টা ও চাহিদা পূর্বাভাস",
+      "authService": "JWT প্রমাণীকরণ পরিষেবা",
+      "database": "প্রধান ডাটাবেস (Sequelize DB)",
+      "operational": "চালু",
+      "degraded": "ধীরগতি",
+      "down": "বন্ধ",
+      "latency": "বিলম্ব",
+      "uptime": "সচল সময়"
+    },
+    "transactions": {
+      "title": "রিয়েল-টাইম লেনদেন নজরদারি",
+      "subtitle": "ক্রয় চুক্তি এবং পেমেন্ট স্ট্যাটাসের লাইভ অডিট লগ",
+      "noTransactionsTitle": "কোনো লেনদেন পাওয়া যায়নি",
+      "noTransactionsDesc": "আপনার অনুসন্ধান বা ফিল্টার পরিবর্তন করে চেষ্টা করুন।"
+    }
+  },
+  "disputes": {
+    "title": "বিরোধ ও অভিযোগ ব্যবস্থাপনা",
+    "subtitle": "কৃষক-ব্যবসায়ী অভিযোগ সমাধান কেন্দ্র",
+    "raiseNew": "নতুন অভিযোগ দায়ের করুন",
+    "workflowTitle": "অভিযোগ নিষ্পত্তির ধাপসমূহ",
+    "filterAll": "সমস্ত অভিযোগ",
+    "statusOpen": "উন্মুক্ত (Open)",
+    "statusUnderReview": "বিবেচনাধীন (Under Review)",
+    "statusActionRequired": "পদক্ষেপ প্রয়োজন (Action Required)",
+    "statusResolved": "মীমাংসিত (Resolved)",
+    "noDisputesTitle": "কোনো অভিযোগ পাওয়া যায়নি",
+    "noDisputesDesc": "সমস্ত ব্যবসা মসৃণভাবে চলছে।",
+    "raiseNewModalTitle": "নতুন অভিযোগ দায়ের করুন",
+    "selectDeal": "সম্পর্কিত চুক্তি নির্বাচন করুন",
+    "category": "অভিযোগের ধরণ",
+    "description": "বিস্তারিত বিবরণ",
+    "descriptionPlaceholder": "গুণগত মানের ত্রুটি, বিলম্ব বা পেমেন্ট সমস্যার বিস্তারিত বিবরণ দিন...",
+    "submitBtn": "অভিযোগ জমা দিন",
+    "selectDealError": "অনুগ্রহ করে চুক্তি নির্বাচন করুন",
+    "enterDescriptionError": "অনুগ্রহ করে বিবরণ প্রদান করুন",
+    "raisedSuccess": "অভিযোগ সফলভাবে জমা হয়েছে!",
+    "updatedSuccess": "স্ট্যাটাস আপডেট করা হয়েছে!",
+    "updateStatus": "স্ট্যাটাস আপডেট করুন",
+    "resolutionNotes": "মীমাংসার নোট / উত্তর",
+    "resolutionPlaceholder": "পারস্পরিক চুক্তি বা সমাধানের নোট লিখুন..."
+  },
+  "emptyStates": {
+    "noListingsTitle": "কোনো ফসল পাওয়া যায়নি",
+    "noListingsDesc": "কোনো ফসল তালিকাভুক্ত নেই।",
+    "noDealsTitle": "কোনো চুক্তি পাওয়া যায়নি",
+    "noDealsDesc": "কোনো চুক্তির রেকর্ড নেই।",
+    "noDisputesTitle": "কোনো অভিযোগ পাওয়া যায়নি",
+    "noDisputesDesc": "কোনো বকেয়া অভিযোগ নেই।",
+    "noTransactionsTitle": "কোনো লেনদেন পাওয়া যায়নি",
+    "noTransactionsDesc": "কোনো লেনদেনের রেকর্ড নেই।"
+  },
+  "skeletons": {
+    "loadingKpis": "মেট্রিক্স লোড হচ্ছে...",
+    "loadingHealth": "পরিষেবার স্বাস্থ্য পরীক্ষা করা হচ্ছে...",
+    "loadingTransactions": "লেনদেনের তথ্য লোড হচ্ছে...",
+    "loadingDisputes": "অভিযোগ লোড হচ্ছে..."
   }
 }

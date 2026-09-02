@@ -10,7 +10,9 @@
     "language": "भाषा",
     "prices": "बाजारभाव",
     "deals": "माझे सौदे",
-    "createListing": "नवीन पीक जोडा"
+    "createListing": "नवीन पीक जोडा",
+    "admin": "प्रशासक (Admin)",
+    "disputes": "तक्रारी निवारण"
   },
   "landing": {
     "title": "लगान सिक्युअर",
@@ -35,5 +37,79 @@
     "addListing": "पीक जोडा",
     "myListings": "माझी पिके",
     "mandiPrices": "थेट बाजारभाव"
+  },
+  "admin": {
+    "title": "प्रशासक डॅशबोर्ड",
+    "subtitle": "रिअल-टाइम टेलिमेट्री, डेटाबेस मेट्रिक्स, एपीआय आरोग्य आणि व्यापार देखरेख",
+    "kpis": {
+      "heading": "डेटाबेस प्रणाली KPIs",
+      "totalUsers": "एकूण वापरकर्ते",
+      "activeListings": "सक्रिय पिके",
+      "completedDeals": "पूर्ण सौदे",
+      "platformVolume": "एकूण प्रमाण (क्विंटल)"
+    },
+    "health": {
+      "title": "सरकारी एपीआय आणि बाह्य सेवा आरोग्य मॉनिटर",
+      "subtitle": "बाजारभाव फीड, AI मॉडेल्स आणि पायाभूत सुविधांची थेट स्थिती",
+      "checkHealth": "आरोग्य तपासणी करा",
+      "checkSuccess": "तपासणी पूर्ण झाली! सर्व सेवा कार्यरत आहेत.",
+      "mandiApi": "सरकारी बाजार समिती एपीआय (eNAM)",
+      "aiService": "जेमिनी AI सल्लागार व मागणी अंदाज",
+      "authService": "JWT प्रमाणीकरण सेवा",
+      "database": "मुख्य डेटाबेस (Sequelize DB)",
+      "operational": "कार्यरत",
+      "degraded": "मंद",
+      "down": "बंद",
+      "latency": "विलंब",
+      "uptime": "कार्यरत वेळ"
+    },
+    "transactions": {
+      "title": "रिअल-टाइम व्यवहार देखरेख",
+      "subtitle": "शेतमाल खरेदी करार आणि पेमेंट स्थितीचे थेट ऑडिट लॉग",
+      "noTransactionsTitle": "कोणतेही व्यवहार आढळले नाहीत",
+      "noTransactionsDesc": "विशिष्ट नोंदी शोधण्यासाठी शोध किंवा फिल्टर बदला."
+    }
+  },
+  "disputes": {
+    "title": "तक्रार व विवाद निवारण",
+    "subtitle": "शेतकरी-व्यापारी तक्रार निवारण केंद्र व टप्प्याटप्प्याने स्थिती",
+    "raiseNew": "नवीन तक्रार नोंदवा",
+    "workflowTitle": "तक्रार निवारण टप्पे",
+    "filterAll": "सर्व तक्रारी",
+    "statusOpen": "उघडी (Open)",
+    "statusUnderReview": "तपासाधीन (Under Review)",
+    "statusActionRequired": "कृती आवश्यक (Action Required)",
+    "statusResolved": "निराकरण झाले (Resolved)",
+    "noDisputesTitle": "कोणत्याही तक्रारी नाहीत",
+    "noDisputesDesc": "सर्व थेट व्यवहार सुरळीत सुरू आहेत.",
+    "raiseNewModalTitle": "नवीन व्यापार तक्रार नोंदवा",
+    "selectDeal": "संबंधित सौदा निवडा",
+    "category": "तक्रारीचा प्रकार",
+    "description": "तक्रारीचे सविस्तर वर्णन",
+    "descriptionPlaceholder": "गुणवत्तेतील तफावत, वाहतूक उशीर किंवा पेमेंट समस्यांचे वर्णन करा...",
+    "submitBtn": "तक्रार सबमिट करा",
+    "selectDealError": "कृपया संबंधित सौदा निवडा",
+    "enterDescriptionError": "कृपया तक्रारीचे वर्णन प्रविष्ट करा",
+    "raisedSuccess": "तक्रार यशस्वीरित्या नोंदवली गेली!",
+    "updatedSuccess": "तक्रारीची स्थिती अद्ययावत केली!",
+    "updateStatus": "स्थिती अद्ययावत करा",
+    "resolutionNotes": "निवारण टिपण / उत्तर",
+    "resolutionPlaceholder": "आपसात झालेला करार किंवा उपायांची नोंद करा..."
+  },
+  "emptyStates": {
+    "noListingsTitle": "कोणतेही पिके आढळले नाहीत",
+    "noListingsDesc": "सध्या तुमच्या निकषांशी जुळणारे पिके उपलब्ध नाहीत.",
+    "noDealsTitle": "सौदे आढळले नाहीत",
+    "noDealsDesc": "फिल्टरनुसार सौदे उपलब्ध नाहीत.",
+    "noDisputesTitle": "तक्रारी आढळल्या नाहीत",
+    "noDisputesDesc": "कोणत्याही उघड्या किंवा जुन्या तक्रारी नाहीत.",
+    "noTransactionsTitle": "व्यवहार आढळले नाहीत",
+    "noTransactionsDesc": "कोणतेही प्लॅटफॉर्म व्यवहार आढळले नाहीत."
+  },
+  "skeletons": {
+    "loadingKpis": "सिस्टम मेट्रिक्स लोड होत आहेत...",
+    "loadingHealth": "सेवा आरोग्य तपासले जात आहे...",
+    "loadingTransactions": "व्यवहार नोंदी लोड होत आहेत...",
+    "loadingDisputes": "तक्रारी लोड होत आहेत..."
   }
 }

@@ -15,7 +15,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
+    if (error.response && error.response.status === 401 && !error.config?.url?.includes('/auth/')) {
       localStorage.removeItem('token');
       window.location.href = '/login';
     }
@@ -26,6 +26,10 @@ api.interceptors.response.use(
 export const auth = {
   register: (data) => api.post('/auth/register', data),
   login: (data) => api.post('/auth/login', data),
+  sendOtp: (data) => api.post('/auth/send-otp', data),
+  verifyOtp: (data) => api.post('/auth/verify-otp', data),
+  forgotPassword: (data) => api.post('/auth/forgot-password', data),
+  resetPassword: (data) => api.post('/auth/reset-password', data),
 };
 
 export const listings = {
@@ -91,6 +95,18 @@ export const notifications = {
 export const advisor = {
   getAdvice: (data) => api.post('/advisor/explain', data),
   chat: (message, context, language) => api.post('/advisor/chat', { message, context, language }),
+};
+
+export const admin = {
+  getKPIs: () => api.get('/admin/kpis'),
+  getHealth: () => api.get('/admin/health'),
+  getTransactions: () => api.get('/admin/transactions'),
+};
+
+export const disputes = {
+  getDisputes: (params) => api.get('/disputes', { params }),
+  createDispute: (data) => api.post('/disputes', data),
+  updateDisputeStatus: (id, data) => api.patch(`/disputes/${id}/status`, data),
 };
 
 export default api;

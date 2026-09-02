@@ -10,30 +10,106 @@
     "language": "மொழி",
     "prices": "சந்தை விலைகள்",
     "deals": "எனது ஒப்பந்தங்கள்",
-    "createListing": "பயிர் சேர்"
+    "createListing": "ಬೆಳೆ ಸೇರಿಸಿ",
+    "admin": "ಅಡ್ಮಿನ್ (Admin)",
+    "disputes": "ಕುಂದುಕೊರತೆ ನಿವಾರಣೆ"
   },
   "landing": {
-    "title": "லகான் செக்யூர்",
-    "subtitle": "பண்ணையிலிருந்து நேரடியாக",
-    "description": "தரகர்கள் இன்றி விவசாயிகள் மற்றும் வணிகர்களை நேரடியாக இணைக்கும் தளம்.",
-    "farmerBtn": "நான் விவசாயி 🌾",
-    "buyerBtn": "நான் வாங்குபவர் 🛒"
+    "title": "ಲಗಾನ್ ಸೆಕ್ಯೂರ್",
+    "subtitle": "ಹೊಲದಿಂದ ನೇರವಾಗಿ",
+    "description": "ದಲ್ಲಾಳಿಗಳಿಲ್ಲದೆ ರೈತರು ಮತ್ತು ಖರೀದಿದಾರರನ್ನು ನೇರವಾಗಿ ಸಂಪರ್ಕಿಸುವ ವೇದಿಕೆ.",
+    "farmerBtn": "ನಾನು ರೈತ 🌾",
+    "buyerBtn": "ನಾನು ಖರೀದಿದಾರ 🛒"
   },
   "auth": {
-    "login": "உங்கள் கணக்கில் உள்நுழையவும்",
-    "register": "புதிய கணக்கை உருவாக்கவும்",
-    "phone": "தொலைபேசி எண்",
-    "password": "கடவுச்சொல்",
-    "farmer": "விவசாயி",
-    "buyer": "வாங்குபவர்",
-    "noAccount": "கணக்கு இல்லையா?",
-    "registerLink": "இங்கே பதிவு செய்யுங்கள்"
+    "login": "ಲಾಗಿನ್ ಮಾಡಿ",
+    "register": "ನೋಂದಾಯಿಸಿ",
+    "phone": "ಫೋನ್ ಸಂಖ್ಯೆ",
+    "password": "ಪಾಸ್‌ವರ್ಡ್",
+    "farmer": "ರೈತ",
+    "buyer": "ಖರೀದಿದಾರ",
+    "noAccount": "ಖಾತೆ ಇಲ್ಲವೇ?",
+    "registerLink": "ಇಲ್ಲಿ ನೋಂದಾಯಿಸಿ"
   },
   "farmer": {
-    "dashboard": "விவசாயி டாஷ்போர்டு",
-    "welcome": "நல்வரவு",
-    "addListing": "பயிர் சேர்",
-    "myListings": "எனது பயிர்கள்",
-    "mandiPrices": "சந்தை விலைகள்"
+    "dashboard": "ರೈತ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    "welcome": "ಸ್ವಾಗತ",
+    "addListing": "ಬೆಳೆ ಸೇರಿಸಿ",
+    "myListings": "ನನ್ನ ಬೆಳೆಗಳು",
+    "mandiPrices": "ಮಾರುಕಟ್ಟೆ ದರಗಳು"
+  },
+  "admin": {
+    "title": "ಅಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    "subtitle": "ರಿಯಲ್-ಟೈಮ್ ಮಾಪನಗಳು, ಡೇಟಾಬೇಸ್ ಮೆಟ್ರಿಕ್ಸ್, API ಹೆಲ್ತ್ ಮತ್ತು ವ್ಯಾಪಾರ ಮೇಲ್ವಿಚಾರಣೆ",
+    "kpis": {
+      "heading": "ಡೇಟಾಬೇಸ್ ಸಿಸ್ಟಮ್ KPIs",
+      "totalUsers": "ಒಟ್ಟು ಬಳಕೆದಾರರು",
+      "activeListings": "ಸಕ್ರಿಯ ಬೆಳೆಗಳು",
+      "completedDeals": "ಪೂರ್ಣಗೊಂಡ ಒಪ್ಪಂದಗಳು",
+      "platformVolume": "ಒಟ್ಟು ಪ್ರಮಾಣ (ಕ್ವಿಂಟಾಲ್)"
+    },
+    "health": {
+      "title": "ಸರ್ಕಾರಿ API ಮತ್ತು ಬಾಹ್ಯ ಸೇವೆಗಳ ಹೆಲ್ತ್ ಮಾನಿಟರ್",
+      "subtitle": "ಮಾರುಕಟ್ಟೆ ದರಗಳು, AI ಮಾಡೆಲ್‌ಗಳು ಮತ್ತು ಮೂಲಸೌಕರ್ಯಗಳ ನೇರ ಸ್ಥಿತಿ",
+      "checkHealth": "ಪರಿಶೀಲಿಸಿ",
+      "checkSuccess": "ಪರಿಶೀಲನೆ ಪೂರ್ಣಗೊಂಡಿದೆ! ಎಲ್ಲಾ ಸೇವೆಗಳು ಸಕ್ರಿಯವಾಗಿವೆ.",
+      "mandiApi": "ಸರ್ಕಾರಿ ಮಾರುಕಟ್ಟೆ API (eNAM)",
+      "aiService": "ಜೆಮಿನಿ AI ಸಲಹೆಗಾರ & ಬೇಡಿಕೆ ಮುನ್ಸೂಚನೆ",
+      "authService": "JWT ಪ್ರಮಾಣೀಕರಣ ಸೇವೆ",
+      "database": "ಮುಖ್ಯ ಡೇಟಾಬೇಸ್ (Sequelize DB)",
+      "operational": "ಸಕ್ರಿಯವಾಗಿದೆ",
+      "degraded": "ನಿಧಾನವಾಗಿದೆ",
+      "down": "ನಿಲ್ಲಿಸಲಾಗಿದೆ",
+      "latency": "ವಿಳಂಬ",
+      "uptime": "ಸಕ್ರಿಯ ಸಮಯ"
+    },
+    "transactions": {
+      "title": "ರಿಯಲ್-ಟೈಮ್ ವಹಿವಾಟು ಮೇಲ್ವಿಚಾರಣೆ",
+      "subtitle": "ಖರೀದಿ ಒಪ್ಪಂದಗಳು ಮತ್ತು ಪಾವತಿ ಸ್ಥಿತಿಯ ನೇರ ದಾಖಲೆ",
+      "noTransactionsTitle": "ಯಾವುದೇ ವಹಿವಾಟುಗಳು ಕಂಡುಬಂದಿಲ್ಲ",
+      "noTransactionsDesc": "ನಿಮ್ಮ ಹುಡುಕಾಟವನ್ನು ಬದಲಾಯಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+    }
+  },
+  "disputes": {
+    "title": "ಕುಂದುಕೊರತೆ ಮತ್ತು ವಿವಾದ ನಿರ್ವಹಣೆ",
+    "subtitle": "ರೈತ-ಖರೀದಿದಾರ ಕುಂದುಕೊರತೆ ನಿವಾರಣೆ ಕೇಂದ್ರ",
+    "raiseNew": "ಹೊಸ ದೂರು ಸಲ್ಲಿಸಿ",
+    "workflowTitle": "ದೂರು ನಿವಾರಣೆ ಹಂತಗಳು",
+    "filterAll": "ಎಲ್ಲಾ ದೂರುಗಳು",
+    "statusOpen": "ತೆರೆದಿದೆ (Open)",
+    "statusUnderReview": "ಪರಿಶೀಲನೆಯಲ್ಲಿದೆ (Under Review)",
+    "statusActionRequired": "ಕ್ರಮ ಅಗತ್ಯವಿದೆ (Action Required)",
+    "statusResolved": "ಪರಿಹರಿಸಲಾಗಿದೆ (Resolved)",
+    "noDisputesTitle": "ಯಾವುದೇ ದೂರುಗಳಿಲ್ಲ",
+    "noDisputesDesc": "ಎಲ್ಲಾ ವ್ಯಾಪಾರಗಳು ಸುಸೂತ್ರವಾಗಿ ನಡೆಯುತ್ತಿವೆ.",
+    "raiseNewModalTitle": "ಹೊಸ ದೂರು ಸಲ್ಲಿಸಿ",
+    "selectDeal": "ಸಂಬಂಧಿತ ಒಪ್ಪಂದವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    "category": "ದೂರಿನ ಪ್ರಕಾರ",
+    "description": "ವಿವರವಾದ ವಿವರಣೆ",
+    "descriptionPlaceholder": "ಗುಣಮಟ್ಟ, ವಿಳಂಬ ಅಥವಾ ಪಾವತಿ ಸಮಸ್ಯೆಗಳ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ...",
+    "submitBtn": "ದೂರು ಸಲ್ಲಿಸಿ",
+    "selectDealError": "ದಯವಿಟ್ಟು ಒಪ್ಪಂದವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    "enterDescriptionError": "ದಯವಿಟ್ಟು ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ",
+    "raisedSuccess": "ದೂರು ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಕೆಯಾಗಿದೆ!",
+    "updatedSuccess": "ಸ್ಥಿತಿಯನ್ನು ನವೀಕರಿಸಲಾಗಿದೆ!",
+    "updateStatus": "ಸ್ಥಿತಿಯನ್ನು ನವೀಕರಿಸಿ",
+    "resolutionNotes": "ಪರಿಹಾರ ಟಿಪ್ಪಣಿಗಳು / ಪ್ರತಿಕ್ರಿಯೆ",
+    "resolutionPlaceholder": "ಒಪ್ಪಂದ ಅಥವಾ ಪರಿಹಾರದ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ..."
+  },
+  "emptyStates": {
+    "noListingsTitle": "ಯಾವುದೇ ಬೆಳೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ",
+    "noListingsDesc": "ಬೆಳೆಗಳು ಲಭ್ಯವಿಲ್ಲ.",
+    "noDealsTitle": "ಯಾವುದೇ ಒಪ್ಪಂದಗಳಿಲ್ಲ",
+    "noDealsDesc": "ಒಪ್ಪಂದದ ದಾಖಲೆಗಳಿಲ್ಲ.",
+    "noDisputesTitle": "ಯಾವುದೇ ದೂರುಗಳಿಲ್ಲ",
+    "noDisputesDesc": "ಯಾವುದೇ ಬಾಕಿ ದೂರುಗಳಿಲ್ಲ.",
+    "noTransactionsTitle": "ಯಾವುದೇ ವಹಿವಾಟುಗಳಿಲ್ಲ",
+    "noTransactionsDesc": "ವಹಿವಾಟು ದಾಖಲೆಗಳಿಲ್ಲ."
+  },
+  "skeletons": {
+    "loadingKpis": "ಮಾಪನಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ...",
+    "loadingHealth": "ಸೇವೆಗಳ ಸ್ಥಿತಿಯನ್ನು ತಪಾಸಣೆ ಮಾಡಲಾಗುತ್ತಿದೆ...",
+    "loadingTransactions": "ದಾಖಲೆಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ...",
+    "loadingDisputes": "ದೂರುಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ..."
   }
 }

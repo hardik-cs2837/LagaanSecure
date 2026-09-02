@@ -4,6 +4,18 @@ import toast from 'react-hot-toast';
 
 export const AuthContext = createContext();
 
+const getFriendlyErrorMessage = (error, defaultMsg) => {
+  let msg = error?.response?.data?.error || error?.response?.data?.message || error?.message;
+  if (!msg || typeof msg !== 'string') return defaultMsg;
+  if (msg.includes('401') || msg.toLowerCase().includes('unauthorized')) {
+    return 'Invalid credentials or verification code. Please check your input and try again.';
+  }
+  if (msg.includes('Request failed with status code')) {
+    return defaultMsg;
+  }
+  return msg;
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || null);
@@ -40,9 +52,9 @@ export const AuthProvider = ({ children }) => {
       toast.success('Logged in successfully!');
       return responseData;
     } catch (error) {
-      const msg = error.response?.data?.error || error.response?.data?.message || 'Login failed';
+      const msg = getFriendlyErrorMessage(error, 'Login failed. Please check your phone and password.');
       toast.error(msg);
-      throw error;
+      throw new Error(msg);
     }
   };
 
@@ -56,9 +68,61 @@ export const AuthProvider = ({ children }) => {
       toast.success('Registered successfully!');
       return responseData;
     } catch (error) {
-      const msg = error.response?.data?.error || error.response?.data?.message || 'Registration failed';
+      const msg = getFriendlyErrorMessage(error, 'Registration failed. Please check your details and try again.');
       toast.error(msg);
-      throw error;
+      throw new Error(msg);
+    }
+  };
+
+  const sendOtp = async (identifier, purpose = 'verification') => {
+    try {
+      const { data } = await auth.sendOtp({ identifier, purpose });
+      const msg = data.message || 'OTP code sent successfully!';
+      toast.success(msg);
+      return data;
+    } catch (error) {
+      const msg = getFriendlyErrorMessage(error, 'Failed to send OTP code. Please try again.');
+      toast.error(msg);
+      throw new Error(msg);
+    }
+  };
+
+  const verifyOtp = async (identifier, otp) => {
+    try {
+      const { data } = await auth.verifyOtp({ identifier, otp });
+      const msg = data.message || 'OTP verified successfully!';
+      toast.success(msg);
+      return data;
+    } catch (error) {
+      const msg = getFriendlyErrorMessage(error, 'Invalid or expired OTP code. Please check and try again.');
+      toast.error(msg);
+      throw new Error(msg);
+    }
+  };
+
+  const forgotPassword = async (identifier) => {
+    try {
+      const { data } = await auth.forgotPassword({ identifier });
+      const msg = data.message || 'Password reset OTP sent successfully!';
+      toast.success(msg);
+      return data;
+    } catch (error) {
+      const msg = getFriendlyErrorMessage(error, 'Failed to send password reset code. Please verify your phone or email.');
+      toast.error(msg);
+      throw new Error(msg);
+    }
+  };
+
+  const resetPassword = async (identifier, otp, newPassword) => {
+    try {
+      const { data } = await auth.resetPassword({ identifier, otp, newPassword });
+      const msg = data.message || 'Password reset successfully!';
+      toast.success(msg);
+      return data;
+    } catch (error) {
+      const msg = getFriendlyErrorMessage(error, 'Failed to reset password. Please check your details.');
+      toast.error(msg);
+      throw new Error(msg);
     }
   };
 
@@ -79,8 +143,9 @@ export const AuthProvider = ({ children }) => {
       toast.success('Google login successful!');
       return responseData;
     } catch (error) {
-      toast.error(error.message || 'Google login failed');
-      throw error;
+      const msg = getFriendlyErrorMessage(error, 'Google login failed. Please try again.');
+      toast.error(msg);
+      throw new Error(msg);
     }
   };
 
@@ -99,6 +164,10 @@ export const AuthProvider = ({ children }) => {
     register: registerUser,
     logout,
     googleLogin: googleLoginUser,
+    sendOtp,
+    verifyOtp,
+    forgotPassword,
+    resetPassword,
     isAuthenticated: !!token && !!user,
     isFarmer: user?.role === 'farmer',
     isBuyer: user?.role === 'buyer',

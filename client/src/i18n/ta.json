@@ -10,7 +10,9 @@
     "language": "மொழி",
     "prices": "சந்தை விலைகள்",
     "deals": "எனது ஒப்பந்தங்கள்",
-    "createListing": "பயிர் சேர்"
+    "createListing": "பயிர் சேர்",
+    "admin": "நிர்வாகி (Admin)",
+    "disputes": "புகார் தீர்வு"
   },
   "landing": {
     "title": "லகான் செக்யூர்",
@@ -35,5 +37,79 @@
     "addListing": "பயிர் சேர்",
     "myListings": "எனது பயிர்கள்",
     "mandiPrices": "சந்தை விலைகள்"
+  },
+  "admin": {
+    "title": "நிர்வாகி டாஷ்போர்டு",
+    "subtitle": "நிகழ்நேர அளவீடுகள், தரவுத்தள அளவீடுகள், API நிலை மற்றும் வர்த்தக கண்காணிப்பு",
+    "kpis": {
+      "heading": "தரவுத்தள கணினி KPIs",
+      "totalUsers": "மொத்த பயனர்கள்",
+      "activeListings": "செயலில் உள்ள பயிர்கள்",
+      "completedDeals": "முடிவடைந்த ஒப்பந்தங்கள்",
+      "platformVolume": "மொத்த அளவு (க்விண்டால்)"
+    },
+    "health": {
+      "title": "அரசு API & வெளி சேவைகள் நிலை கண்காணிப்பு",
+      "subtitle": "சந்தை தரவு, AI மாதிரிகள் மற்றும் உள்கட்டமைப்பின் நேரடி நிலை",
+      "checkHealth": "சோதனை செய்",
+      "checkSuccess": "சோதனை முடிந்தது! அனைத்து சேவைகளும் இயங்குகின்றன.",
+      "mandiApi": "அரசு சந்தை API (eNAM)",
+      "aiService": "ஜெமினி AI ஆலோசகர் & தேவை கணிப்பு",
+      "authService": "JWT அங்கீகார சேவை",
+      "database": "முக்கிய தரவுத்தளம் (Sequelize DB)",
+      "operational": "இயங்குகிறது",
+      "degraded": "மெதுவாக உள்ளது",
+      "down": "நிறுத்தப்பட்டுள்ளது",
+      "latency": "தாமதம்",
+      "uptime": "இயக்க நேரம்"
+    },
+    "transactions": {
+      "title": "நிகழ்நேர பரிவர்த்தனை கண்காணிப்பு",
+      "subtitle": "கொள்முதல் ஒப்பந்தங்கள் மற்றும் கட்டண நிலையின் நேரடி பதிவேடு",
+      "noTransactionsTitle": "பரிவர்த்தனைகள் எதுவும் இல்லை",
+      "noTransactionsDesc": "உங்கள் தேடலை மாற்றி மீண்டும் முயற்சிக்கவும்."
+    }
+  },
+  "disputes": {
+    "title": "புகார்கள் மற்றும் বিরোধ மேலாண்மை",
+    "subtitle": "விவசாயி-வணிகர் புகார் தீர்வு மையம்",
+    "raiseNew": "புதிய புகார் பதிவு செய்",
+    "workflowTitle": "புகார் தீர்வு நிலைகள்",
+    "filterAll": "அனைத்து புகார்கள்",
+    "statusOpen": "திறந்தது (Open)",
+    "statusUnderReview": "பரிசீலனையில் (Under Review)",
+    "statusActionRequired": "நடவடிக்கை தேவை (Action Required)",
+    "statusResolved": "தீர்வு காணப்பட்டது (Resolved)",
+    "noDisputesTitle": "புகார்கள் எதுவும் இல்லை",
+    "noDisputesDesc": "அனைத்து வர்த்தகங்களும் தடையின்றி நடக்கின்றன.",
+    "raiseNewModalTitle": "புதிய புகார் பதிவு செய்",
+    "selectDeal": "தொடர்புடைய ஒப்பந்தத்தை தேர்வு செய்",
+    "category": "புகார் வகை",
+    "description": "விரிவான விளக்கம்",
+    "descriptionPlaceholder": "தரக் குறைபாடு, தாமதம் அல்லது கட்டணப் பிரச்சனை விவரங்களை உள்ளிடவும்...",
+    "submitBtn": "புகாரைச் சமர்ப்பி",
+    "selectDealError": "தயவுசெய்து ஒப்பந்தத்தை தேர்வு செய்யவும்",
+    "enterDescriptionError": "தயவுசெய்து விவரங்களை உள்ளிடவும்",
+    "raisedSuccess": "புகார் வெற்றிகரமாக பதிவானது!",
+    "updatedSuccess": "நிலை புதுப்பிக்கப்பட்டது!",
+    "updateStatus": "நிலையைப் புதுப்பி",
+    "resolutionNotes": "தீர்வு குறிப்புகள் / பதில்",
+    "resolutionPlaceholder": "ஒப்பந்தம் அல்லது தீர்வு விவரங்களை உள்ளிடவும்..."
+  },
+  "emptyStates": {
+    "noListingsTitle": "பயிர்கள் எதுவும் இல்லை",
+    "noListingsDesc": "பயிர்கள் எதுவும் கிடைக்கவில்லை.",
+    "noDealsTitle": "ஒப்பந்தங்கள் எதுவும் இல்லை",
+    "noDealsDesc": "ஒப்பந்தப் பதிவுகள் எதுவும் இல்லை.",
+    "noDisputesTitle": "புகார்கள் எதுவும் இல்லை",
+    "noDisputesDesc": "நிலுவையில் உள்ள புகார்கள் எதுவும் இல்லை.",
+    "noTransactionsTitle": "பரிவர்த்தனைகள் எதுவும் இல்லை",
+    "noTransactionsDesc": "பரிவர்த்தனை பதிவுகள் எதுவும் இல்லை."
+  },
+  "skeletons": {
+    "loadingKpis": "அளவீடுகள் ஏற்றப்படுகின்றன...",
+    "loadingHealth": "சேவை நிலை பரிசோதிக்கப்படுகிறது...",
+    "loadingTransactions": "பதிவுகள் ஏற்றப்படுகின்றன...",
+    "loadingDisputes": "புகார்கள் ஏற்றப்படுகின்றன..."
   }
 }

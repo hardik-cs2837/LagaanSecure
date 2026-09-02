@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import { listings } from '../services/api';
@@ -14,20 +14,22 @@ export default function CreateListing() {
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const prefill = location.state || {};
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    crop_name: '',
-    custom_crop: '',
-    quantity: '',
-    unit: 'quintal',
-    quality_grade: 'A',
-    price: '',
-    location: user?.location || '',
-    is_fpo_pool: false,
-    fpo_name: user?.fpo_name || '',
-    harvest_date: '',
-    description: ''
+    crop_name: prefill.crop_name || '',
+    custom_crop: prefill.custom_crop || '',
+    quantity: prefill.quantity || '',
+    unit: prefill.unit || 'quintal',
+    quality_grade: prefill.quality_grade || 'A',
+    price: prefill.price || '',
+    location: prefill.location || user?.location || '',
+    is_fpo_pool: prefill.is_fpo_pool || false,
+    fpo_name: prefill.fpo_name || user?.fpo_name || '',
+    harvest_date: prefill.harvest_date || '',
+    description: prefill.description || ''
   });
   const [photo, setPhoto] = useState(null);
   const [photoPreview, setPhotoPreview] = useState('');

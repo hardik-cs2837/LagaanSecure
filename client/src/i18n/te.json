@@ -10,7 +10,9 @@
     "language": "భాష",
     "prices": "మండి ధరలు",
     "deals": "నా డీల్స్",
-    "createListing": "పంట జోడించండి"
+    "createListing": "పంట జోడించండి",
+    "admin": "అడ్మిన్ (Admin)",
+    "disputes": "ఫిర్యాదుల పరిష్కారం"
   },
   "landing": {
     "title": "లగాన్ సెక్యూర్",
@@ -35,5 +37,79 @@
     "addListing": "పంట జోడించండి",
     "myListings": "నా పంటలు",
     "mandiPrices": "మండి ధరలు"
+  },
+  "admin": {
+    "title": "అడ్మిన్ డాష్‌బోర్డ్",
+    "subtitle": "రియల్-టైమ్ టెలిమెట్రీ, డేటాబేస్ మెట్రిక్స్, API హెల్త్ మరియు వ్యాపార పర్యవేక్షణ",
+    "kpis": {
+      "heading": "డేటాబేస్ సిస్టమ్ KPIs",
+      "totalUsers": "మొత్తం వినియోగదారులు",
+      "activeListings": "యాక్టివ్ పంటలు",
+      "completedDeals": "పూర్తయిన డీల్స్",
+      "platformVolume": "మొత్తం పరిమాణం (క్వింటాళ్ళు)"
+    },
+    "health": {
+      "title": "ప్రభుత్వ API & బాహ్య సేవల హెల్త్ మానిటర్",
+      "subtitle": "మండి ఫీడ్లు, AI మోడళ్ళు మరియు మౌలిక సదుపాయాల ప్రత్యక్ష స్థితి",
+      "checkHealth": "హెల్త్ చెక్ రన్ చేయండి",
+      "checkSuccess": "తనిఖీ పూర్తయింది! అన్ని సేవలు పనిచేస్తున్నాయి.",
+      "mandiApi": "ప్రభుత్వ మండి API (eNAM)",
+      "aiService": "జెమిని AI అడ్వైజర్ & డిమాండ్ ఫోర్‌కాస్ట్",
+      "authService": "JWT ఆథెంటికేషన్ సర్వీస్",
+      "database": "ప్రధాన డేటాబేస్ (Sequelize DB)",
+      "operational": "పనిచేస్తోంది",
+      "degraded": "నెమ్మదిగా ఉంది",
+      "down": "నిలిపివేయబడింది",
+      "latency": "లేటెన్సీ",
+      "uptime": "అప్‌టైమ్"
+    },
+    "transactions": {
+      "title": "రియల్-టైమ్ లావాదేవీల పర్యవేక్షణ",
+      "subtitle": "కొనుగోలు ఒప్పందాలు మరియు చెల్లింపుల స్థితి ప్రత్యక్ష లాగ్",
+      "noTransactionsTitle": "లావాదేవీలు కనుగొనబడలేదు",
+      "noTransactionsDesc": "మీ శోధన లేదా ఫిల్టర్‌ని మార్చి మళ్ళీ ప్రయత్నించండి."
+    }
+  },
+  "disputes": {
+    "title": "ఫిర్యాదులు & వివాదాల నిర్వహణ",
+    "subtitle": "రైతు-వ్యాపారి ఫిర్యాదుల పరిష్కార కేంద్రం",
+    "raiseNew": "కొత్త ఫిర్యాదు నమోదు చేయండి",
+    "workflowTitle": "ఫిర్యాదు పరిష్కార దశలు",
+    "filterAll": "అన్ని ఫిర్యాదులు",
+    "statusOpen": "ఓపెన్ (Open)",
+    "statusUnderReview": "పరిశీలనలో (Under Review)",
+    "statusActionRequired": "చర్య అవసరం (Action Required)",
+    "statusResolved": "పరిష్కరించబడింది (Resolved)",
+    "noDisputesTitle": "ఫిర్యాదులు ఏవీ లేవు",
+    "noDisputesDesc": "అన్ని వ్యాపారాలు సునాయాసంగా సాగుతున్నాయి.",
+    "raiseNewModalTitle": "కొత్త ఫిర్యాదు నమోదు చేయండి",
+    "selectDeal": "సంబంధిత డీల్‌ను ఎంచుకోండి",
+    "category": "ఫిర్యాదు రకం",
+    "description": "వివరమైన వివరణ",
+    "descriptionPlaceholder": "నాణ్యత లోపం, ఆలస్యం లేదా చెల్లింపు సమస్యల వివరాలను నమోదు చేయండి...",
+    "submitBtn": "ఫిర్యాదు సమర్పించండి",
+    "selectDealError": "దయచేసి సంబంధిత డీల్‌ను ఎంచుకోండి",
+    "enterDescriptionError": "దయచేసి వివరాలను నమోదు చేయండి",
+    "raisedSuccess": "ఫిర్యాదు విజయవంతంగా నమోదైంది!",
+    "updatedSuccess": "స్థితి అప్‌డేట్ చేయబడింది!",
+    "updateStatus": "స్థితిని అప్‌డేట్ చేయండి",
+    "resolutionNotes": "పరిష్కార గమనికలు / స్పందన",
+    "resolutionPlaceholder": "పరస్పర ఒప్పందం లేదా పరిష్కార వివరాలను నమోదు చేయండి..."
+  },
+  "emptyStates": {
+    "noListingsTitle": "పంటలు కనుగొనబడలేదు",
+    "noListingsDesc": "మీ ఫిల్టర్‌కు సరిపోయే పంటలు లేవు.",
+    "noDealsTitle": "డీల్స్ కనుగొనబడలేదు",
+    "noDealsDesc": "ప్రస్తుతం ఎటువంటి డీల్స్ లేవు.",
+    "noDisputesTitle": "ఫిర్యాదులు ఏవీ లేవు",
+    "noDisputesDesc": "ఓపెన్ లేదా పాత ఫిర్యాదులు లేవు.",
+    "noTransactionsTitle": "లావాదేవీలు కనుగొనబడలేదు",
+    "noTransactionsDesc": "ఎటువంటి లావాదేవీల రికార్డులు లేవు."
+  },
+  "skeletons": {
+    "loadingKpis": "సిస్టమ్ మెట్రిక్స్ లోడ్ అవుతున్నాయి...",
+    "loadingHealth": "సేవల స్థితిని తనిఖీ చేస్తోంది...",
+    "loadingTransactions": "లావాదేవీల లాగ్ లోడ్ అవుతోంది...",
+    "loadingDisputes": "ఫిర్యాదులు లోడ్ అవుతున్నాయి..."
   }
 }

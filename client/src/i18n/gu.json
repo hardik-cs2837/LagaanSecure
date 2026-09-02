@@ -10,7 +10,9 @@
     "language": "ભાષા",
     "prices": "મંડી ભાવ",
     "deals": "મારા સોદા",
-    "createListing": "પાક ઉમેરો"
+    "createListing": "પાક ઉમેરો",
+    "admin": "એડમિન (Admin)",
+    "disputes": "ફરિયાદ નિવારણ"
   },
   "landing": {
     "title": "લગાન સિક્યોર",
@@ -35,5 +37,79 @@
     "addListing": "પાક ઉમેરો",
     "myListings": "મારા પાક",
     "mandiPrices": "મંડી ભાવ"
+  },
+  "admin": {
+    "title": "એડમિન ડેશબોર્ડ",
+    "subtitle": "રિયલ-ટાઇમ ટેલિમેટ્રી, ડેટાબેઝ મેટ્રિક્સ, API હેલ્થ અને ટ્રેડ મોનિટરિંગ",
+    "kpis": {
+      "heading": "ડેટાબેઝ સિસ્ટમ KPIs",
+      "totalUsers": "કુલ યુઝર્સ",
+      "activeListings": "સક્રિય પાક",
+      "completedDeals": "પૂર્ણ થયેલ સોદા",
+      "platformVolume": "કુલ જથ્થો (ક્વિન્ટલ)"
+    },
+    "health": {
+      "title": "સરકારી API અને બાહ્ય સેવા હેલ્થ મોનિટર",
+      "subtitle": "મંડી ફીડ, AI મોડેલ્સ અને ઇન્ફ્રાસ્ટ્રક્ચરની લાઇવ સ્થિતિ",
+      "checkHealth": "હેલ્થ ચેક ચલાવો",
+      "checkSuccess": "તપાસ પૂર્ણ! બધી સેવાઓ કાર્યરત છે.",
+      "mandiApi": "સરકારી મંડી API (eNAM)",
+      "aiService": "જેમિની AI એડવાઇઝર અને ડિમાન્ડ ફોરકાસ્ટ",
+      "authService": "JWT ઓથેન્ટિકેશન સર્વિસ",
+      "database": "મુખ્ય ડેટાબેઝ (Sequelize DB)",
+      "operational": "કાર્યરત",
+      "degraded": "ધીમું",
+      "down": "બંધ",
+      "latency": "લેટન્સી",
+      "uptime": "અપટાઇમ"
+    },
+    "transactions": {
+      "title": "રિયલ-ટાઇમ ટ્રાન્ઝેક્શન મોનિટરિંગ",
+      "subtitle": "ખરીદ કરારો અને પેમેન્ટ સ્ટેટસનો લાઇવ ઓડિટ લોગ",
+      "noTransactionsTitle": "કોઈ ટ્રાન્ઝેક્શન મળ્યા નથી",
+      "noTransactionsDesc": "તમારી શોધ અથવા ફિલ્ટર બદલીને પ્રયાસ કરો."
+    }
+  },
+  "disputes": {
+    "title": "વિવાદ અને ફરિયાદ નિવારણ",
+    "subtitle": "ખેડૂત-વેપારી ફરિયાદ નિવારણ કેન્દ્ર",
+    "raiseNew": "નવી ફરિયાદ નોંધાવો",
+    "workflowTitle": "ફરિયાદ નિવારણ તબક્કા",
+    "filterAll": "તમામ ફરિયાદો",
+    "statusOpen": "ખુલ્લી (Open)",
+    "statusUnderReview": "તપાસ હેઠળ (Under Review)",
+    "statusActionRequired": "કારવાઈ જરૂરી (Action Required)",
+    "statusResolved": "ઉકેલાયેલ (Resolved)",
+    "noDisputesTitle": "કોઈ ફરિયાદ મળી નથી",
+    "noDisputesDesc": "તમામ સોદા સરળતાથી ચાલી રહ્યા છે.",
+    "raiseNewModalTitle": "નવી ફરિયાદ નોંધાવો",
+    "selectDeal": "સંબંધિત સોદો પસંદ કરો",
+    "category": "ફરિયાદનો પ્રકાર",
+    "description": "વિગતવાર વર્ણન",
+    "descriptionPlaceholder": "ગુણવત્તા, મોડું આવવું અથવા ચૂકવણીની સમસ્યાનું વર્ણન લખો...",
+    "submitBtn": "ફરિયાદ સબમિટ કરો",
+    "selectDealError": "કૃપા કરીને સંબંધિત સોદો પસંદ કરો",
+    "enterDescriptionError": "કૃપા કરીને ફરિયાદની વિગત આપો",
+    "raisedSuccess": "ફરિયાદ સફળતાપૂર્વક નોંધાઈ ગઈ!",
+    "updatedSuccess": "સ્થિતિ અપડેટ થઈ ગઈ!",
+    "updateStatus": "સ્થિતિ અપડેટ કરો",
+    "resolutionNotes": "ઉકેલ નોંધો / જવાબ",
+    "resolutionPlaceholder": "પરસ્પર સમજૂતી અથવા ઉકેલની નોંધો લખો..."
+  },
+  "emptyStates": {
+    "noListingsTitle": "કોઈ પાક મળ્યો નથી",
+    "noListingsDesc": "તમારા ફિલ્ટર મુજબ કોઈ પાક ઉપલબ્ધ નથી.",
+    "noDealsTitle": "કોઈ સોદા મળ્યા નથી",
+    "noDealsDesc": "હાલમાં કોઈ સોદાનો રેકોર્ડ નથી.",
+    "noDisputesTitle": "કોઈ ફરિયાદો મળી નથી",
+    "noDisputesDesc": "કોઈ ખુલ્લી કે જૂની ફરિયાદ નથી.",
+    "noTransactionsTitle": "કોઈ ટ્રાન્ઝેક્શન મળ્યા નથી",
+    "noTransactionsDesc": "કોઈ ટ્રાન્ઝેક્શન રેકોર્ડ મળ્યો નથી."
+  },
+  "skeletons": {
+    "loadingKpis": "સિસ્ટમ મેટ્રિક્સ લોડ થઈ રહ્યા છે...",
+    "loadingHealth": "સર્વિસ હેલ્થ ચકાસાઈ રહી છે...",
+    "loadingTransactions": "ટ્રાન્ઝેક્શન લોગ લોડ થઈ રહ્યો છે...",
+    "loadingDisputes": "ફરિયાદો લોડ થઈ રહી છે..."
   }
 }

@@ -15,6 +15,7 @@ import ListingCard from '../components/ListingCard';
 import DealCard from '../components/DealCard';
 import NearestMarketSuggestion from '../components/NearestMarketSuggestion';
 import AIChatbot from '../components/AIChatbot';
+import AISmartSellCopilot from '../components/AISmartSellCopilot';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../components/ui/Button';
 import { cn } from '../lib/utils';
@@ -43,6 +44,7 @@ const FarmerDashboard = () => {
   const [showStorageModal, setShowStorageModal] = useState(false);
   const [showFpoModal, setShowFpoModal] = useState(false);
   const [showRouteModal, setShowRouteModal] = useState(false);
+  const [showCopilotModal, setShowCopilotModal] = useState(false);
 
   useEffect(() => {
     fetchMyListings();
@@ -150,6 +152,14 @@ const FarmerDashboard = () => {
 
         <div className="flex flex-wrap items-center gap-3">
           <button
+            onClick={() => setShowCopilotModal(true)}
+            className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 rounded-xl hover:from-emerald-500 hover:to-indigo-500 transition-all shadow-md hover:shadow-emerald-500/25 overflow-hidden"
+          >
+            <SparklesIcon className="w-4 h-4 text-amber-300 animate-pulse" />
+            <span>AI Sell Copilot</span>
+          </button>
+
+          <button
             onClick={() => setShowFpoModal(true)}
             className="group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-amber-700 bg-white border border-amber-200 rounded-xl hover:bg-amber-50 hover:border-amber-300 transition-all shadow-sm overflow-hidden"
           >
@@ -209,6 +219,38 @@ const FarmerDashboard = () => {
             </div>
           </div>
         ))}
+      </motion.div>
+
+      {/* AI Smart Sell Copilot Featured Section */}
+      <motion.div variants={itemVariants}>
+        <div className="bg-gradient-to-r from-slate-900 via-teal-950 to-emerald-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-emerald-800/40 relative overflow-hidden mb-6">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-2xl">
+              <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-400/30">
+                <SparklesIcon className="w-3.5 h-3.5 text-amber-300" />
+                Government Verified Mandi Intelligence
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+                AI Smart Sell Copilot
+              </h2>
+              <p className="text-slate-300 text-sm font-medium leading-relaxed">
+                6-step interactive workflow: Get verified government mandi price benchmarks, expected net realization, and data-backed sell/store recommendations.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setShowCopilotModal(true)}
+              className="shrink-0 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold px-7 py-3.5 rounded-2xl shadow-lg hover:shadow-emerald-500/30 transition-all flex items-center gap-2 text-sm sm:text-base group"
+            >
+              <span>Launch Copilot Workflow 🚀</span>
+              <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </div>
+
+        {/* Embedded Interactive Copilot Widget */}
+        <AISmartSellCopilot />
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -387,6 +429,22 @@ const FarmerDashboard = () => {
         onClose={() => setShowRouteModal(false)}
         userLocation={user?.location || 'Nashik Farm Hub'}
       />
+
+      {/* AI Smart Sell Copilot Modal */}
+      <AnimatePresence>
+        {showCopilotModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-md overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="w-full max-w-3xl my-auto rounded-3xl"
+            >
+              <AISmartSellCopilot onClose={() => setShowCopilotModal(false)} isModal={true} />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* AI Chatbot Floating Widget */}
       <AIChatbot />

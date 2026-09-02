@@ -1,13 +1,31 @@
 const express = require('express');
+const marketDataService = require('../services/marketDataService');
 const priceService = require('../services/priceService');
 const mockPrices = require('../data/mockPrices.json');
 
 const router = express.Router();
 
+/**
+ * @route GET /api/prices
+ * @desc Get available commodities and states
+ */
 router.get('/', (req, res) => {
   const commodities = [...new Set(mockPrices.map(p => p.commodity))];
   const states = [...new Set(mockPrices.map(p => p.state))];
   res.json({ success: true, data: { commodities, states } });
+});
+
+/**
+ * @route GET /api/prices/health
+ * @desc Get Government Mandi Price API connection health status
+ */
+router.get('/health', async (req, res, next) => {
+  try {
+    const health = await marketDataService.getApiHealth();
+    res.json({ success: true, data: health });
+  } catch (err) {
+    next(err);
+  }
 });
 
 /**
@@ -17,21 +35,28 @@ router.get('/:commodity/trends', async (req, res, next) => {
   try {
     const { commodity } = req.params;
     const { state } = req.query;
-    const allPrices = await priceService.getAllPricesForCommodity(commodity);
+
+    let history = await marketDataService.getCommodityHistory(commodity);
+    let allPrices = history;
+
+    // Fallback to priceService if no history records exist from live API / cache
+    if (!allPrices || allPrices.length === 0) {
+      allPrices = await priceService.getAllPricesForCommodity(commodity);
+    }
     
     if (!allPrices || allPrices.length === 0) {
       return res.status(404).json({ success: false, error: 'Price history unavailable for this commodity' });
     }
 
     const filtered = state 
-      ? allPrices.filter(p => p.state.toLowerCase() === state.toLowerCase())
+      ? allPrices.filter(p => p.state && p.state.toLowerCase() === state.toLowerCase())
       : allPrices;
     
     const sample = filtered.length > 0 ? filtered : allPrices;
     const modalSum = sample.reduce((sum, item) => sum + (item.modal_price || 0), 0);
-    const avgModal = Math.round(modalSum / sample.length);
-    const maxModal = Math.max(...sample.map(i => i.max_price || i.modal_price));
-    const minModal = Math.min(...sample.map(i => i.min_price || i.modal_price));
+    const avgModal = Math.round(modalSum / sample.length) || 1500;
+    const maxModal = Math.max(...sample.map(i => i.max_price || i.modal_price || 1500));
+    const minModal = Math.min(...sample.map(i => i.min_price || i.modal_price || 1500));
     
     // Historical 7-day series
     const days = ['6d ago', '5d ago', '4d ago', '3d ago', '2d ago', 'Yesterday', 'Today'];
@@ -85,10 +110,8 @@ router.get('/:commodity/trends', async (req, res, next) => {
     const zScore90 = 1.645;
     const forecastSeries = forecastDays.map((fd) => {
       const futureX = (n - 1) + fd.step;
-      // Linear component + small EWMA dampener
       const rawProjection = intercept + slope * futureX;
       const projectedPrice = Math.round(rawProjection);
-      // Expanding confidence interval with horizon
       const horizonMultiplier = Math.sqrt(1 + (1 / n) + Math.pow(futureX - (sumX / n), 2) / (sumXX - (sumX * sumX / n)));
       const marginOfError = Math.round(zScore90 * stdError * horizonMultiplier);
 
@@ -155,15 +178,27 @@ router.get('/:commodity/trends', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
+/**
+ * @route GET /api/prices/:commodity
+ * @desc Get Mandi price for a commodity with optional state & market filters
+ */
 router.get('/:commodity', async (req, res, next) => {
   try {
     const { state, market } = req.query;
-    if (state && market) {
-      const data = await priceService.fetchMandiPrice(req.params.commodity, state, market);
+    const { commodity } = req.params;
+
+    if (state || market) {
+      const data = await marketDataService.getMandiPrice(commodity, state, market);
       return res.json({ success: true, data });
     }
-    const allPrices = await priceService.getAllPricesForCommodity(req.params.commodity);
-    res.json({ success: true, data: allPrices });
+
+    const history = await marketDataService.getCommodityHistory(commodity);
+    if (history && history.length > 0) {
+      return res.json({ success: true, data: history });
+    }
+
+    const singleData = await marketDataService.getMandiPrice(commodity);
+    res.json({ success: true, data: singleData });
   } catch (err) { next(err); }
 });
 

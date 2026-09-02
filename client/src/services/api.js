@@ -35,9 +35,13 @@ export const listings = {
   updateListing: (id, data) => api.put(`/listings/${id}`, data),
   deleteListing: (id) => api.delete(`/listings/${id}`),
   getDemandSupplyAnalytics: () => api.get('/listings/analytics/demand-supply'),
+  getPlatformImpactAnalytics: () => api.get('/listings/analytics/platform-impact'),
   getStorageOptions: (state) => api.get('/listings/storage-options', { params: { state } }),
+  storeLot: (id, data) => api.post(`/listings/${id}/store`, data),
   getLogisticsOptions: (params) => api.get('/listings/logistics-options', { params }),
   getRouteSuggestions: (params) => api.get('/listings/route-suggestions', { params }),
+  getMultiStopRoute: (data) => api.post('/listings/multi-stop-route', data),
+  aggregateFpo: (data) => api.post('/listings/fpo-aggregate', data),
 };
 
 export const prices = {
@@ -59,6 +63,8 @@ export const deals = {
   createDeal: (data) => api.post('/deals', data),
   getMyDeals: () => api.get('/deals/my'),
   updateDeal: (id, data) => api.patch(`/deals/${id}`, data),
+  rateDeal: (id, data) => api.post(`/deals/${id}/rate`, data),
+  getReceipt: (id) => api.get(`/deals/${id}/receipt`),
 };
 
 export const notifications = {

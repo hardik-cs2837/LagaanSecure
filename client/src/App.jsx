@@ -14,6 +14,7 @@ import CreateListing from './pages/CreateListing';
 import ListingDetail from './pages/ListingDetail';
 import DealFlow from './pages/DealFlow';
 import Notifications from './pages/Notifications';
+import ImpactAnalytics from './pages/ImpactAnalytics';
 
 function App() {
   const { isAuthenticated, isFarmer, isBuyer } = useContext(AuthContext);
@@ -35,6 +36,7 @@ function App() {
         />
         <Route path="/login" element={isAuthenticated ? <Navigate to={isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace /> : <Login />} />
         <Route path="/register" element={isAuthenticated ? <Navigate to={isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace /> : <Register />} />
+        <Route path="/impact" element={<ImpactAnalytics />} />
 
         {/* Farmer */}
         <Route path="/farmer/dashboard" element={<ProtectedRoute role="farmer"><FarmerDashboard /></ProtectedRoute>} />

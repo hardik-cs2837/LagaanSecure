@@ -22,6 +22,12 @@ module.exports = (sequelize) => {
     dispute_resolution: { type: DataTypes.TEXT, allowNull: true },
     transport_requested: { type: DataTypes.BOOLEAN, defaultValue: false },
     transport_details: { type: DataTypes.JSON, allowNull: true },
+    farmer_rating: { type: DataTypes.INTEGER, allowNull: true },
+    farmer_feedback: { type: DataTypes.TEXT, allowNull: true },
+    buyer_rating: { type: DataTypes.INTEGER, allowNull: true },
+    buyer_feedback: { type: DataTypes.TEXT, allowNull: true },
+    fpo_payout_splits: { type: DataTypes.JSON, allowNull: true },
+    audit_timeline: { type: DataTypes.JSON, defaultValue: [] },
   }, {
     tableName: 'deals',
     timestamps: true,

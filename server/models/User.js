@@ -12,6 +12,10 @@ module.exports = (sequelize) => {
     business_name: { type: DataTypes.STRING, allowNull: true },
     is_verified: { type: DataTypes.BOOLEAN, defaultValue: false },
     fpo_name: { type: DataTypes.STRING, allowNull: true },
+    rating_avg: { type: DataTypes.FLOAT, defaultValue: 4.8 },
+    rating_count: { type: DataTypes.INTEGER, defaultValue: 0 },
+    deals_completed_count: { type: DataTypes.INTEGER, defaultValue: 0 },
+    payment_reliability_rate: { type: DataTypes.FLOAT, defaultValue: 100.0 },
     password_hash: { type: DataTypes.STRING, allowNull: false },
     created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   }, {

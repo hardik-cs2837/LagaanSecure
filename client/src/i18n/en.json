@@ -257,5 +257,49 @@
     "enter_reason": "Please describe your grievance.",
     "submitted": "Grievance submitted for review",
     "resolved_success": "Dispute marked as resolved!"
+  },
+  "fpo": {
+    "modal_title": "FPO Bulk Produce Lot Aggregation",
+    "modal_subtitle": "Pool individual member harvests into a single master bulk listing for institutional buyers",
+    "create_bulk_btn": "Pool FPO Bulk Lot",
+    "create_bulk_lot": "Publish FPO Bulk Lot",
+    "contributing_members": "Contributing Member Farmers",
+    "add_member": "Add Member",
+    "total_bulk_volume": "Total Pooled Volume",
+    "member_contributions": "FPO Member Group Contributions",
+    "member_payout_splits": "FPO Member Proportional Payout Split"
+  },
+  "quality": {
+    "specs_title": "Structured Quality Grading & AGMARK Specifications",
+    "moisture": "Moisture Content",
+    "foreign_matter": "Foreign Matter / Impurity",
+    "damage": "Damage / Defect %",
+    "uniformity": "Size Uniformity"
+  },
+  "receipt": {
+    "title": "Direct Mandi Transaction Receipt & Invoice",
+    "subtitle": "Official Direct Purchase Record & Settlement Certificate",
+    "print": "Print Receipt",
+    "view_invoice": "Invoice Receipt",
+    "invoice": "Invoice",
+    "seller": "Direct Producer / Seller",
+    "buyer": "Procuring Buyer",
+    "fpo_splits_title": "FPO Member Proportional Share Distribution",
+    "not_found": "Invoice details unavailable."
+  },
+  "rating": {
+    "modal_title": "Rate Trade Experience",
+    "modal_subtitle": "Help build transparent trust ratings for agricultural partners",
+    "rate_trade": "Rate Trade",
+    "select_stars": "Select Rating",
+    "feedback_label": "Written Feedback (Optional)",
+    "feedback_placeholder": "Share your experience regarding produce quality, timely dispatch, or payment reliability...",
+    "submit_btn": "Submit Rating",
+    "submitted_success": "Rating submitted! Trust score updated."
+  },
+  "impact": {
+    "title": "Disintermediation & Impact Analytics",
+    "subtitle": "Live transparency dashboard measuring direct farmer income enhancements, consumer price savings, and FPO aggregation outcomes under PS 26033 & PS 26132.",
+    "chart_title": "Value Unlocked per Commodity via Direct Trade (INR)"
   }
 }

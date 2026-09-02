@@ -10,6 +10,7 @@
     "install:all": "npm install && cd server && npm install && cd ../client && npm install",
     "db:migrate": "cd server && npx sequelize-cli db:migrate",
     "db:seed": "cd server && npx sequelize-cli db:seed:all",
+    "seed": "node server/scripts/seed.js",
     "test": "node test-flow.js"
   },
   "devDependencies": {

@@ -42,6 +42,9 @@ const Navbar = () => {
                     <Link to="/deals" className="text-dark hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">{t('nav.deals')}</Link>
                   </>
                 )}
+                <Link to="/impact" className="text-dark hover:text-primary-600 px-3 py-2 rounded-md text-sm font-bold flex items-center gap-1">
+                  📊 {t('nav.impact', 'Impact Analytics')}
+                </Link>
                 <LanguageToggle />
                 <div className="relative">
                   <button
@@ -102,6 +105,7 @@ const Navbar = () => {
                   <Link to="/buyer/dashboard" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-lg text-base font-medium text-dark hover:bg-gray-50 min-h-[48px]">{t('nav.dashboard')}</Link>
                 )}
                 <Link to="/deals" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-lg text-base font-medium text-dark hover:bg-gray-50 min-h-[48px]">{t('nav.deals')}</Link>
+                <Link to="/impact" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-lg text-base font-bold text-emerald-800 hover:bg-gray-50 min-h-[48px]">📊 {t('nav.impact', 'Impact Analytics')}</Link>
                 <Link to="/notifications" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-lg text-base font-medium text-dark hover:bg-gray-50 min-h-[48px]">{t('nav.notifications')}</Link>
                 <button onClick={() => { handleLogout(); setIsOpen(false); }} className="block w-full text-left px-3 py-3 rounded-lg text-base font-medium text-accent-600 hover:bg-gray-50 min-h-[48px]">{t('nav.logout')}</button>
               </>

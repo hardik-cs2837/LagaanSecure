@@ -70,6 +70,13 @@ export default function CreateListing() {
         quality_grade: formData.quality_grade,
         price_per_unit: formData.price ? Number(formData.price) : null,
         location: formData.location,
+        quality_checklist: {
+          moisture_pct: Number(formData.moisture_pct) || 11.5,
+          foreign_matter_pct: Number(formData.foreign_matter_pct) || 0.6,
+          damage_pct: Number(formData.damage_pct) || 0.9,
+          grain_size_uniformity: formData.grain_size_uniformity || 'High (>90%)',
+          declaration_type: 'Farmer Self-Declared Quality Checklist'
+        },
         is_fpo_pool: formData.is_fpo_pool,
         fpo_name: formData.is_fpo_pool ? (formData.fpo_name || user?.fpo_name || 'Kisan Agro FPO') : null,
         harvest_date: formData.harvest_date || null,
@@ -168,42 +175,124 @@ export default function CreateListing() {
             </div>
           </div>
 
-          {/* Quality Grade */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('listings.quality_grade', 'Quality Grade')}
-            </label>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { id: 'A', label: 'Grade A', desc: t('farmer.grade_a_desc', 'Premium') },
-                { id: 'B', label: 'Grade B', desc: t('farmer.grade_b_desc', 'Good') },
-                { id: 'C', label: 'Grade C', desc: t('farmer.grade_c_desc', 'Fair') }
-              ].map(grade => (
-                <label 
-                  key={grade.id} 
-                  className={`
-                    cursor-pointer border rounded-lg p-3 text-center transition-all flex flex-col items-center justify-center
-                    ${formData.quality_grade === grade.id 
-                      ? 'bg-primary-50 border-primary-500 ring-1 ring-primary-500' 
-                      : 'border-gray-200 hover:bg-gray-50'
-                    }
-                  `}
-                >
-                  <input 
-                    type="radio" 
-                    name="quality_grade" 
-                    value={grade.id} 
-                    checked={formData.quality_grade === grade.id}
+          {/* Structured Quality Grading & Self-Declared Checklist (Section C) */}
+          <div className="bg-emerald-50/60 p-5 rounded-2xl border border-emerald-200 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-bold text-sm text-emerald-950 flex items-center gap-1.5">
+                  🔍 {t('listings.quality_checklist_title', 'Self-Declared Structured Quality Checklist')}
+                </h3>
+                <p className="text-[11px] text-emerald-800">
+                  {t('listings.quality_checklist_desc', 'Enter measured physical parameters according to AGMARK/APMC standards (Farmer self-declared)')}
+                </p>
+              </div>
+              <span className="text-[10px] font-extrabold bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded">
+                STRUCTURED SPEC
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div>
+                <label className="text-gray-600 block mb-1 font-medium">{t('quality.moisture', 'Moisture Content')}:</label>
+                <div className="flex items-center">
+                  <input
+                    type="number"
+                    step="0.1"
+                    name="moisture_pct"
+                    value={formData.moisture_pct || 11.5}
                     onChange={handleChange}
-                    className="sr-only"
+                    className="w-full p-2 border border-emerald-300 bg-white rounded-lg font-bold"
                   />
-                  <span className={`font-bold text-lg ${
-                    grade.id === 'A' ? 'text-green-600' : 
-                    grade.id === 'B' ? 'text-yellow-600' : 'text-orange-600'
-                  }`}>{grade.id}</span>
-                  <span className="text-xs text-gray-500 mt-1">{grade.desc}</span>
-                </label>
-              ))}
+                  <span className="ml-1 text-gray-500 font-bold">%</span>
+                </div>
+                <span className="text-[9px] text-gray-400 block mt-0.5">&lt;12% is Grade A</span>
+              </div>
+
+              <div>
+                <label className="text-gray-600 block mb-1 font-medium">{t('quality.foreign_matter', 'Foreign Matter')}:</label>
+                <div className="flex items-center">
+                  <input
+                    type="number"
+                    step="0.1"
+                    name="foreign_matter_pct"
+                    value={formData.foreign_matter_pct || 0.6}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-emerald-300 bg-white rounded-lg font-bold"
+                  />
+                  <span className="ml-1 text-gray-500 font-bold">%</span>
+                </div>
+                <span className="text-[9px] text-gray-400 block mt-0.5">&lt;1% is Grade A</span>
+              </div>
+
+              <div>
+                <label className="text-gray-600 block mb-1 font-medium">{t('quality.damage', 'Damage / Defect')}:</label>
+                <div className="flex items-center">
+                  <input
+                    type="number"
+                    step="0.1"
+                    name="damage_pct"
+                    value={formData.damage_pct || 0.9}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-emerald-300 bg-white rounded-lg font-bold"
+                  />
+                  <span className="ml-1 text-gray-500 font-bold">%</span>
+                </div>
+                <span className="text-[9px] text-gray-400 block mt-0.5">&lt;2% is Grade A</span>
+              </div>
+
+              <div>
+                <label className="text-gray-600 block mb-1 font-medium">{t('quality.uniformity', 'Size Uniformity')}:</label>
+                <select
+                  name="grain_size_uniformity"
+                  value={formData.grain_size_uniformity || 'High (>90%)'}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-emerald-300 bg-white rounded-lg font-semibold text-xs"
+                >
+                  <option value="High (>90%)">High (&gt;90%)</option>
+                  <option value="Medium (75-90%)">Medium (75-90%)</option>
+                  <option value="Mixed (<75%)">Mixed (&lt;75%)</option>
+                </select>
+                <span className="text-[9px] text-gray-400 block mt-0.5">Sieve/Diameter</span>
+              </div>
+            </div>
+
+            {/* Quality Grade Radio Selection */}
+            <div className="pt-2 border-t border-emerald-200">
+              <label className="block text-xs font-bold text-emerald-950 mb-2">
+                {t('listings.quality_grade', 'Resulting Quality Grade')}:
+              </label>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { id: 'A', label: 'Grade A', desc: t('farmer.grade_a_desc', 'Premium Export/Milling') },
+                  { id: 'B', label: 'Grade B', desc: t('farmer.grade_b_desc', 'Standard Wholesale') },
+                  { id: 'C', label: 'Grade C', desc: t('farmer.grade_c_desc', 'Fair / Processing') }
+                ].map(grade => (
+                  <label 
+                    key={grade.id} 
+                    className={`
+                      cursor-pointer border-2 rounded-xl p-3 text-center transition-all flex flex-col items-center justify-center
+                      ${formData.quality_grade === grade.id 
+                        ? 'bg-white border-emerald-600 ring-2 ring-emerald-400 shadow-sm' 
+                        : 'bg-white/70 border-gray-200 hover:bg-white'
+                      }
+                    `}
+                  >
+                    <input 
+                      type="radio" 
+                      name="quality_grade" 
+                      value={grade.id} 
+                      checked={formData.quality_grade === grade.id}
+                      onChange={handleChange}
+                      className="sr-only"
+                    />
+                    <span className={`font-black text-xl ${
+                      grade.id === 'A' ? 'text-emerald-700' : 
+                      grade.id === 'B' ? 'text-yellow-600' : 'text-orange-600'
+                    }`}>{grade.id}</span>
+                    <span className="text-[11px] text-gray-600 mt-0.5 font-medium">{grade.desc}</span>
+                  </label>
+                ))}
+              </div>
             </div>
           </div>
 

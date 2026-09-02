@@ -452,7 +452,7 @@ const AdminDashboard = () => {
                             tx.payment_status === 'paid' ? 'bg-emerald-100 text-emerald-800' :
                             tx.payment_status === 'pending_confirmation' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'
                           }`}>
-                            {tx.payment_status === 'paid' ? '✓ Paid' : tx.payment_status === 'pending_confirmation' ? '<Clock className='w-3 h-3 inline mr-1'/> Pending Conf' : 'Unpaid'}
+                            {tx.payment_status === 'paid' ? <><Check className="w-3 h-3 inline mr-1" /> Paid</> : tx.payment_status === 'pending_confirmation' ? <><Clock className="w-3 h-3 inline mr-1" /> Pending Conf</> : 'Unpaid'}
                           </span>
                         </td>
 

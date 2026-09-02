@@ -11,7 +11,9 @@
     "db:migrate": "cd server && npx sequelize-cli db:migrate",
     "db:seed": "cd server && npx sequelize-cli db:seed:all",
     "seed": "node server/scripts/seed.js",
-    "test": "node test-flow.js"
+    "test": "node test-flow.js",
+    "build": "npm run install:all && cd client && npm run build",
+    "start": "cd server && node server.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

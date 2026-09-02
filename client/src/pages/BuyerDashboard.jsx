@@ -14,6 +14,7 @@ import BulkRequirementsSection from '../components/BulkRequirementsSection';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../components/ui/Button';
 import ListingCard from '../components/ListingCard';
+import TextToSpeechButton from '../components/TextToSpeechButton';
 
 const getCropEmoji = (cropName) => {
   const name = cropName?.toLowerCase() || '';
@@ -153,11 +154,10 @@ export default function BuyerDashboard() {
     visible: { opacity: 1, y: 0 }
   };
 
-  // Mock stats for premium UI
   const stats = [
-    { label: 'Active Listings', value: items.length > 0 ? items.length + '+' : '-', icon: '📦', color: 'bg-emerald-50 text-emerald-700' },
-    { label: 'Deals Completed', value: user?.deals_completed_count || 18, icon: '🤝', color: 'bg-blue-50 text-blue-700' },
-    { label: 'Est. Savings', value: '₹1.2L+', icon: '💰', color: 'bg-purple-50 text-purple-700' },
+    { label: t('buyer.stats.activeListings', 'Active Listings'), value: items.length > 0 ? items.length : '0', icon: '📦', color: 'bg-emerald-50 text-emerald-700' },
+    { label: t('buyer.stats.dealsCompleted', 'Deals Completed'), value: user?.deals_completed_count || 0, icon: '🤝', color: 'bg-blue-50 text-blue-700' },
+    { label: t('buyer.stats.estSavings', 'Est. Savings'), value: t('common.unavailable', 'Unavailable'), icon: '💰', color: 'bg-purple-50 text-purple-700' },
   ];
 
   return (
@@ -175,14 +175,15 @@ export default function BuyerDashboard() {
           <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-4">
-                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
                   {t('buyer.welcome', 'Welcome back')}, <span className="text-emerald-700">{user?.name}</span>!
+                  <TextToSpeechButton textToRead={`${t('buyer.welcome', 'Welcome back')} ${user?.name}. ${t('buyer.dashboard_subtitle', 'Manage your procurement pipeline, discover premium agricultural produce, and negotiate directly with verified farmers.')}`} />
                 </h1>
                 <BuyerBadge 
                   isVerified={user?.is_verified ?? true} 
                   businessName={user?.business_name} 
                   ratingAvg={user?.rating_avg || 4.9}
-                  dealsCompleted={user?.deals_completed_count || 18}
+                  dealsCompleted={user?.deals_completed_count || 0}
                   size="sm" 
                 />
               </div>
@@ -203,7 +204,7 @@ export default function BuyerDashboard() {
               </button>
               <Link to="/deals">
                 <button className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-sm transition-colors shadow-sm flex items-center gap-2">
-                  <span>📋</span> My Deals
+                  <span>📋</span> {t('buyer.myDeals', 'My Deals')}
                 </button>
               </Link>
             </div>

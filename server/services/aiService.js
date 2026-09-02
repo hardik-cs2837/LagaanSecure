@@ -1,5 +1,4 @@
 const axios = require('axios');
-const priceService = require('./priceService');
 
 /**
  * Enterprise AI Service supporting Gemini / OpenAI when configured,

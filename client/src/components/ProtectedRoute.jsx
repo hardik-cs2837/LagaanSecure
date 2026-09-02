@@ -12,6 +12,8 @@ const ProtectedRoute = ({ children, role }) => {
   }
 
   if (role && user?.role !== role) {
+    if (user?.role === 'farmer') return <Navigate to="/farmer/dashboard" />;
+    if (user?.role === 'buyer') return <Navigate to="/buyer/dashboard" />;
     return <Navigate to="/" />;
   }
 

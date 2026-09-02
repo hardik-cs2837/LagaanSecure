@@ -10,7 +10,7 @@
     "install:all": "npm install --production=false && cd server && npm install && cd ../client && npm install",
     "db:migrate": "cd server && npx sequelize-cli db:migrate",
     "db:seed": "cd server && npx sequelize-cli db:seed:all",
-    "seed": "node server/scripts/seed.js",
+    "seed": "node server/scripts/seed.js", "seed:admin": "node server/scripts/seed-admin.js",
     "test": "node test-flow.js",
     "build": "npm run install:all && cd client && npm run build",
     "start": "cd server && node server.js"

@@ -7,6 +7,7 @@ import NotificationPanel from './NotificationPanel';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/Button';
 import { cn } from '../lib/utils';
+import { Wheat } from 'lucide-react';
 
 const NavLink = ({ to, children, isActive }) => (
   <Link
@@ -83,7 +84,7 @@ const Navbar = () => {
                 whileTap={{ scale: 0.95 }}
                 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 flex items-center gap-2"
               >
-                <span>🌾</span> Lagaan Secure
+                <span><Wheat className="w-6 h-6 text-emerald-600" /></span> Lagaan Secure
               </motion.div>
             </Link>
           </div>
@@ -105,7 +106,7 @@ const Navbar = () => {
                   </>
                 )}
                 <NavLink to="/disputes" isActive={location.pathname === '/disputes'}>{t('nav.disputes', 'Disputes')}</NavLink>
-                <NavLink to="/admin" isActive={location.pathname === '/admin'}>⚙️ {t('nav.admin', 'Admin')}</NavLink>
+                {user?.role === "admin" && <NavLink to="/admin" isActive={location.pathname === '/admin'}>⚙️ {t('nav.admin', 'Admin')}</NavLink>}
                 <NavLink to="/impact" isActive={location.pathname === '/impact'}>
                   <span className="flex items-center gap-1">📊 {t('nav.impact', 'Impact Analytics')}</span>
                 </NavLink>
@@ -268,7 +269,7 @@ const Navbar = () => {
                   )}
                   <MobileNavLink to="/deals" onClick={() => setIsOpen(false)} isActive={location.pathname === '/deals'}>{t('nav.deals')}</MobileNavLink>
                   <MobileNavLink to="/disputes" onClick={() => setIsOpen(false)} isActive={location.pathname === '/disputes'}>⚖️ {t('nav.disputes', 'Disputes')}</MobileNavLink>
-                  <MobileNavLink to="/admin" onClick={() => setIsOpen(false)} isActive={location.pathname === '/admin'}>⚙️ {t('nav.admin', 'Admin')}</MobileNavLink>
+                  {user?.role === "admin" && <MobileNavLink to="/admin" onClick={() => setIsOpen(false)} isActive={location.pathname === '/admin'}>⚙️ {t('nav.admin', 'Admin')}</MobileNavLink>}
                   <MobileNavLink to="/impact" onClick={() => setIsOpen(false)} isActive={location.pathname === '/impact'} className="text-primary-700 font-semibold bg-primary-50/50">📊 {t('nav.impact', 'Impact Analytics')}</MobileNavLink>
                   <MobileNavLink to="/notifications" onClick={() => setIsOpen(false)} isActive={location.pathname === '/notifications'}>{t('nav.notifications')}</MobileNavLink>
                   

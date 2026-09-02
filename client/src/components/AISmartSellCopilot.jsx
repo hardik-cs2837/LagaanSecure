@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import api from '../services/api';
 import DataSourceBadge from './DataSourceBadge';
 import { Button } from './ui/Button';
+import TextToSpeechButton from './TextToSpeechButton';
 import { cn } from '../lib/utils';
 import { 
   SparklesIcon, 
@@ -22,19 +23,20 @@ import {
   InformationCircleIcon
 } from '@heroicons/react/24/outline';
 import { FiTrendingUp, FiTrendingDown, FiRefreshCw, FiZap, FiShoppingBag } from 'react-icons/fi';
+import { Circle, Wheat, Leaf, Cloud, Sprout } from 'lucide-react';
 
 const CROPS = [
-  { name: 'Onion', icon: '🧅', category: 'Vegetable' },
-  { name: 'Tomato', icon: '🍅', category: 'Vegetable' },
-  { name: 'Wheat', icon: '🌾', category: 'Grain' },
-  { name: 'Rice', icon: '🍚', category: 'Grain' },
-  { name: 'Potato', icon: '🥔', category: 'Tuber' },
-  { name: 'Soybean', icon: '🫘', category: 'Pulse' },
-  { name: 'Cotton', icon: '☁️', category: 'Commercial' },
-  { name: 'Maize', icon: '🌽', category: 'Grain' },
-  { name: 'Sugarcane', icon: '🎋', category: 'Commercial' },
-  { name: 'Garlic', icon: '🧄', category: 'Spice' },
-  { name: 'Mustard', icon: '🌼', category: 'Oilseed' }
+  { name: 'Onion', icon: <Circle className="w-8 h-8 text-emerald-600" />, category: 'Vegetable' },
+  { name: 'Tomato', icon: <Circle className="w-8 h-8 text-red-500" />, category: 'Vegetable' },
+  { name: 'Wheat', icon: <Wheat className="w-8 h-8 text-yellow-500" />, category: 'Grain' },
+  { name: 'Rice', icon: <Leaf className="w-8 h-8 text-stone-300" />, category: 'Grain' },
+  { name: 'Potato', icon: <Circle className="w-8 h-8 text-amber-700" />, category: 'Tuber' },
+  { name: 'Soybean', icon: <Sprout className="w-8 h-8 text-green-700" />, category: 'Pulse' },
+  { name: 'Cotton', icon: <Cloud className="w-8 h-8 text-slate-300" />, category: 'Commercial' },
+  { name: 'Maize', icon: <Leaf className="w-8 h-8 text-yellow-400" />, category: 'Grain' },
+  { name: 'Sugarcane', icon: <Leaf className="w-8 h-8 text-green-500" />, category: 'Commercial' },
+  { name: 'Garlic', icon: <Circle className="w-8 h-8 text-slate-200" />, category: 'Spice' },
+  { name: 'Mustard', icon: <Leaf className="w-8 h-8 text-yellow-500" />, category: 'Oilseed' }
 ];
 
 const STATES_AND_DISTRICTS = {
@@ -351,7 +353,7 @@ export default function AISmartSellCopilot({ onClose, isModal = false }) {
                         : "border-slate-200 hover:border-emerald-300 hover:bg-slate-50"
                     )}
                   >
-                    <span className="text-3xl group-hover:scale-110 transition-transform">🌱</span>
+                    <span className="group-hover:scale-110 transition-transform"><Sprout className="w-8 h-8 text-emerald-500" /></span>
                     <span className="font-bold text-slate-900 text-sm">Other Crop</span>
                     <span className="text-[10px] text-slate-400 font-semibold">Custom</span>
                   </button>
@@ -783,10 +785,13 @@ export default function AISmartSellCopilot({ onClose, isModal = false }) {
                       <span className={cn("px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-xs", recommendationColor)}>
                         {recommendationBadge}
                       </span>
-                      <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
-                        <MapPinIcon className="w-4 h-4 text-emerald-600" />
-                        {district}, {stateName} Mandi Hub
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <TextToSpeechButton textToRead={`${recommendationTitle}. ${recommendationDesc}`} />
+                        <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
+                          <MapPinIcon className="w-4 h-4 text-emerald-600" />
+                          {district}, {stateName} Mandi Hub
+                        </span>
+                      </div>
                     </div>
 
                     <div>

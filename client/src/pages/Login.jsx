@@ -444,7 +444,7 @@ const Login = () => {
               className="mt-8 pt-6 border-t border-gray-100 flex flex-col items-center"
             >
               <p className="text-xs text-gray-500 mb-4 font-medium uppercase tracking-wider">Or continue with</p>
-              {import.meta.env.VITE_GOOGLE_CLIENT_ID && !import.meta.env.VITE_GOOGLE_CLIENT_ID.includes('dummy') ? (
+              {import.meta.env.VITE_GOOGLE_CLIENT_ID ? (
                 <GoogleLogin
                   onSuccess={handleGoogleSuccess}
                   onError={() => console.log('Google Login Failed')}

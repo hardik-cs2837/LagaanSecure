@@ -32,6 +32,7 @@ import {
   MapPinIcon
 } from '@heroicons/react/24/outline';
 import { FiBox, FiTrendingUp, FiActivity, FiMapPin, FiTruck, FiAlertCircle } from 'react-icons/fi';
+import TextToSpeechButton from '../components/TextToSpeechButton';
 
 const FarmerDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -96,28 +97,28 @@ const FarmerDashboard = () => {
 
   const stats = [
     { 
-      label: 'Active Lots', 
+      label: t('farmer.stats.activeLots', 'Active Lots'), 
       value: loadingListings ? '-' : myListings.length, 
       icon: <FiBox className="w-6 h-6 text-emerald-600" />, 
       bg: 'bg-emerald-50', 
       border: 'border-emerald-100',
-      trend: myListings.length > 0 ? '+1 this week' : 'No active lots' 
+      trend: myListings.length > 0 ? t('farmer.stats.activeTrend', '+1 this week') : t('farmer.stats.noActive', 'No active lots') 
     },
     { 
-      label: 'Pending Deals', 
+      label: t('farmer.stats.pendingDeals', 'Pending Deals'), 
       value: loadingDeals ? '-' : myDeals.length, 
       icon: <FiActivity className="w-6 h-6 text-blue-600" />, 
       bg: 'bg-blue-50', 
       border: 'border-blue-100',
-      trend: myDeals.length > 0 ? 'Requires action' : 'All caught up' 
+      trend: myDeals.length > 0 ? t('farmer.stats.actionReq', 'Requires action') : t('farmer.stats.caughtUp', 'All caught up') 
     },
     { 
-      label: 'Est. Revenue', 
+      label: t('farmer.stats.estRevenue', 'Est. Revenue'), 
       value: `₹${estimatedValue.toLocaleString()}`, 
       icon: <CurrencyRupeeIcon className="w-6 h-6 text-indigo-600" />, 
       bg: 'bg-indigo-50', 
       border: 'border-indigo-100',
-      trend: '+12% vs last month' 
+      trend: t('farmer.stats.revTrend', '+12% vs last month') 
     },
   ];
 
@@ -132,16 +133,17 @@ const FarmerDashboard = () => {
       <motion.div variants={itemVariants} className="flex flex-col xl:flex-row xl:items-end justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 flex items-center gap-2">
               {t('farmer.welcome', 'Welcome back')},{' '}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-500">
                 {user?.name || 'Kisaan'}
               </span> 👋
+              <TextToSpeechButton textToRead={`${t('farmer.welcome', 'Welcome back')} ${user?.name || 'Kisaan'}. ${t('farmer.subtitle', "Here's what's happening with your crops today. Track deals, forecast demand, and manage your lots.")}`} />
             </h1>
             {user?.fpo_name && (
               <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-200 uppercase tracking-wider shadow-sm">
                 <UserGroupIcon className="w-3.5 h-3.5" />
-                FPO: {user.fpo_name}
+                {t('farmer.fpo', 'FPO')}: {user.fpo_name}
               </span>
             )}
           </div>
@@ -156,7 +158,7 @@ const FarmerDashboard = () => {
             className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 rounded-xl hover:from-emerald-500 hover:to-indigo-500 transition-all shadow-md hover:shadow-emerald-500/25 overflow-hidden"
           >
             <SparklesIcon className="w-4 h-4 text-amber-300 animate-pulse" />
-            <span>AI Sell Copilot</span>
+            <span>{t('farmer.actions.aiCopilot', 'AI Sell Copilot')}</span>
           </button>
 
           <button

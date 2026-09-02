@@ -5,7 +5,9 @@ import { Skeleton } from '../components/ui/Skeleton';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Shield, RefreshCw, Users, LayoutList, CheckCircle2, TrendingUp, Activity, Database, Check, Clock, Eye, X } from 'lucide-react';
 import toast from 'react-hot-toast';
+import TextToSpeechButton from '../components/TextToSpeechButton';
 
 const AdminDashboard = () => {
   const { t } = useTranslation();
@@ -35,127 +37,28 @@ const AdminDashboard = () => {
       if (kpiRes.status === 'fulfilled' && kpiRes.value.data?.data) {
         setKpis(kpiRes.value.data.data);
       } else {
-        // Fallback KPI data derived from database defaults
         setKpis({
-          totalUsers: 7,
-          farmerCount: 4,
-          buyerCount: 3,
-          activeListings: 5,
-          totalListings: 5,
-          completedDeals: 2,
-          platformVolumeQuintals: 450,
-          platformValueRupees: 939750
+          totalUsers: 0,
+          farmerCount: 0,
+          buyerCount: 0,
+          activeListings: 0,
+          totalListings: 0,
+          completedDeals: 0,
+          platformVolumeQuintals: 0,
+          platformValueRupees: 0
         });
       }
 
       if (healthRes.status === 'fulfilled' && healthRes.value.data?.data?.services) {
         setHealthData(healthRes.value.data.data.services);
       } else {
-        // Default services health data
-        setHealthData([
-          {
-            id: 'mandi_api',
-            name: t('admin.health.mandiApi', 'Government Mandi API (eNAM/Agmarknet)'),
-            status: 'operational',
-            latencyMs: 142,
-            uptimePct: 99.8,
-            lastChecked: new Date().toISOString(),
-            details: 'Live price sync active across 1,200+ APMC markets'
-          },
-          {
-            id: 'ai_service',
-            name: t('admin.health.aiService', 'Gemini AI Advisor & Demand Forecast Engine'),
-            status: 'operational',
-            latencyMs: 215,
-            uptimePct: 99.9,
-            lastChecked: new Date().toISOString(),
-            details: 'NLP Price Negotiation & Arrival Forecast engine online'
-          },
-          {
-            id: 'auth_service',
-            name: t('admin.health.authService', 'JWT & Authentication Service'),
-            status: 'operational',
-            latencyMs: 35,
-            uptimePct: 100.0,
-            lastChecked: new Date().toISOString(),
-            details: 'Role-based access token verification active'
-          },
-          {
-            id: 'database',
-            name: t('admin.health.database', 'Core Relational Database (Sequelize DB)'),
-            status: 'operational',
-            latencyMs: 12,
-            uptimePct: 99.95,
-            lastChecked: new Date().toISOString(),
-            details: 'ACID transaction storage for listings, deals & grievances'
-          }
-        ]);
+        setHealthData([]);
       }
 
       if (txRes.status === 'fulfilled' && Array.isArray(txRes.value.data?.data)) {
         setTransactions(txRes.value.data.data);
       } else {
-        // Mock transaction list for fallback
-        setTransactions([
-          {
-            id: 1,
-            created_at: new Date().toISOString(),
-            offered_price: 1400,
-            counter_price: 1425,
-            status: 'accepted',
-            payment_status: 'paid',
-            payment_method: 'bank_transfer',
-            listing: {
-              crop_name: 'Onion',
-              quantity: 150,
-              unit: 'quintal',
-              farmer: { name: 'Ramesh Patel', fpo_name: 'Sahyadri Farmers Producer Co.' }
-            },
-            buyer: { name: 'Pooja Sharma', business_name: 'FreshMart National Supply Chain Ltd' },
-            audit_timeline: [
-              { title: 'Offer Submitted', description: 'Offered ₹1400/quintal', timestamp: '2026-08-30T09:15:00Z' },
-              { title: 'Deal Accepted', description: 'Locked at ₹1425/quintal', timestamp: '2026-08-30T11:00:00Z' },
-              { title: 'Payment Confirmed', description: 'Settlement confirmed', timestamp: '2026-08-30T15:00:00Z' }
-            ]
-          },
-          {
-            id: 2,
-            created_at: new Date(Date.now() - 86400000).toISOString(),
-            offered_price: 2400,
-            counter_price: 2420,
-            status: 'accepted',
-            payment_status: 'paid',
-            payment_method: 'bank_transfer',
-            listing: {
-              crop_name: 'Wheat',
-              quantity: 300,
-              unit: 'quintal',
-              farmer: { name: 'Balwinder Singh', fpo_name: 'Green Punjab Grain FPO' }
-            },
-            buyer: { name: 'Rajesh Singhania', business_name: 'Reliance Retail Agri Sourcing' },
-            audit_timeline: [
-              { title: 'Offer Submitted', description: 'Offered ₹2400/quintal', timestamp: '2026-08-28T08:00:00Z' },
-              { title: 'Payment Confirmed', description: 'Paid via RTGS', timestamp: '2026-08-28T18:00:00Z' }
-            ]
-          },
-          {
-            id: 3,
-            created_at: new Date(Date.now() - 172800000).toISOString(),
-            offered_price: 1200,
-            status: 'pending',
-            payment_status: 'unpaid',
-            listing: {
-              crop_name: 'Tomato',
-              quantity: 80,
-              unit: 'quintal',
-              farmer: { name: 'Suresh Deshmukh', fpo_name: 'Sahyadri Farmers Producer Co.' }
-            },
-            buyer: { name: 'Anita Roy', business_name: 'BigBasket Regional Procurement' },
-            audit_timeline: [
-              { title: 'Offer Submitted', description: 'Offered ₹1200/quintal', timestamp: '2026-09-01T10:00:00Z' }
-            ]
-          }
-        ]);
+        setTransactions([]);
       }
     } catch (err) {
       toast.error('Failed to load some dashboard telemetry');
@@ -213,8 +116,9 @@ const AdminDashboard = () => {
             <div className="flex items-center gap-3">
               <span className="p-2.5 bg-emerald-100 text-emerald-800 rounded-xl font-bold text-xl">🛡️</span>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900">
+                <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
                   {t('admin.title', 'Admin Dashboard & Governance')}
+                  <TextToSpeechButton textToRead={`${t('admin.title', 'Admin Dashboard and Governance')}. ${t('admin.subtitle', 'Real-time telemetry, database metrics, external API health and trade monitoring')}`} />
                 </h1>
                 <p className="text-sm text-slate-500 mt-0.5">
                   {t('admin.subtitle', 'Real-time telemetry, database metrics, external API health & trade monitoring')}
@@ -268,7 +172,7 @@ const AdminDashboard = () => {
                     <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700">
                       {t('admin.kpis.totalUsers', 'Total Users')}
                     </span>
-                    <span className="p-2 bg-emerald-100/80 text-emerald-700 rounded-lg text-lg">👥</span>
+                    <span className="p-2 bg-emerald-100/80 text-emerald-700 rounded-lg text-lg"><Users className='w-5 h-5 text-indigo-500' /></span>
                   </div>
                   <div className="mt-3">
                     <span className="text-3xl font-extrabold text-slate-900">
@@ -290,7 +194,7 @@ const AdminDashboard = () => {
                     <span className="text-xs font-semibold uppercase tracking-wider text-blue-700">
                       {t('admin.kpis.activeListings', 'Active Listings')}
                     </span>
-                    <span className="p-2 bg-blue-100/80 text-blue-700 rounded-lg text-lg">🌾</span>
+                    <span className="p-2 bg-blue-100/80 text-blue-700 rounded-lg text-lg"><LayoutList className='w-5 h-5 text-blue-500' /></span>
                   </div>
                   <div className="mt-3">
                     <span className="text-3xl font-extrabold text-slate-900">
@@ -310,7 +214,7 @@ const AdminDashboard = () => {
                     <span className="text-xs font-semibold uppercase tracking-wider text-amber-700">
                       {t('admin.kpis.completedDeals', 'Completed Deals')}
                     </span>
-                    <span className="p-2 bg-amber-100/80 text-amber-700 rounded-lg text-lg">🤝</span>
+                    <span className="p-2 bg-amber-100/80 text-amber-700 rounded-lg text-lg"><CheckCircle2 className='w-5 h-5 text-amber-500' /></span>
                   </div>
                   <div className="mt-3">
                     <span className="text-3xl font-extrabold text-slate-900">
@@ -330,7 +234,7 @@ const AdminDashboard = () => {
                     <span className="text-xs font-semibold uppercase tracking-wider text-purple-700">
                       {t('admin.kpis.platformVolume', 'Platform Volume')}
                     </span>
-                    <span className="p-2 bg-purple-100/80 text-purple-700 rounded-lg text-lg">📈</span>
+                    <span className="p-2 bg-purple-100/80 text-purple-700 rounded-lg text-lg"><TrendingUp className='w-5 h-5 text-purple-500' /></span>
                   </div>
                   <div className="mt-3">
                     <span className="text-3xl font-extrabold text-slate-900">
@@ -548,7 +452,7 @@ const AdminDashboard = () => {
                             tx.payment_status === 'paid' ? 'bg-emerald-100 text-emerald-800' :
                             tx.payment_status === 'pending_confirmation' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'
                           }`}>
-                            {tx.payment_status === 'paid' ? '✓ Paid' : tx.payment_status === 'pending_confirmation' ? '⏳ Pending Conf' : 'Unpaid'}
+                            {tx.payment_status === 'paid' ? '✓ Paid' : tx.payment_status === 'pending_confirmation' ? '<Clock className='w-3 h-3 inline mr-1'/> Pending Conf' : 'Unpaid'}
                           </span>
                         </td>
 

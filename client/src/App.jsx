@@ -39,7 +39,7 @@ function App() {
         <Route path="/login" element={isAuthenticated ? <Navigate to={isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace /> : <Login />} />
         <Route path="/register" element={isAuthenticated ? <Navigate to={isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace /> : <Register />} />
         <Route path="/impact" element={<ImpactAnalytics />} />
-        <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
         <Route path="/disputes" element={<ProtectedRoute><Disputes /></ProtectedRoute>} />
 
         {/* Farmer */}

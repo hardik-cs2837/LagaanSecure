@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
   const User = sequelize.define('User', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, allowNull: false },
-    role: { type: DataTypes.ENUM('farmer', 'buyer'), allowNull: false },
+    role: { type: DataTypes.ENUM('farmer', 'buyer', 'admin'), allowNull: false },
     phone: { type: DataTypes.STRING, unique: true, allowNull: false },
     email: { type: DataTypes.STRING, unique: true, allowNull: true },
     location: { type: DataTypes.STRING },

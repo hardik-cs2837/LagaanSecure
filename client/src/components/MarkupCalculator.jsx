@@ -84,21 +84,7 @@ const MarkupCalculator = () => {
       });
     } catch (err) {
       console.error(err);
-      // Fallback with mock calculation
-      const mockMandi = { Wheat: 2200, Rice: 2100, Tomato: 1200, Onion: 1100, Potato: 650 };
-      const mp = mockMandi[crop] || 2000;
-      const diff = ((mp - Number(price)) / mp) * 100;
-      setResult({
-        mandiPrice: mp,
-        offeredPrice: Number(price),
-        diffPercent: diff,
-        potentialLoss: mp > Number(price) ? mp - Number(price) : 0,
-        verdict: diff <= 0
-          ? `This offer of ₹${price}/quintal for ${crop} is at or above the mandi modal price of ₹${mp}/quintal. This is a fair deal!`
-          : diff <= 10
-            ? `This offer is ${diff.toFixed(1)}% below the mandi price. You might negotiate for a bit more.`
-            : `Caution: This offer is ${diff.toFixed(1)}% below the mandi price of ₹${mp}/quintal. You're losing ₹${mp - Number(price)} per quintal. Consider selling directly on Lagaan Secure.`,
-      });
+      setResult({ error: 'Mandi price not available. Please try again later.' });
     } finally {
       setLoading(false);
     }

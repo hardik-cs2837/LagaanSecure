@@ -1,165 +1,103 @@
-# Lagaan Secure 🌾
+# Lagaan Secure - Startup-Grade AgriTech Platform
 
-**Lagaan Secure** is an enterprise-grade AgriTech marketplace connecting farmers and Farmers Producer Organizations (FPOs) directly with institutional buyers and wholesale procurement networks — eliminating multi-layered intermediary commissions.
+**Lagaan Secure** is a production-ready enterprise AgriTech marketplace connecting smallholder farmers and Farmers Producer Organizations (FPOs) directly with institutional buyers and wholesale procurement networks—eliminating multi-layered intermediary commissions.
 
-🌐 **Live Vercel Production Web App:** [https://lagaan-secure.vercel.app](https://lagaan-secure.vercel.app)
+## 🚀 Live Production Environment
+
+- **Web Application**: [https://lagaan-secure.vercel.app](https://lagaan-secure.vercel.app)
+- **Status**: Beta / Release Candidate 1
+- **Data Source**: Live Integration with data.gov.in Mandi Prices API
+
+---
+
+## 💼 Business Model
+
+Lagaan Secure operates on a B2B2C marketplace model designed for scalability and trust:
+
+1. **Transaction Fee (Take Rate)**: A nominal 1-2% escrow processing fee on completed wholesale deals, charged primarily to the buyer. This replaces the traditional 8-15% commission charged by middlemen.
+2. **Premium FPO Subscriptions**: Advanced analytics, pooled logistics, and bulk tender matching for FPOs on a monthly SaaS subscription.
+3. **Logistics & Warehousing Partnerships**: Lead-generation fees for connecting farmers/buyers with verified cold-storage providers and transport carriers.
+4. **Data Insights (Future)**: Anonymized, aggregated supply/demand data licensing for financial institutions and agro-processors.
+
+### Target Users
+- **Smallholder Farmers**: Seeking fair, transparent market prices and direct access to reliable buyers without exploitation.
+- **Farmers Producer Organizations (FPOs)**: Aggregating member produce to fulfill large institutional orders and optimize transport logistics.
+- **Institutional Buyers / FMCGs**: Looking for traceable, direct-source procurement with guaranteed quality and reliable fulfillment.
 
 ---
 
 ## 🌟 Key Capabilities & Innovation
 
-- **Direct Farmer-to-Buyer Marketplace**: Trade agricultural produce directly without agent fees.
-- **AI Demand & 14-Day Price Forecasting**: Mathematical linear regression (OLS + EWMA) timing advice.
+- **Zero Mock Data Policy**: All market prices are fetched live from verified Government APIs (pi.data.gov.in). If data is unavailable, the system degrades gracefully. No fabricated transactions or fake metrics are displayed.
+- **AI Smart Sell Copilot**: Personalized agricultural intelligence powered by verified data. Analyzes crop, location, real-time prices, and logistics to provide actionable selling advice.
+- **Advanced Authentication & Security**: Secure JWT sessions, Google OAuth 2.0 integration, strict rate limiting against brute-force attacks, and complete OTP/Forgot Password workflows.
+- **Multilingual & Accessible**: Native support for 9 Indian regional languages with Text-to-Speech (TTS) capabilities for low-literacy users.
+- **Real-Time Platform Governance**: An administrative dashboard with live API health monitoring and real, database-driven KPIs. Dispute resolution and escrow logic placeholders built-in.
 - **Multi-Stop Route Optimizer**: Nearest-Neighbor TSP heuristic for freight consolidation and route planning.
 - **FPO Bulk Lot Aggregation**: Pool smallholder member harvests into unified institutional master lots.
-- **Institutional Bulk Tenders**: Post buyer procurement requirements with automated match scoring.
-- **Cold Storage & Logistics Directory**: Multi-chamber warehouse and verified transport carrier discovery.
-- **Google OAuth 2.0 & Demo Access**: One-click Google sign-in and instant dual-role demo access.
-- **Real-Time Platform Impact Analytics**: Quantifiable farmer earnings gain (+38.5%) and buyer cost savings (-18.2%).
-- **Bilingual Interface**: Native English and Hindi localization with instant context toggling.
 
 ---
 
 ## 🏗️ System Architecture
 
-```text
-       ┌─────────────────────────────────────────┐
-       │   Browser / Client (React 18 + Vite)    │
-       └────────────────────┬────────────────────┘
-                            │
-               REST APIs / JSON Payloads
-                            │
-       ┌────────────────────▼────────────────────┐
-       │     Express.js API Server / Vercel      │
-       │    Serverless Node Execution Engine     │
-       └────────────────────┬────────────────────┘
-                            │
-              Sequelize ORM / Dialect pg
-                            │
-       ┌────────────────────▼────────────────────┐
-       │  PostgreSQL Relational Database (SSL)   │
-       └─────────────────────────────────────────┘
-```
-
----
-
-## 🚀 Live Production & One-Click Cloud Deployment
-
-### 1. Vercel Deployment (Frontend + Serverless API)
-The repository includes a root `vercel.json` and `/api/index.js` wrapper configured for Vercel deployment:
-- **Production Web App**: [https://lagaan-secure.vercel.app](https://lagaan-secure.vercel.app)
-- **Deployment Config**: `vercel.json`
-
-### 2. Render Blueprint Deployment (Full Stack + Managed PostgreSQL)
-The project includes a 1-click `render.yaml` Blueprint for Render:
-1. Log in to [dashboard.render.com](https://dashboard.render.com).
-2. Click **New +** → **Blueprint**.
-3. Connect repository `hardik-cs2837/LagaanSecure`.
-4. Render automatically provisions the Express Web Service and PostgreSQL database.
-
----
-
-## 🔐 Google OAuth 2.0 Configuration
-
-Lagaan Secure supports Google Identity Services (GIS) One-Tap and Popup Authentication (`@react-oauth/google`).
-
-### Environment Variables Setup:
-Set the following environment variable in Vercel / Render or your local `.env`:
-
-```env
-VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
-```
-
-### Google Cloud Console Setup:
-1. Go to **[Google Cloud Console Credentials](https://console.cloud.google.com/apis/credentials)**.
-2. Create an **OAuth 2.0 Client ID** (Application type: *Web Application*).
-3. Set **Authorized JavaScript Origins**:
-   - `https://lagaan-secure.vercel.app` (Production)
-   - `http://localhost:5173` (Local Development)
-4. Set **Authorized Redirect URIs**:
-   - `https://lagaan-secure.vercel.app/login`
-5. Save and paste your **Client ID** into `VITE_GOOGLE_CLIENT_ID`.
-
-*Note: If no Google Client ID is configured, the application automatically enables active demo session fallbacks so evaluators can test Google sign-in instantly with one click.*
+- **Frontend**: React 18, Vite, Tailwind CSS, Framer Motion, Lucide Icons
+- **Backend**: Express.js (Serverless-ready for Vercel)
+- **Database**: PostgreSQL (Sequelize ORM)
+- **External Services**: Google OAuth (Identity), Gemini API (AI Copilot), data.gov.in (Market Prices)
 
 ---
 
 ## 🛠️ Local Development & Quickstart
 
 ### Prerequisites
-- **Node.js**: v18.x or higher
-- **PostgreSQL**: v14.x or higher
-- **npm**: v9.x or higher
+- Node.js v18.x+
+- PostgreSQL v14.x+
 
-### 1. Clone Repository & Install Dependencies
-```bash
+### 1. Installation
+\\\ash
 git clone https://github.com/hardik-cs2837/LagaanSecure.git
 cd LagaanSecure
-
-# Install root dependencies
 npm install
-
-# Install frontend dependencies
-cd client
-npm install
-cd ..
+cd client && npm install && cd ..
 ```
 
-### 2. Environment Configuration
-Create a `.env` file in the project root (copy from `.env.example`):
-```env
-PORT=5000
-NODE_ENV=development
-DATABASE_URL=postgres://postgres:your_password@localhost:5432/lagaansecure
-JWT_SECRET=lagaan_secure_super_secret_jwt_key_2026
-CORS_ORIGIN=*
-VITE_GOOGLE_CLIENT_ID=your_google_client_id_here
-```
+### 2. Configuration
+Copy .env.example to .env and fill in your actual credentials.
+**Crucial**: You must provide a valid AGMARKNET_API_KEY to fetch live prices.
 
-### 3. Database Initialization & Seeding
+### 3. Database Initialization & Admin Provisioning
 ```bash
-# Create local database
 createdb -U postgres lagaansecure
-
-# Seed database with sample farmers, buyers, FPOs, and active listings
 npm run seed
 ```
 
+**Admin Account Provisioning:**
+The `npm run seed` command automatically provisions a default Super Admin account required to access the Platform Governance and API Health dashboards:
+- **Role:** `admin`
+- **Phone:** `0000000000` (Use this to login)
+- **Password:** `admin123`
+
+*⚠️ SECURITY WARNING: Admin accounts cannot be created via the public registration form. For production deployments, you MUST manually provision admin accounts directly in the PostgreSQL database or change the default seeded password immediately to prevent unauthorized access.*
+
 ### 4. Run Development Servers
 ```bash
-# Run both Backend API and Frontend concurrently:
 npm run dev
 ```
 
-- **Frontend App**: [http://localhost:5173](http://localhost:5173)
-- **Backend API**: [http://localhost:5000/api/health](http://localhost:5000/api/health)
-
 ---
 
-## 🔑 Pre-Seeded Demo Accounts
+## 🛣️ Roadmap & Known Limitations
 
-| User Role | Phone Number | Password | Profile / Business Name |
-| :--- | :--- | :--- | :--- |
-| **Farmer (FPO Leader)** | `9876543210` | `password123` | Ramesh Patel (Sahyadri Farmers Co.) |
-| **Buyer (Institutional)** | `9123456780` | `password123` | Pooja Sharma (FreshMart Ltd.) |
+### Current Limitations
+- **Escrow Integration**: The current deal flow supports negotiation and "accepted" states, but actual fiat currency escrow is simulated pending a payment gateway integration (e.g., Razorpay/Stripe).
+- **Logistics Booking**: Users can view suggested routes, but the final booking of trucks relies on external coordination.
 
----
-
-## 🧪 Testing & Verification
-
-Run automated integration test suite:
-```bash
-npm test
-```
-
-Verifies:
-- User registration & authentication JWT issuance
-- Mandi price transparency calculations
-- FPO lot pooling & distribution
-- Order deal creation & counter-offer negotiation
-- Route optimization engine output
+### Future Roadmap
+- Q3 2026: Escrow payment gateway integration & automated KYC verification for buyers.
+- Q4 2026: Mobile applications for Android (React Native) for deeper penetration into rural markets.
+- Q1 2027: Integration with IoT weather sensors and soil health cards for predictive yield modeling.
 
 ---
 
 ## 📄 License
-Released under the MIT License. Developed for Lagaan Secure AgriTech Platform.
+Released under the MIT License.

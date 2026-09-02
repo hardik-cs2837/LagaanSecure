@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 
-const mockData = {
-  wheat: [
-    { market: 'Azadpur', min: 2100, modal: 2200, max: 2350 },
-    { market: 'Ghazipur', min: 2150, modal: 2280, max: 2400 },
-    { market: 'Okhla', min: 2050, modal: 2150, max: 2300 }
-  ],
-  rice: [
-    { market: 'Azadpur', min: 3100, modal: 3300, max: 3500 },
-    { market: 'Ghazipur', min: 3200, modal: 3400, max: 3600 },
-  ]
-};
-
-const MandiPriceChart = () => {
+const MandiPriceChart = ({ chartData }) => {
   const [crop, setCrop] = useState('wheat');
-  const data = mockData[crop];
+  const data = chartData ? chartData[crop] : null;
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="bg-white p-6 rounded-xl shadow-md h-full min-h-[400px] flex flex-col items-center justify-center">
+        <h3 className="text-xl font-bold text-gray-500">Data Unavailable</h3>
+        <p className="text-gray-400 mt-2">No live mandi prices available.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md h-full min-h-[400px] flex flex-col">

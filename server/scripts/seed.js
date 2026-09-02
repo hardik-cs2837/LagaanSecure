@@ -4,6 +4,20 @@ const { sequelize, User, Listing, Deal, Notification, PriceCache, FpoGroup, Bulk
 async function seed() {
   console.log('🌱 Starting comprehensive database seeding for Lagaan Secure Demo...');
 
+  // Create Super Admin Account
+  console.log('0. Creating Super Admin...');
+  const adminPwd = await bcrypt.hash('admin123', 10);
+  await User.findOrCreate({
+    where: { role: 'admin' },
+    defaults: {
+      name: 'Super Admin',
+      phone: '0000000000',
+      email: 'admin@lagaansecure.com',
+      role: 'admin',
+      password_hash: adminPwd
+    }
+  });
+
   // Clean existing tables in foreign key order
   if (BulkRequirement) await BulkRequirement.destroy({ where: {} });
   await Notification.destroy({ where: {} });

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { SparklesIcon as Sparkles, TruckIcon as Tractor, ShoppingCartIcon as ShoppingCart, XCircleIcon as XCircle, BuildingOfficeIcon as Building, BuildingStorefrontIcon as Store, TruckIcon as Truck, ChartBarIcon as LineChart, UserGroupIcon as Users, UsersIcon as Handshake } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../components/ui/Button';
+import TextToSpeechButton from '../components/TextToSpeechButton';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -68,11 +70,14 @@ export default function Landing() {
           className="max-w-6xl mx-auto text-center space-y-8 relative z-10"
         >
           <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 text-xs font-bold text-emerald-200 shadow-xl">
-            <span className="animate-pulse">✨</span> {t('landing.ps_tag', 'Direct Farmer-to-Buyer Agricultural Marketplace')}
+            <Sparkles className="w-4 h-4 animate-pulse inline mr-1" /> {t('landing.ps_tag', 'Direct Farmer-to-Buyer Agricultural Marketplace')}
           </motion.div>
 
-          <motion.h1 variants={fadeInUp} className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-white via-emerald-100 to-white">
+          <motion.h1 variants={fadeInUp} className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-white via-emerald-100 to-white flex items-center justify-center gap-4">
             {t('landing.hero_title', 'बेचें सीधे। कमाएँ ज़्यादा।')}
+            <div className="text-white">
+              <TextToSpeechButton textToRead={`${t('landing.hero_title', 'Sell Direct. Earn More.')} ${t('landing.hero_subtitle', 'Connecting farmers and FPOs directly with consumers and institutional buyers — eliminating multi-layer intermediary markups.')}`} />
+            </div>
           </motion.h1>
 
           <motion.p variants={fadeInUp} className="text-lg sm:text-2xl text-emerald-100/90 max-w-3xl mx-auto font-medium leading-relaxed">
@@ -83,12 +88,12 @@ export default function Landing() {
           <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-8">
             <Link to="/register?role=farmer" className="w-full sm:w-auto">
               <Button size="lg" className="w-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black px-8 py-6 rounded-2xl shadow-xl hover:shadow-emerald-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2">
-                👨‍🌾 {t('landing.farmerBtn', 'Start Selling')}
+                <Tractor className="w-5 h-5" /> {t('landing.farmerBtn', 'Start Selling')}
               </Button>
             </Link>
             <Link to="/register?role=buyer" className="w-full sm:w-auto">
               <Button size="lg" variant="outline" className="w-full bg-white/5 hover:bg-white/10 text-white border-white/20 font-black px-8 py-6 rounded-2xl shadow-xl backdrop-blur-md transition-all hover:scale-105 flex items-center justify-center gap-2">
-                🛒 {t('landing.buyerBtn', 'Procure Direct')}
+                <ShoppingCart className="w-5 h-5" /> {t('landing.buyerBtn', 'Procure Direct')}
               </Button>
             </Link>
           </motion.div>
@@ -134,7 +139,7 @@ export default function Landing() {
               
               <div className="flex items-center justify-between mb-8">
                 <span className="text-sm font-black text-red-600 uppercase tracking-wider flex items-center gap-2">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100">❌</span> Traditional
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100"><XCircle className="w-4 h-4 text-red-600" /></span> Traditional
                 </span>
                 <span className="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full">
                   4-6 Intermediaries
@@ -143,7 +148,7 @@ export default function Landing() {
 
               <div className="space-y-4 text-sm font-medium">
                 <div className="flex items-center justify-between bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                  <span className="flex items-center gap-3"><span className="text-xl">👨‍🌾</span> Farmer Gate</span>
+                  <span className="flex items-center gap-3"><span className="text-xl"><Tractor className="w-5 h-5" /></span> Farmer Gate</span>
                   <span className="font-bold text-red-600">₹2,000 / qtl</span>
                 </div>
                 
@@ -153,7 +158,7 @@ export default function Landing() {
                 </div>
 
                 <div className="flex items-center justify-between bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                  <span className="flex items-center gap-3"><span className="text-xl">🏢</span> Primary Wholesaler</span>
+                  <span className="flex items-center gap-3"><span className="text-xl"><Building className="w-5 h-5" /></span> Primary Wholesaler</span>
                   <span className="font-bold text-slate-700">+₹250 Markup</span>
                 </div>
 
@@ -163,7 +168,7 @@ export default function Landing() {
                 </div>
 
                 <div className="flex items-center justify-between bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                  <span className="flex items-center gap-3"><span className="text-xl">🏬</span> City Retailer</span>
+                  <span className="flex items-center gap-3"><span className="text-xl"><Store className="w-5 h-5" /></span> City Retailer</span>
                   <span className="font-bold text-slate-700">+₹450 Markup</span>
                 </div>
 
@@ -172,7 +177,7 @@ export default function Landing() {
                 </div>
 
                 <div className="flex items-center justify-between bg-red-50 p-5 rounded-2xl border border-red-200 shadow-inner">
-                  <span className="font-black text-red-900 flex items-center gap-3"><span className="text-xl">🛒</span> Consumer Pays</span>
+                  <span className="font-black text-red-900 flex items-center gap-3"><span className="text-xl"><ShoppingCart className="w-5 h-5" /></span> Consumer Pays</span>
                   <div className="text-right">
                     <span className="block text-lg font-black text-red-600">₹3,200 / qtl</span>
                     <span className="text-[10px] text-red-500 font-bold uppercase tracking-wider">60% Inflated</span>
@@ -187,7 +192,7 @@ export default function Landing() {
               
               <div className="flex items-center justify-between mb-8">
                 <span className="text-sm font-black text-emerald-600 uppercase tracking-wider flex items-center gap-2">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100">✨</span> Lagaan Secure
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100"><Sparkles className="w-4 h-4 text-emerald-600" /></span> Lagaan Secure
                 </span>
                 <span className="text-xs font-bold bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-200">
                   Zero Intermediaries
@@ -196,7 +201,7 @@ export default function Landing() {
 
               <div className="space-y-4 text-sm font-medium">
                 <div className="flex items-center justify-between bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100">
-                  <span className="flex items-center gap-3"><span className="text-xl">👨‍🌾</span> Farmer / FPO</span>
+                  <span className="flex items-center gap-3"><span className="text-xl"><Users className="w-5 h-5" /></span> Farmer / FPO</span>
                   <div className="text-right">
                     <span className="block font-black text-emerald-700">₹2,450 / qtl</span>
                     <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">+₹450/q Gain</span>
@@ -222,7 +227,7 @@ export default function Landing() {
                 </div>
 
                 <div className="flex items-center justify-between bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100">
-                  <span className="flex items-center gap-3"><span className="text-xl">🚚</span> Smart Transit</span>
+                  <span className="flex items-center gap-3"><span className="text-xl"><Truck className="w-5 h-5" /></span> Smart Transit</span>
                   <span className="font-bold text-emerald-700">₹150 / qtl</span>
                 </div>
 
@@ -231,7 +236,7 @@ export default function Landing() {
                 </div>
 
                 <div className="flex items-center justify-between bg-emerald-500 p-5 rounded-2xl shadow-lg shadow-emerald-500/25">
-                  <span className="font-black text-white flex items-center gap-3"><span className="text-xl">🛒</span> Consumer Pays</span>
+                  <span className="font-black text-white flex items-center gap-3"><span className="text-xl"><ShoppingCart className="w-5 h-5" /></span> Consumer Pays</span>
                   <div className="text-right">
                     <span className="block text-xl font-black text-white">₹2,680 / qtl</span>
                     <span className="text-[10px] text-emerald-100 font-bold uppercase tracking-wider">16% Cheaper</span>
@@ -260,10 +265,10 @@ export default function Landing() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { icon: '📈', title: 'Forecast & List', desc: 'AI analyzes 14-day price trends to suggest optimal selling times. Farmers list produce with a simple tap.', color: 'blue' },
-              { icon: '👥', title: 'Aggregate', desc: 'Platform automatically pools small harvests into FPO-level bulk lots to attract institutional buyers.', color: 'indigo' },
-              { icon: '🤝', title: 'Match & Deal', desc: 'Smart algorithms match lots with buyers based on quality specs and location, securing the best price.', color: 'emerald' },
-              { icon: '🚚', title: 'Transit & Settle', desc: 'Optimized routing picks up produce. Payments are settled directly and instantly upon delivery.', color: 'amber' }
+              { icon: <LineChart className="w-8 h-8" />, title: 'Forecast & List', desc: 'AI analyzes 14-day price trends to suggest optimal selling times. Farmers list produce with a simple tap.', color: 'blue' },
+              { icon: <Users className="w-8 h-8" />, title: 'Aggregate', desc: 'Platform automatically pools small harvests into FPO-level bulk lots to attract institutional buyers.', color: 'indigo' },
+              { icon: <Handshake className="w-8 h-8" />, title: 'Match & Deal', desc: 'Smart algorithms match lots with buyers based on quality specs and location, securing the best price.', color: 'emerald' },
+              { icon: <Truck className="w-8 h-8" />, title: 'Transit & Settle', desc: 'Optimized routing picks up produce. Payments are settled directly and instantly upon delivery.', color: 'amber' }
             ].map((step, index) => (
               <motion.div key={index} variants={scaleUp} className="relative group">
                 <div className="bg-slate-50 rounded-3xl p-8 border border-slate-100 h-full hover:bg-white hover:shadow-xl transition-all duration-300 relative z-10 group-hover:-translate-y-2">

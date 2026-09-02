@@ -6,15 +6,16 @@ import { Badge } from './ui/Badge';
 import { Button } from './ui/Button';
 import { motion } from 'framer-motion';
 
-const cropEmojis = {
-  wheat: '🌾', rice: '🍚', tomato: '🍅', onion: '🧅', potato: '🥔',
-  cotton: '🧶', maize: '🌽', soybean: '🌱', sugarcane: '🎋',
-  garlic: '🧄', mustard: '🌼',
+import { User, Wheat, Leaf, Circle, Cloud, Sprout, Package, Droplets, Ruler, MapPin } from 'lucide-react';
+const cropIcons = {
+  wheat: <Wheat className="inline w-5 h-5 text-yellow-500" />, rice: <Leaf className="inline w-5 h-5 text-stone-300" />, tomato: <Leaf className="inline w-5 h-5 text-red-500" />, onion: <Circle className="inline w-5 h-5 text-emerald-600" />, potato: <Circle className="inline w-5 h-5 text-amber-700" />,
+  cotton: <Cloud className="inline w-5 h-5 text-slate-300" />, maize: <Leaf className="inline w-5 h-5 text-yellow-400" />, soybean: <Sprout className="inline w-5 h-5 text-green-700" />, sugarcane: <Leaf className="inline w-5 h-5 text-green-500" />,
+  garlic: <Circle className="inline w-5 h-5 text-slate-200" />, mustard: <Leaf className="inline w-5 h-5 text-yellow-500" />,
 };
 
 const ListingCard = ({ listing, showOfferButton = true }) => {
   const { t } = useTranslation();
-  const emoji = cropEmojis[listing.crop_name?.toLowerCase()] || '🌾';
+  const emoji = cropIcons[listing.crop_name?.toLowerCase()] || <Wheat className="inline w-5 h-5 text-yellow-500" />;
   const farmer = listing.farmer || {};
 
   return (
@@ -50,7 +51,7 @@ const ListingCard = ({ listing, showOfferButton = true }) => {
 
           <div className="flex flex-wrap gap-2 text-sm mb-4">
             <span className="bg-gray-50 text-gray-700 font-medium px-2.5 py-1 rounded-lg border border-gray-200 flex items-center gap-1">
-              📦 <span className="font-bold">{listing.quantity}</span> {listing.unit || 'qtl'}
+              <Package className="inline w-4 h-4 text-slate-500" /> <span className="font-bold">{listing.quantity}</span> {listing.unit || 'qtl'}
             </span>
             {listing.quality_grade && (
               <Badge variant={
@@ -70,9 +71,9 @@ const ListingCard = ({ listing, showOfferButton = true }) => {
 
           {listing.quality_checklist && (
             <div className="mb-4 bg-emerald-50/50 p-2.5 rounded-xl border border-emerald-100 flex items-center justify-between text-xs text-emerald-900 font-semibold">
-              <span className="flex items-center gap-1">💧 {listing.quality_checklist.moisture_pct || 11}%</span>
-              <span className="flex items-center gap-1">🌾 {listing.quality_checklist.foreign_matter_pct || 0.5}%</span>
-              <span className="flex items-center gap-1">📐 {listing.quality_checklist.grain_size_uniformity?.split(' ')[0] || 'Uniform'}</span>
+              <span className="flex items-center gap-1"><Droplets className="inline w-4 h-4 text-blue-500" /> {listing.quality_checklist.moisture_pct || 11}%</span>
+              <span className="flex items-center gap-1"><Wheat className="inline w-4 h-4 text-yellow-500" /> {listing.quality_checklist.foreign_matter_pct || 0.5}%</span>
+              <span className="flex items-center gap-1"><Ruler className="inline w-4 h-4 text-slate-500" /> {listing.quality_checklist.grain_size_uniformity?.split(' ')[0] || 'Uniform'}</span>
             </div>
           )}
 
@@ -86,8 +87,8 @@ const ListingCard = ({ listing, showOfferButton = true }) => {
           )}
 
           <div className="text-sm text-gray-500 space-y-1.5 font-medium mt-4">
-            {listing.location && <p className="flex items-center gap-2">📍 {listing.location}</p>}
-            {farmer.name && <p className="flex items-center gap-2">👨‍🌾 {farmer.name}</p>}
+            {listing.location && <p className="flex items-center gap-2"><MapPin className="inline w-4 h-4 text-slate-500" /> {listing.location}</p>}
+            {farmer.name && <p className="flex items-center gap-2"><User className="inline w-4 h-4 text-slate-500" /> {farmer.name}</p>}
           </div>
         </div>
 

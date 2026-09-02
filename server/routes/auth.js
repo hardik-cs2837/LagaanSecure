@@ -2,15 +2,20 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
-const { User } = require('../models');
+const { User, OtpStore } = require('../models');
 const { validate, registerValidation, loginValidation } = require('../middleware/validate');
+const rateLimit = require('express-rate-limit');
 
 const router = express.Router();
 
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: { success: false, error: 'Too many requests, please try again later.' }
+});
+
 // In-memory OTP storage
 // Structure: identifier -> { otp, expiresAt, attempts, lastSent, verified }
-const otpStore = new Map();
-
 const OTP_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
 const RESEND_COOLDOWN_MS = 60 * 1000; // 60 seconds rate limit
 const MAX_ATTEMPTS = 5;
@@ -20,37 +25,11 @@ const generate6DigitOtp = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-// Pre-configured demo user accounts for instant access
-const DEMO_PRESETS = {
-  '9876543210': {
-    id: 1,
-    name: 'Ramesh Patel',
-    role: 'farmer',
-    phone: '9876543210',
-    email: 'ramesh.patel@lagaansecure.com',
-    location: 'Nashik, Maharashtra',
-    business_name: null,
-    is_verified: true,
-    fpo_name: 'Sahyadri Farmers Producer Co.'
-  },
-  '9123456780': {
-    id: 2,
-    name: 'Pooja Sharma',
-    role: 'buyer',
-    phone: '9123456780',
-    email: 'pooja.sharma@lagaansecure.com',
-    location: 'Mumbai, Maharashtra',
-    business_name: 'FreshMart National Supply Chain Ltd',
-    is_verified: true,
-    fpo_name: null
-  }
-};
-
 /**
  * POST /api/auth/send-otp
  * Generates 6-digit OTP, 5 min expiry, rate-limited
  */
-router.post('/send-otp', async (req, res, next) => {
+router.post('/send-otp', authLimiter, async (req, res, next) => {
   try {
     const identifier = (req.body.identifier || req.body.phone || req.body.email || '').toString().trim();
     
@@ -61,31 +40,31 @@ router.post('/send-otp', async (req, res, next) => {
       });
     }
 
-    const existing = otpStore.get(identifier);
-    if (existing && Date.now() - existing.lastSent < RESEND_COOLDOWN_MS) {
-      const waitSeconds = Math.ceil((RESEND_COOLDOWN_MS - (Date.now() - existing.lastSent)) / 1000);
-      return res.status(429).json({
-        success: false,
-        error: `Please wait ${waitSeconds} seconds before requesting a new verification code.`
+    const existing = await OtpStore.findOne({ where: { identifier } });
+      if (existing && Date.now() - new Date(existing.last_sent).getTime() < RESEND_COOLDOWN_MS) {
+        const waitSeconds = Math.ceil((RESEND_COOLDOWN_MS - (Date.now() - new Date(existing.last_sent).getTime())) / 1000);
+        return res.status(429).json({
+          success: false,
+          error: \`Please wait \${waitSeconds} seconds before requesting a new code.\`
+        });
+      }
+      const otp = generate6DigitOtp();
+      const expiresAt = new Date(Date.now() + OTP_EXPIRY_MS);
+      
+      await OtpStore.upsert({
+        identifier,
+        otp,
+        expires_at: expiresAt,
+        attempts: 0,
+        last_sent: new Date(),
+        purpose: 'verification'
       });
-    }
-
-    const otp = generate6DigitOtp();
-    const expiresAt = Date.now() + OTP_EXPIRY_MS;
-
-    otpStore.set(identifier, {
-      otp,
-      expiresAt,
-      attempts: 0,
-      lastSent: Date.now()
-    });
 
     console.log(`[AUTH OTP] Code ${otp} generated for ${identifier}. Expires in 5 minutes.`);
 
     return res.json({
       success: true,
-      message: 'Verification code sent successfully. Valid for 5 minutes.',
-      demo_otp: otp
+      message: 'Verification code sent successfully. Valid for 5 minutes.'
     });
   } catch (err) {
     next(err);
@@ -108,15 +87,7 @@ router.post('/verify-otp', async (req, res, next) => {
       });
     }
 
-    const record = otpStore.get(identifier);
-
-    // Fallback demo OTP for ease of testing
-    if (otp === '123456') {
-      return res.json({
-        success: true,
-        message: 'OTP verified successfully.'
-      });
-    }
+    const record = await OtpStore.findOne({ where: { identifier } });
 
     if (!record) {
       return res.status(400).json({
@@ -125,8 +96,8 @@ router.post('/verify-otp', async (req, res, next) => {
       });
     }
 
-    if (Date.now() > record.expiresAt) {
-      otpStore.delete(identifier);
+    if (Date.now() > new Date(record.expires_at).getTime()) {
+      await OtpStore.destroy({ where: { identifier } });
       return res.status(400).json({
         success: false,
         error: 'The OTP code has expired. Please request a new verification code.'
@@ -134,7 +105,7 @@ router.post('/verify-otp', async (req, res, next) => {
     }
 
     if (record.attempts >= MAX_ATTEMPTS) {
-      otpStore.delete(identifier);
+      await OtpStore.destroy({ where: { identifier } });
       return res.status(400).json({
         success: false,
         error: 'Too many invalid attempts. Please request a new OTP code.'
@@ -142,7 +113,7 @@ router.post('/verify-otp', async (req, res, next) => {
     }
 
     if (record.otp !== otp) {
-      record.attempts += 1;
+      await record.increment("attempts");
       return res.status(400).json({
         success: false,
         error: 'Invalid verification code. Please check and try again.'
@@ -164,7 +135,7 @@ router.post('/verify-otp', async (req, res, next) => {
  * POST /api/auth/forgot-password
  * Sends OTP for password reset
  */
-router.post('/forgot-password', async (req, res, next) => {
+router.post('/forgot-password', authLimiter, async (req, res, next) => {
   try {
     const identifier = (req.body.identifier || req.body.phone || req.body.email || '').toString().trim();
 
@@ -192,14 +163,6 @@ router.post('/forgot-password', async (req, res, next) => {
       console.warn('DB lookup failed during forgot-password, checking demo presets:', dbErr.message);
     }
 
-    // Check Demo Presets if DB check didn't find user
-    if (!userExists) {
-      const presetFound = Object.values(DEMO_PRESETS).find(
-        (u) => u.phone === identifier || u.email === identifier
-      );
-      if (presetFound) userExists = true;
-    }
-
     if (!userExists) {
       return res.status(404).json({
         success: false,
@@ -208,32 +171,31 @@ router.post('/forgot-password', async (req, res, next) => {
     }
 
     // Rate-limit check
-    const existing = otpStore.get(identifier);
-    if (existing && Date.now() - existing.lastSent < RESEND_COOLDOWN_MS) {
-      const waitSeconds = Math.ceil((RESEND_COOLDOWN_MS - (Date.now() - existing.lastSent)) / 1000);
-      return res.status(429).json({
-        success: false,
-        error: `Please wait ${waitSeconds} seconds before requesting a new password reset code.`
+    const existing = await OtpStore.findOne({ where: { identifier } });
+      if (existing && Date.now() - new Date(existing.last_sent).getTime() < RESEND_COOLDOWN_MS) {
+        const waitSeconds = Math.ceil((RESEND_COOLDOWN_MS - (Date.now() - new Date(existing.last_sent).getTime())) / 1000);
+        return res.status(429).json({
+          success: false,
+          error: \`Please wait \${waitSeconds} seconds before requesting a new code.\`
+        });
+      }
+      const otp = generate6DigitOtp();
+      const expiresAt = new Date(Date.now() + OTP_EXPIRY_MS);
+      
+      await OtpStore.upsert({
+        identifier,
+        otp,
+        expires_at: expiresAt,
+        attempts: 0,
+        last_sent: new Date(),
+        purpose: 'verification'
       });
-    }
-
-    const otp = generate6DigitOtp();
-    const expiresAt = Date.now() + OTP_EXPIRY_MS;
-
-    otpStore.set(identifier, {
-      otp,
-      expiresAt,
-      attempts: 0,
-      lastSent: Date.now(),
-      purpose: 'password_reset'
-    });
 
     console.log(`[FORGOT PASSWORD OTP] Code ${otp} generated for ${identifier}. Expires in 5 minutes.`);
 
     return res.json({
       success: true,
-      message: 'Password reset code sent successfully. Valid for 5 minutes.',
-      demo_otp: otp
+      message: 'Password reset code sent successfully. Valid for 5 minutes.'
     });
   } catch (err) {
     next(err);
@@ -265,27 +227,25 @@ router.post('/reset-password', async (req, res, next) => {
     }
 
     // Verify OTP
-    const record = otpStore.get(identifier);
-    if (otp !== '123456') {
-      if (!record) {
-        return res.status(400).json({
-          success: false,
-          error: 'No active OTP verification found. Please request a new OTP code.'
-        });
-      }
-      if (Date.now() > record.expiresAt) {
-        otpStore.delete(identifier);
-        return res.status(400).json({
-          success: false,
-          error: 'OTP code has expired. Please request a new verification code.'
-        });
-      }
-      if (record.otp !== otp) {
-        return res.status(400).json({
-          success: false,
-          error: 'Invalid OTP code. Password reset failed.'
-        });
-      }
+    const record = await OtpStore.findOne({ where: { identifier } });
+    if (!record) {
+      return res.status(400).json({
+        success: false,
+        error: 'No active OTP verification found. Please request a new OTP code.'
+      });
+    }
+    if (Date.now() > new Date(record.expires_at).getTime()) {
+      await OtpStore.destroy({ where: { identifier } });
+      return res.status(400).json({
+        success: false,
+        error: 'OTP code has expired. Please request a new verification code.'
+      });
+    }
+    if (record.otp !== otp) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid OTP code. Password reset failed.'
+      });
     }
 
     const password_hash = await bcrypt.hash(newPassword, 10);
@@ -307,7 +267,7 @@ router.post('/reset-password', async (req, res, next) => {
     }
 
     // Clear OTP after successful reset
-    otpStore.delete(identifier);
+    await OtpStore.destroy({ where: { identifier } });
 
     return res.json({
       success: true,
@@ -318,7 +278,7 @@ router.post('/reset-password', async (req, res, next) => {
   }
 });
 
-router.post('/register', registerValidation, validate, async (req, res, next) => {
+router.post('/register', authLimiter, registerValidation, validate, async (req, res, next) => {
   try {
     const { name, role, phone, email, location, language_pref, password, business_name, fpo_name } = req.body;
 
@@ -384,7 +344,7 @@ router.post('/register', registerValidation, validate, async (req, res, next) =>
   } catch (err) { next(err); }
 });
 
-router.post('/login', loginValidation, validate, async (req, res, next) => {
+router.post('/login', authLimiter, loginValidation, validate, async (req, res, next) => {
   try {
     const { phone, password } = req.body;
 
@@ -423,30 +383,6 @@ router.post('/login', loginValidation, validate, async (req, res, next) => {
             is_verified: user.is_verified,
             fpo_name: user.fpo_name
           }
-        }
-      });
-    }
-
-    // Demo access fallback for pre-seeded farmer/buyer demo accounts
-    if (DEMO_PRESETS[phone]) {
-      if (password !== 'password123') {
-        return res.status(401).json({ success: false, error: 'Invalid phone number or password.' });
-      }
-      const demoUser = DEMO_PRESETS[phone];
-      const token = jwt.sign({ 
-        id: demoUser.id, 
-        role: demoUser.role, 
-        name: demoUser.name,
-        is_verified: demoUser.is_verified,
-        business_name: demoUser.business_name
-      }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
-
-      return res.json({
-        success: true,
-        message: 'Login successful!',
-        data: {
-          token,
-          user: demoUser
         }
       });
     }

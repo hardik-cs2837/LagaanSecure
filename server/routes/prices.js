@@ -1,7 +1,7 @@
 const express = require('express');
+const { Sequelize } = require('sequelize');
+const { PriceCache } = require('../models');
 const marketDataService = require('../services/marketDataService');
-const priceService = require('../services/priceService');
-const mockPrices = require('../data/mockPrices.json');
 
 const router = express.Router();
 
@@ -9,10 +9,22 @@ const router = express.Router();
  * @route GET /api/prices
  * @desc Get available commodities and states
  */
-router.get('/', (req, res) => {
-  const commodities = [...new Set(mockPrices.map(p => p.commodity))];
-  const states = [...new Set(mockPrices.map(p => p.state))];
-  res.json({ success: true, data: { commodities, states } });
+router.get('/', async (req, res, next) => {
+  try {
+    const commoditiesData = await PriceCache.findAll({
+      attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('commodity')), 'commodity']]
+    });
+    const statesData = await PriceCache.findAll({
+      attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('state')), 'state']]
+    });
+
+    const commodities = commoditiesData.map(p => p.commodity).filter(Boolean);
+    const states = statesData.map(p => p.state).filter(Boolean);
+
+    res.json({ success: true, data: { commodities, states } });
+  } catch (err) {
+    next(err);
+  }
 });
 
 /**
@@ -39,11 +51,6 @@ router.get('/:commodity/trends', async (req, res, next) => {
     let history = await marketDataService.getCommodityHistory(commodity);
     let allPrices = history;
 
-    // Fallback to priceService if no history records exist from live API / cache
-    if (!allPrices || allPrices.length === 0) {
-      allPrices = await priceService.getAllPricesForCommodity(commodity);
-    }
-    
     if (!allPrices || allPrices.length === 0) {
       return res.status(404).json({ success: false, error: 'Price history unavailable for this commodity' });
     }

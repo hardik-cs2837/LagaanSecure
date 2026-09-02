@@ -8,7 +8,7 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import "./i18n/index.js";
 import "./index.css";
 
-const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'dummy-client-id';
+const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

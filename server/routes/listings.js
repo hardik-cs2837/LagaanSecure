@@ -3,7 +3,7 @@ const { Listing, User, Deal, FpoGroup } = require('../models');
 const { verifyToken, requireRole } = require('../middleware/auth');
 const { validate, listingValidation } = require('../middleware/validate');
 const { Op } = require('sequelize');
-const priceService = require('../services/priceService');
+const marketDataService = require('../services/marketDataService');
 const advisorService = require('../services/advisorService');
 
 const router = express.Router();
@@ -547,7 +547,7 @@ router.post('/:id/markup-check', async (req, res, next) => {
       }
     }
     
-    const mandiData = await priceService.fetchMandiPrice(listing.crop_name, targetState, targetMarket);
+    const mandiData = await marketDataService.getMandiPrice(listing.crop_name, targetState, targetMarket);
     if (!mandiData) return res.status(404).json({ success: false, error: 'Mandi price not available' });
     
     const advice = await advisorService.getAdvice({ 

@@ -8,6 +8,7 @@ const db = {
   Notification: require('./Notification')(sequelize),
   PriceCache: require('./PriceCache')(sequelize),
   BulkRequirement: require('./BulkRequirement')(sequelize),
+  OtpStore: require('./OtpStore')(sequelize),
 };
 
 Object.keys(db).forEach((modelName) => {

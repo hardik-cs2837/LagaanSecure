@@ -1,16 +1,14 @@
-const fs = require('fs');
-const path = require('path');
 const { sequelize } = require('../config/database');
 
-const db = {};
-
-// Load all models in the directory except index.js
-fs.readdirSync(__dirname)
-  .filter((file) => file.indexOf('.') !== 0 && file !== 'index.js' && file.slice(-3) === '.js')
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file))(sequelize);
-    db[model.name] = model;
-  });
+const db = {
+  User: require('./User')(sequelize),
+  Listing: require('./Listing')(sequelize),
+  Deal: require('./Deal')(sequelize),
+  FpoGroup: require('./FpoGroup')(sequelize),
+  Notification: require('./Notification')(sequelize),
+  PriceCache: require('./PriceCache')(sequelize),
+  BulkRequirement: require('./BulkRequirement')(sequelize),
+};
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {

@@ -24,14 +24,17 @@ export default function CreateListing() {
     quality_grade: 'A',
     price: '',
     location: user?.location || '',
+    is_fpo_pool: false,
+    fpo_name: user?.fpo_name || '',
+    harvest_date: '',
     description: ''
   });
   const [photo, setPhoto] = useState(null);
   const [photoPreview, setPhotoPreview] = useState('');
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
   const handlePhotoChange = (e) => {
@@ -60,26 +63,23 @@ export default function CreateListing() {
 
     try {
       setLoading(true);
-      // Create FormData if sending files, otherwise JSON
       const dataToSubmit = {
         crop_name: finalCropName,
         quantity: Number(formData.quantity),
         unit: formData.unit,
         quality_grade: formData.quality_grade,
-        price: formData.price ? Number(formData.price) : null,
+        price_per_unit: formData.price ? Number(formData.price) : null,
         location: formData.location,
+        is_fpo_pool: formData.is_fpo_pool,
+        fpo_name: formData.is_fpo_pool ? (formData.fpo_name || user?.fpo_name || 'Kisan Agro FPO') : null,
+        harvest_date: formData.harvest_date || null,
         description: formData.description
       };
-
-      // Depending on API, if photo is supported via FormData:
-      // const payload = new FormData();
-      // Object.keys(dataToSubmit).forEach(k => payload.append(k, dataToSubmit[k]));
-      // if (photo) payload.append('photo', photo);
 
       await listings.createListing(dataToSubmit);
       
       toast.success(t('farmer.listing_created', 'Listing created successfully!'));
-      navigate('/farmer/dashboard'); // Or wherever the farmer dashboard is
+      navigate('/farmer/dashboard');
     } catch (error) {
       console.error(error);
       toast.error(t('common.error_occurred', 'An error occurred.'));
@@ -92,9 +92,13 @@ export default function CreateListing() {
     <div className="min-h-screen bg-gray-50 pb-20 md:pb-10">
       {/* Header */}
       <div className="bg-primary-700 text-white p-4 flex items-center shadow-md">
-        <Link to={-1} className="mr-4 text-white hover:bg-primary-600 p-2 rounded-full transition">
+        <button 
+          type="button" 
+          onClick={() => navigate(-1)} 
+          className="mr-4 text-white hover:bg-primary-600 p-2 rounded-full transition"
+        >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-        </Link>
+        </button>
         <h1 className="text-xl font-bold">{t('farmer.create_listing', 'Create New Listing')}</h1>
       </div>
 
@@ -247,6 +251,55 @@ export default function CreateListing() {
               placeholder={t('farmer.desc_placeholder', 'Add any details about harvest date, pesticide use, etc.')}
               className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition resize-none"
             ></textarea>
+          </div>
+
+          {/* FPO / Farmer Group Pooling */}
+          <div className="bg-amber-50 p-4 rounded-xl border border-amber-200 space-y-3">
+            <label className="flex items-center gap-3 cursor-pointer select-none">
+              <input 
+                type="checkbox"
+                name="is_fpo_pool"
+                checked={formData.is_fpo_pool}
+                onChange={handleChange}
+                className="w-5 h-5 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
+              />
+              <div>
+                <span className="font-bold text-sm text-amber-950 block">👥 {t('farmer.fpo_pool_label', 'FPO / Farmer Group Collective Lot')}</span>
+                <span className="text-xs text-amber-800">
+                  {t('farmer.fpo_pool_desc', 'Pool this produce with other members of your Farmer Producer Organisation for bulk pricing')}
+                </span>
+              </div>
+            </label>
+
+            {formData.is_fpo_pool && (
+              <div className="pt-2 border-t border-amber-200 animate-fadeIn">
+                <label className="block text-xs font-bold text-amber-950 mb-1">
+                  {t('farmer.fpo_name_label', 'FPO / Group Name')}:
+                </label>
+                <input 
+                  type="text"
+                  name="fpo_name"
+                  value={formData.fpo_name}
+                  onChange={handleChange}
+                  placeholder="e.g. Sahyadri Farmers Producer Co."
+                  className="w-full px-3 py-2 rounded-lg border border-amber-300 bg-white text-sm focus:ring-2 focus:ring-primary-500 outline-none"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Harvest Date */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              📅 {t('listings.harvest_date', 'Harvest Date')} <span className="text-gray-400 font-normal text-xs ml-1">({t('common.optional', 'Optional')})</span>
+            </label>
+            <input 
+              type="date"
+              name="harvest_date"
+              value={formData.harvest_date}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition bg-white"
+            />
           </div>
 
           {/* Photo Upload */}

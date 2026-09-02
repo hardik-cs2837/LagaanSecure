@@ -34,11 +34,17 @@ export const listings = {
   getListing: (id) => api.get(`/listings/${id}`),
   updateListing: (id, data) => api.put(`/listings/${id}`, data),
   deleteListing: (id) => api.delete(`/listings/${id}`),
+  getDemandSupplyAnalytics: () => api.get('/listings/analytics/demand-supply'),
+  getStorageOptions: (state) => api.get('/listings/storage-options', { params: { state } }),
+  getLogisticsOptions: (params) => api.get('/listings/logistics-options', { params }),
+  getRouteSuggestions: (params) => api.get('/listings/route-suggestions', { params }),
 };
 
 export const prices = {
   getPrice: (commodity, state, market) =>
     api.get(`/prices/${encodeURIComponent(commodity)}`, { params: { state, market } }),
+  getTrends: (commodity, state) =>
+    api.get(`/prices/${encodeURIComponent(commodity)}/trends`, { params: { state } }),
   getAvailableCommodities: () => api.get('/prices'),
 };
 

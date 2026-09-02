@@ -8,6 +8,20 @@ module.exports = (sequelize) => {
     offered_price: { type: DataTypes.FLOAT, allowNull: false },
     counter_price: { type: DataTypes.FLOAT },
     status: { type: DataTypes.ENUM('pending', 'accepted', 'rejected', 'countered'), defaultValue: 'pending' },
+    payment_status: { 
+      type: DataTypes.ENUM('unpaid', 'pending_confirmation', 'paid', 'refunded'), 
+      defaultValue: 'unpaid' 
+    },
+    payment_method: { type: DataTypes.STRING, defaultValue: 'bank_transfer' },
+    payment_reference: { type: DataTypes.STRING, allowNull: true },
+    dispute_status: { 
+      type: DataTypes.ENUM('none', 'open', 'under_review', 'resolved'), 
+      defaultValue: 'none' 
+    },
+    dispute_reason: { type: DataTypes.TEXT, allowNull: true },
+    dispute_resolution: { type: DataTypes.TEXT, allowNull: true },
+    transport_requested: { type: DataTypes.BOOLEAN, defaultValue: false },
+    transport_details: { type: DataTypes.JSON, allowNull: true },
   }, {
     tableName: 'deals',
     timestamps: true,

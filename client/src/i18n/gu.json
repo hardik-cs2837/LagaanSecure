@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "હોમ",
+    "dashboard": "ડેશબોર્ડ",
+    "listings": "પાક વેચાણ",
+    "notifications": "સૂચનાઓ",
+    "login": "લોગઇન",
+    "register": "રજિસ્ટર",
+    "logout": "લોગઆઉટ",
+    "language": "ભાષા",
+    "prices": "મંડી ભાવ",
+    "deals": "મારા સોદા",
+    "createListing": "પાક ઉમેરો"
+  },
+  "landing": {
+    "title": "લગાન સિક્યોર",
+    "subtitle": "ખેતરથી સીધા ગ્રાહક",
+    "description": "મધ્યસ્થીઓ વિના ખેડૂતો અને વેપારીઓને સીધા જોડતું માધ્યમ.",
+    "farmerBtn": "હું ખેડૂત છું 🌾",
+    "buyerBtn": "હું વેપારી છું 🛒"
+  },
+  "auth": {
+    "login": "તમારા એકાઉન્ટમાં લોગઇન કરો",
+    "register": "નવું એકાઉન્ટ બનાવો",
+    "phone": "ફોન નંબર",
+    "password": "પાસવર્ડ",
+    "farmer": "ખેડૂત",
+    "buyer": "વેપારી",
+    "noAccount": "એકાઉન્ટ નથી?",
+    "registerLink": "અહીં રજિસ્ટર કરો"
+  },
+  "farmer": {
+    "dashboard": "ખેડૂત ડેશબોર્ડ",
+    "welcome": "જી આયા નૂ",
+    "addListing": "પાક ઉમેરો",
+    "myListings": "મારા પાક",
+    "mandiPrices": "મંડી ભાવ"
+  }
+}

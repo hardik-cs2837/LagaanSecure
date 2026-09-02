@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "ਮੁੱਖ ਪੰਨਾ",
+    "dashboard": "ਡੈਸ਼ਬੋਰਡ",
+    "listings": "ਫਸਲ ਵਿਕਰੀ",
+    "notifications": "ਸੂਚਨਾਵਾਂ",
+    "login": "ਲੌਗਇਨ",
+    "register": "ਰਜਿਸਟਰ",
+    "logout": "ਲੌਗਆਊਟ",
+    "language": "ਭਾਸ਼ਾ",
+    "prices": "ਮੰਡੀ ਭਾਅ",
+    "deals": "ਮੇਰੇ ਸੌਦੇ",
+    "createListing": "ਫਸਲ ਜੋੜੋ"
+  },
+  "landing": {
+    "title": "ਲਗਾਨ ਸਕਿਓਰ",
+    "subtitle": "ਖੇਤ ਤੋਂ ਸਿੱਧਾ ਗਾਹਕ",
+    "description": "ਕਿਸਾਨਾਂ ਅਤੇ ਖਰੀਦਦਾਰਾਂ ਨੂੰ ਸਿੱਧਾ ਜੋੜਨਾ, ਬਿਨਾਂ ਕਿਸੇ ਵਿਚੋਲੇ ਦੇ।",
+    "farmerBtn": "ਮੈਂ ਕਿਸਾਨ ਹਾਂ 🌾",
+    "buyerBtn": "ਮੈਂ ਖਰੀਦਦਾਰ ਹਾਂ 🛒"
+  },
+  "auth": {
+    "login": "ਆਪਣੇ ਖਾਤੇ ਵਿੱਚ ਲੌਗਇਨ ਕਰੋ",
+    "register": "ਨਵਾਂ ਖਾਤਾ ਬਣਾਓ",
+    "phone": "ਫੋਨ ਨੰਬਰ",
+    "password": "ਪਾਸਵਰਡ",
+    "farmer": "ਕਿਸਾਨ",
+    "buyer": "ਖਰੀਦਦਾਰ",
+    "noAccount": "ਖਾਤਾ ਨਹੀਂ ਹੈ?",
+    "registerLink": "ਇੱਥੇ ਰਜਿਸਟਰ ਕਰੋ"
+  },
+  "farmer": {
+    "dashboard": "ਕਿਸਾਨ ਡੈਸ਼ਬੋਰਡ",
+    "welcome": "ਜੀ ਆਇਆਂ ਨੂੰ",
+    "addListing": "ਫਸਲ ਜੋੜੋ",
+    "myListings": "ਮੇਰੀਆਂ ਫਸਲਾਂ",
+    "mandiPrices": "ਮੰਡੀ ਭਾਅ"
+  }
+}

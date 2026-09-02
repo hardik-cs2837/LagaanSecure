@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "मुख्यपृष्ठ",
+    "dashboard": "डॅशबोर्ड",
+    "listings": "पिके विक्री",
+    "notifications": "सूचना",
+    "login": "लॉगिन",
+    "register": "नोंदणी",
+    "logout": "लॉगआउट",
+    "language": "भाषा",
+    "prices": "बाजारभाव",
+    "deals": "माझे सौदे",
+    "createListing": "नवीन पीक जोडा"
+  },
+  "landing": {
+    "title": "लगान सिक्युअर",
+    "subtitle": "शेत ते थेट ग्राहक",
+    "description": "मध्यस्थांशिवाय शेतकरी आणि व्यापारी यांचा थेट संपर्क.",
+    "farmerBtn": "मी शेतकरी आहे 🌾",
+    "buyerBtn": "मी व्यापारी आहे 🛒"
+  },
+  "auth": {
+    "login": "आपल्या खात्यात लॉगिन करा",
+    "register": "नवीन खाते तयार करा",
+    "phone": "फोन नंबर",
+    "password": "पासवर्ड",
+    "farmer": "शेतकरी",
+    "buyer": "व्यापारी",
+    "noAccount": "खाते नाही?",
+    "registerLink": "इथे नोंदणी करा"
+  },
+  "farmer": {
+    "dashboard": "शेतकरी डॅशबोर्ड",
+    "welcome": "सुस्वागतम",
+    "addListing": "पीक जोडा",
+    "myListings": "माझी पिके",
+    "mandiPrices": "थेट बाजारभाव"
+  }
+}

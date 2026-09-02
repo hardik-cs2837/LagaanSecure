@@ -139,9 +139,12 @@ router.post('/login', loginValidation, validate, async (req, res, next) => {
       });
     }
 
-    // Demo access fallback (Farmer / Buyer) if DB is empty or unseeded
-    if (DEMO_PRESETS[phone] || dbError || (password === 'password123')) {
-      const demoUser = DEMO_PRESETS[phone] || (phone.startsWith('91') ? DEMO_PRESETS['9123456780'] : DEMO_PRESETS['9876543210']);
+    // Demo access fallback for pre-seeded farmer/buyer demo accounts
+    if (DEMO_PRESETS[phone]) {
+      if (password !== 'password123') {
+        return res.status(401).json({ success: false, error: 'Invalid credentials' });
+      }
+      const demoUser = DEMO_PRESETS[phone];
       const token = jwt.sign({ 
         id: demoUser.id, 
         role: demoUser.role, 

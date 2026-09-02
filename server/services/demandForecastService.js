@@ -1,5 +1,5 @@
 /**
- * AI Demand Forecasting Service (PS 26033 Requirement)
+ * AI Demand Forecasting Service
  * Generates forward-looking demand indices, 7-day/30-day projection curves,
  * key market drivers, and smart sell recommendations.
  */

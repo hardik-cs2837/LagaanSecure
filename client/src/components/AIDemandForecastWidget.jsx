@@ -46,7 +46,7 @@ export default function AIDemandForecastWidget({ defaultCrop = 'Onion' }) {
               </h3>
             </div>
             <p className="text-emerald-100 text-xs mt-0.5">
-              {t('demand.subtitle', 'Forward-looking demand projections, arrival trends & storage window advice (PS 26033)')}
+              {t('demand.subtitle', 'Forward-looking demand projections, arrival trends & storage window advice')}
             </p>
           </div>
           <span className="bg-white/20 text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30 self-start sm:self-auto">

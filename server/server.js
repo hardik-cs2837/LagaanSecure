@@ -21,6 +21,16 @@ const bulkRequirementsRoutes = require('./routes/bulkRequirements');
 
 const app = express();
 
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200, // Limit each IP to 200 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
+
 // CORS Configuration
 const allowedOrigins = process.env.CORS_ORIGIN 
   ? process.env.CORS_ORIGIN.split(',').map(s => s.trim()) 
@@ -32,7 +42,7 @@ app.use(cors({
     if (!origin || process.env.NODE_ENV !== 'production' || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
       return callback(null, true);
     }
-    return callback(null, true); // Permissive for hackathon demo compatibility
+    return callback(null, true); // Permissive for local development
   },
   credentials: true
 }));
@@ -62,7 +72,7 @@ app.get('/api/health', (req, res) => {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     service: 'KisaanConnect Backend REST API',
-    problemStatement: 'PS 26033 - Direct Farmer-to-Buyer Agricultural Marketplace'
+    description: 'Direct Farmer-to-Buyer Agricultural Marketplace'
   });
 });
 
@@ -72,8 +82,8 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 if (require.main === module) {
-  sequelize.sync({ alter: true }).then(() => {
-    console.log('Database synced successfully with models');
+  sequelize.authenticate().then(() => {
+    console.log('Database connected successfully');
     app.listen(PORT, () => {
       console.log(`KisaanConnect Server running on port ${PORT}`);
       // Start background price refresh job

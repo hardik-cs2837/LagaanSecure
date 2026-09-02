@@ -152,15 +152,15 @@ export default function ImpactAnalytics() {
           </div>
         </div>
 
-        {/* Problem Statement 26033 & 26132 Outcomes Breakdown */}
+        {/* Core Product Outcomes Breakdown */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
-          {/* PS 26033 Card */}
+          {/* Disintermediation Card */}
           <div className="bg-gradient-to-br from-emerald-50 to-white p-6 rounded-3xl border-2 border-emerald-200 space-y-4">
             <div className="flex items-center gap-3">
               <span className="text-2xl">🌾</span>
               <div>
-                <h4 className="font-extrabold text-emerald-950 text-base">PS 26033: Intermediary Disintermediation</h4>
+                <h4 className="font-extrabold text-emerald-950 text-base">Supply Chain Disintermediation</h4>
                 <p className="text-xs text-emerald-800">Direct Farmer-to-Consumer & Bulk Buyer Linkage</p>
               </div>
             </div>
@@ -178,31 +178,39 @@ export default function ImpactAnalytics() {
                 <span className="font-medium">Multi-Stop Route Efficiency:</span>
                 <span className="font-extrabold text-dark">Consolidated Rural Haulage</span>
               </div>
+              <div className="flex justify-between items-center bg-emerald-100/50 p-3 rounded-xl font-bold text-emerald-900">
+                <span>Intermediary Commissions:</span>
+                <span>0% Leakage</span>
+              </div>
             </div>
           </div>
 
-          {/* PS 26132 Card */}
+          {/* Market Linkages Card */}
           <div className="bg-gradient-to-br from-primary-50 to-white p-6 rounded-3xl border-2 border-primary-200 space-y-4">
             <div className="flex items-center gap-3">
-              <span className="text-2xl">🔍</span>
+              <span className="text-2xl">📈</span>
               <div>
-                <h4 className="font-extrabold text-primary-950 text-base">PS 26132: Market Linkages & Price Discovery</h4>
-                <p className="text-xs text-primary-800">Information Asymmetry & Quality Transparency</p>
+                <h4 className="font-extrabold text-primary-950 text-base">Market Linkages & Price Discovery</h4>
+                <p className="text-xs text-primary-800">AI Driven Demand, Grading & FPO Aggregation</p>
               </div>
             </div>
 
             <div className="space-y-2.5 text-xs text-gray-700">
               <div className="flex justify-between items-center bg-white p-3 rounded-xl border border-primary-100 shadow-sm">
-                <span className="font-medium">Price Discovery & Forecast:</span>
-                <span className="font-extrabold text-primary-700">7-Day OLS Regression + EWMA</span>
+                <span className="font-medium">Price Discovery Accuracy:</span>
+                <span className="font-extrabold text-primary-700">14-Day OLS Regression</span>
               </div>
               <div className="flex justify-between items-center bg-white p-3 rounded-xl border border-primary-100 shadow-sm">
-                <span className="font-medium">Structured Quality Grading:</span>
-                <span className="font-extrabold text-dark">Moisture, Foreign Matter & AGMARK</span>
+                <span className="font-medium">Demand Forecasting Accuracy:</span>
+                <span className="font-extrabold text-primary-700">7-Day & 30-Day Shifts</span>
               </div>
               <div className="flex justify-between items-center bg-white p-3 rounded-xl border border-primary-100 shadow-sm">
-                <span className="font-medium">Post-Harvest Loss Prevention:</span>
-                <span className="font-extrabold text-emerald-700">Connected Cold Storage Facilities</span>
+                <span className="font-medium">Produce Verification Standard:</span>
+                <span className="font-extrabold text-dark">Self-Declared Grade A/B/C</span>
+              </div>
+              <div className="flex justify-between items-center bg-primary-100/50 p-3 rounded-xl font-bold text-primary-900">
+                <span>FPO Produce Aggregation:</span>
+                <span>Proportional Payout Splits</span>
               </div>
             </div>
           </div>

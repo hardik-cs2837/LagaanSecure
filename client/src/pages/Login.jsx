@@ -2,14 +2,28 @@ import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
   const { t } = useTranslation();
-  const { login } = useContext(AuthContext);
+  const { login, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const data = await googleLogin(credentialResponse.credential);
+      if (data.user?.role === 'farmer') {
+        navigate('/farmer/dashboard');
+      } else {
+        navigate('/buyer/dashboard');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,6 +98,27 @@ const Login = () => {
             )}
           </button>
         </form>
+
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+            </div>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => console.log('Google Login Failed')}
+              useOneTap
+              theme="outline"
+              size="large"
+              shape="pill"
+            />
+          </div>
+        </div>
 
         <p className="text-center mt-6 text-gray-600">
           {t('auth.noAccount', "Don't have an account?")}{' '}

@@ -8,7 +8,7 @@ const advisorService = require('../services/advisorService');
 
 const router = express.Router();
 
-// Real Impact Analytics Aggregator (PS 26033 & PS 26132 Metrics)
+// Real Impact Analytics Aggregator
 router.get('/analytics/platform-impact', async (req, res, next) => {
   try {
     const allListings = await Listing.findAll({ include: [{ model: User, as: 'farmer' }] });

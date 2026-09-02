@@ -11,7 +11,7 @@ export default function Landing() {
       <section className="relative overflow-hidden bg-gradient-to-b from-emerald-900 via-primary-900 to-primary-800 text-white pt-16 pb-24 px-4">
         <div className="max-w-6xl mx-auto text-center space-y-6">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 text-xs font-bold text-emerald-200">
-            <span>🌾</span> {t('landing.ps_tag', 'Solving Problem Statement 26033 (DoCA / Ministry of Consumer Affairs)')}
+            <span>🌾</span> {t('landing.ps_tag', 'Direct Farmer-to-Buyer Agricultural Marketplace')}
           </div>
 
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-tight">

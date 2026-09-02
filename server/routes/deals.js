@@ -103,9 +103,23 @@ router.patch('/:id', verifyToken, async (req, res, next) => {
     const timeline = Array.isArray(deal.audit_timeline) ? [...deal.audit_timeline] : [];
     const now = new Date().toISOString();
 
+    let transaction = null;
+
     if (status) {
       updates.status = status;
       if (status === 'accepted') {
+        // Prevent race conditions and overselling by using a transaction
+        const { sequelize } = require('../models');
+        transaction = await sequelize.transaction();
+
+        const currentListing = await Listing.findByPk(deal.listing_id, { transaction, lock: transaction.LOCK.UPDATE });
+        if (currentListing.status !== 'active') {
+          await transaction.rollback();
+          return res.status(400).json({ success: false, error: 'Listing is no longer active' });
+        }
+
+        await currentListing.update({ status: 'sold' }, { transaction });
+
         timeline.push({
           event: 'DEAL_ACCEPTED',
           actor: isFarmer ? 'farmer' : 'buyer',
@@ -212,7 +226,8 @@ router.patch('/:id', verifyToken, async (req, res, next) => {
     if (transport_details !== undefined) updates.transport_details = transport_details;
 
     updates.audit_timeline = timeline;
-    await deal.update(updates);
+    await deal.update(updates, { transaction });
+    if (transaction) await transaction.commit();
     
     // Send notifications for key milestones
     if (status) {

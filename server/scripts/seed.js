@@ -4,8 +4,6 @@ const { sequelize, User, Listing, Deal, Notification, PriceCache, FpoGroup, Bulk
 async function seed() {
   console.log('🌱 Starting comprehensive database seeding for KisaanConnect Demo...');
 
-  await sequelize.sync({ alter: true });
-
   // Clean existing tables in foreign key order
   if (BulkRequirement) await BulkRequirement.destroy({ where: {} });
   await Notification.destroy({ where: {} });

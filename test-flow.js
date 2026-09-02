@@ -121,7 +121,7 @@ async function runTests() {
   );
   console.log('✓ Lot Deposited in Cold Storage. In Storage =', storeRes.data.data.is_in_storage);
 
-  // 9. AI Demand Forecasting Endpoint (PS 26033 Core AI)
+  // 9. AI Demand Forecasting Endpoint
   console.log('\n[9] Testing AI Demand Forecasting Endpoint...');
   const demandRes = await axios.get(`${BASE_URL}/demand/forecast?crop=Onion`);
   console.log('✓ Demand Forecast for Onion: Index =', demandRes.data.data.currentDemandIndex, '| 7-Day Trend = +' + demandRes.data.data.trend7DayPct + '%');

@@ -409,7 +409,7 @@ export default function ListingDetail() {
           </div>
         </div>
 
-        {/* Consumer Savings & Markup Elimination Breakdown (PS 26033 Demo Moment) */}
+        {/* Consumer Savings & Markup Elimination Breakdown */}
         <ConsumerSavingsComparison 
           cropName={listing.crop_name}
           farmerPrice={effectiveFarmerPrice}

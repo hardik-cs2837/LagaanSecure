@@ -107,13 +107,13 @@ const FarmerDashboard = () => {
         </div>
       </div>
 
-      {/* Markup Calculator — PROMINENT (Core Differentiator for PS 26033) */}
+      {/* Markup Calculator */}
       <MarkupCalculator />
 
-      {/* AI Demand Forecasting & "Should I Sell Now?" Recommendation (PS 26033 Core AI Feature) */}
+      {/* AI Demand Forecasting & "Should I Sell Now?" Recommendation */}
       <AIDemandForecastWidget defaultCrop={myListings[0]?.crop_name || 'Onion'} />
 
-      {/* Statistical Price Trend & 14-Day OLS Regression Forecast (PS 26132) */}
+      {/* Statistical Price Trend Forecast */}
       <PriceTrendRecommendation initialCrop={myListings[0]?.crop_name || 'Onion'} initialState="Maharashtra" />
 
       {/* Smart Buyer Matching: Best Buyers for Farmer's Produce */}

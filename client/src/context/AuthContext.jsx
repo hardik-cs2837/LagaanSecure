@@ -62,6 +62,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const googleLoginUser = async (googleToken, role = 'buyer') => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: googleToken, role })
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || 'Google login failed');
+      
+      const responseData = data.data || data;
+      const newToken = responseData.token;
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+      toast.success('Google login successful!');
+      return responseData;
+    } catch (error) {
+      toast.error(error.message || 'Google login failed');
+      throw error;
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     setToken(null);
@@ -76,6 +98,7 @@ export const AuthProvider = ({ children }) => {
     login: loginUser,
     register: registerUser,
     logout,
+    googleLogin: googleLoginUser,
     isAuthenticated: !!token && !!user,
     isFarmer: user?.role === 'farmer',
     isBuyer: user?.role === 'buyer',

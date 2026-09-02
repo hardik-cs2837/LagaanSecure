@@ -1,13 +1,16 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const { Sequelize } = require('sequelize');
+const pg = require('pg');
+require('pg-hstore');
 
 let sequelize;
 
 if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
-    logging: process.env.NODE_ENV === 'development' ? false : false,
+    dialectModule: pg,
+    logging: false,
     dialectOptions: process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production' ? {
       ssl: {
         require: true,
@@ -30,6 +33,7 @@ if (process.env.DATABASE_URL) {
     host: config.host,
     port: config.port,
     dialect: config.dialect,
+    dialectModule: pg,
     logging: config.logging
   });
 }

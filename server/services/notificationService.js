@@ -47,4 +47,4 @@ module.exports = {
   markAsRead,
   markAllAsRead,
   notifyDealUpdate
-};\n
+};

@@ -29,4 +29,4 @@ const getAdvice = async ({ mandiPrice, enteredPrice, crop }) => {
   }
 };
 
-module.exports = { getAdvice };\n
+module.exports = { getAdvice };

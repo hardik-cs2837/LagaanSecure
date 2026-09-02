@@ -28,4 +28,4 @@ router.patch('/read-all', verifyToken, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-module.exports = router;\n
+module.exports = router;

@@ -18,4 +18,4 @@ module.exports = (sequelize) => {
     Notification.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
   };
   return Notification;
-};\n
+};

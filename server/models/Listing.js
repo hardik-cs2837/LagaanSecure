@@ -24,4 +24,4 @@ module.exports = (sequelize) => {
     Listing.hasMany(models.Deal, { foreignKey: 'listing_id', as: 'deals' });
   };
   return Listing;
-};\n
+};

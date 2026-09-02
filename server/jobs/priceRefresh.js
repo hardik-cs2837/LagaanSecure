@@ -14,4 +14,4 @@ const startJob = () => {
   });
 };
 
-module.exports = startJob;\n
+module.exports = startJob;

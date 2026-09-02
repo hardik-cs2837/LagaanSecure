@@ -10,4 +10,4 @@ const sendWhatsApp = async (phone, message) => {
   return true;
 };
 
-module.exports = { sendSMS, sendWhatsApp };\n
+module.exports = { sendSMS, sendWhatsApp };

@@ -20,4 +20,4 @@ module.exports = (sequelize) => {
     Deal.belongsTo(models.User, { foreignKey: 'buyer_id', as: 'buyer' });
   };
   return Deal;
-};\n
+};

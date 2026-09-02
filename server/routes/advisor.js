@@ -22,4 +22,4 @@ router.post('/explain', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-module.exports = router;\n
+module.exports = router;

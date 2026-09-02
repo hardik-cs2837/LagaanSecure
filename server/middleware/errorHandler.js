@@ -13,4 +13,4 @@ module.exports = (err, req, res, next) => {
     success: false,
     error: process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message
   });
-};\n
+};

@@ -36,36 +36,64 @@ const fetchMandiPrice = async (commodity, state, market) => {
         });
         
         if (response.data && response.data.records && response.data.records.length > 0) {
-          const record = response.data.records[0];
-          const newCache = await PriceCache.create({
-            commodity: record.commodity,
-            state: record.state,
-            market: record.market,
-            min_price: record.min_price,
-            max_price: record.max_price,
-            modal_price: record.modal_price,
-            date: today
+          const [cacheEntry] = await PriceCache.findOrCreate({
+            where: {
+              commodity: record.commodity,
+              state: record.state,
+              market: record.market,
+              date: today
+            },
+            defaults: {
+              commodity: record.commodity,
+              state: record.state,
+              market: record.market,
+              min_price: record.min_price,
+              max_price: record.max_price,
+              modal_price: record.modal_price,
+              date: today
+            }
           });
-          return { ...newCache.toJSON(), source: 'api' };
+          return { ...cacheEntry.toJSON(), source: 'api' };
         }
       } catch (err) {
         console.error('Agmarknet API failed, falling back to mock data', err.message);
       }
     }
 
-    // Fallback to mock data
-    const mockData = mockPrices.find(p => 
+    // Fallback to mock data: exact match first, then state match, then commodity match
+    let mockData = mockPrices.find(p => 
       p.commodity.toLowerCase() === commodity.toLowerCase() &&
-      p.state.toLowerCase() === state.toLowerCase() &&
-      p.market.toLowerCase() === market.toLowerCase()
+      (!state || p.state.toLowerCase() === state.toLowerCase()) &&
+      (!market || p.market.toLowerCase() === market.toLowerCase())
     );
 
+    if (!mockData && state) {
+      mockData = mockPrices.find(p => 
+        p.commodity.toLowerCase() === commodity.toLowerCase() &&
+        p.state.toLowerCase() === state.toLowerCase()
+      );
+    }
+
+    if (!mockData) {
+      mockData = mockPrices.find(p => 
+        p.commodity.toLowerCase() === commodity.toLowerCase()
+      );
+    }
+
     if (mockData) {
-      const newCache = await PriceCache.create({
-        ...mockData,
-        date: today
+      const [cacheEntry] = await PriceCache.findOrCreate({
+        where: {
+          commodity: mockData.commodity,
+          state: mockData.state,
+          market: mockData.market,
+          date: today
+        },
+        defaults: {
+          ...mockData,
+          date: today
+        }
       });
-      return { ...newCache.toJSON(), source: 'mock' };
+      return { ...cacheEntry.toJSON(), source: 'mock' };
     }
 
     return null;
@@ -105,4 +133,4 @@ module.exports = {
   fetchMandiPrice,
   getAllPricesForCommodity,
   refreshAllPrices
-};\n
+};

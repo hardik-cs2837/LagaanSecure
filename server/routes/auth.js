@@ -48,4 +48,4 @@ router.post('/login', loginValidation, validate, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-module.exports = router;\n
+module.exports = router;

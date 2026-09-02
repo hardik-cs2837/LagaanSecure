@@ -82,12 +82,25 @@ router.delete('/:id', verifyToken, requireRole('farmer'), async (req, res, next)
 // Markup Check route attached here
 router.post('/:id/markup-check', async (req, res, next) => {
   try {
-    const { enteredPrice } = req.body;
+    const { enteredPrice, state, market } = req.body;
     const listing = await Listing.findByPk(req.params.id);
     if (!listing) return res.status(404).json({ success: false, error: 'Listing not found' });
     
-    // Attempt to fetch price based on listing crop_name and a default or listing location
-    const mandiData = await priceService.fetchMandiPrice(listing.crop_name, 'Maharashtra', 'Pune'); // using default fallback for example
+    // Parse location if possible (e.g. "Nashik, Maharashtra")
+    let targetState = state;
+    let targetMarket = market;
+    if (!targetState && listing.location) {
+      const parts = listing.location.split(',').map(s => s.trim());
+      if (parts.length > 1) {
+        targetMarket = parts[0];
+        targetState = parts[parts.length - 1];
+      } else {
+        targetState = parts[0];
+      }
+    }
+    
+    // Fetch price based on listing crop_name and location
+    const mandiData = await priceService.fetchMandiPrice(listing.crop_name, targetState, targetMarket);
     if (!mandiData) return res.status(404).json({ success: false, error: 'Mandi price not available' });
     
     const advice = await advisorService.getAdvice({ 
@@ -110,4 +123,4 @@ router.post('/:id/markup-check', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-module.exports = router;\n
+module.exports = router;

@@ -4,7 +4,6 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const path = require('path');
 const { sequelize } = require('./models');
 const errorHandler = require('./middleware/errorHandler');
 const priceRefreshJob = require('./jobs/priceRefresh');
@@ -49,4 +48,6 @@ sequelize.sync({ force: false }).then(() => {
   });
 }).catch(err => {
   console.error('Unable to connect to the database:', err);
-});\n
+});
+
+module.exports = app;

@@ -22,4 +22,4 @@ module.exports = (sequelize) => {
     ]
   });
   return PriceCache;
-};\n
+};

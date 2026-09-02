@@ -36,4 +36,4 @@ module.exports = {
   loginValidation,
   listingValidation,
   dealValidation
-};\n
+};

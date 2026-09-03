@@ -106,7 +106,7 @@ export default function AISmartSellCopilot({ onClose, isModal = false }) {
       
       try {
         response = await api.get(`/prices/${encodeURIComponent(targetCrop)}/trends`, {
-          params: { state: stateName }
+          params: { state: stateName, district: district }
         });
         if (response.data && response.data.success) {
           priceData = response.data.data;
@@ -119,7 +119,7 @@ export default function AISmartSellCopilot({ onClose, isModal = false }) {
       if (!priceData) {
         try {
           const resPrice = await api.get(`/prices/${encodeURIComponent(targetCrop)}`, {
-            params: { state: stateName }
+            params: { state: stateName, district: district }
           });
           if (resPrice.data && resPrice.data.success && Array.isArray(resPrice.data.data) && resPrice.data.data.length > 0) {
             const item = resPrice.data.data[0];

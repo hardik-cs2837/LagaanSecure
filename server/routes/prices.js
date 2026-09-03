@@ -191,11 +191,11 @@ router.get('/:commodity/trends', async (req, res, next) => {
  */
 router.get('/:commodity', async (req, res, next) => {
   try {
-    const { state, market } = req.query;
+    const { state, market, district } = req.query;
     const { commodity } = req.params;
 
-    if (state || market) {
-      const data = await marketDataService.getMandiPrice(commodity, state, market);
+    if (state || market || district) {
+      const data = await marketDataService.getMandiPrice(commodity, state, district, market);
       return res.json({ success: true, data });
     }
 
@@ -204,7 +204,7 @@ router.get('/:commodity', async (req, res, next) => {
       return res.json({ success: true, data: history });
     }
 
-    const singleData = await marketDataService.getMandiPrice(commodity);
+    const singleData = await marketDataService.getMandiPrice(commodity, null, null, null);
     res.json({ success: true, data: singleData });
   } catch (err) { next(err); }
 });

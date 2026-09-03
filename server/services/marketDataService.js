@@ -125,9 +125,9 @@ const buildCacheKey = (commodity, state, market) => {
  * @param {string} market 
  * @returns {Promise<Object>} Normalized record
  */
-const getMandiPrice = async (commodity, state, market) => {
+const getMandiPrice = async (commodity, state, district, market) => {
   const apiKey = getApiKey();
-  const cacheKey = buildCacheKey(commodity, state, market);
+  const cacheKey = buildCacheKey(commodity, state, (district || '') + (market || ''));
 
   // 1. Attempt API call if API key configured
   if (apiKey) {
@@ -141,6 +141,7 @@ const getMandiPrice = async (commodity, state, market) => {
 
       if (commodity) params['filters[commodity]'] = commodity;
       if (state) params['filters[state]'] = state;
+      if (district) params['filters[district]'] = district;
       if (market) params['filters[market]'] = market;
 
       const response = await axios.get(MANDI_API_ENDPOINT, {
@@ -151,7 +152,7 @@ const getMandiPrice = async (commodity, state, market) => {
       if (response.data && Array.isArray(response.data.records) && response.data.records.length > 0) {
         const rawRecord = response.data.records[0];
         const fetchTime = new Date().toISOString();
-        const normalized = normalizeRecord(rawRecord, commodity, state, market, fetchTime);
+        const normalized = normalizeRecord(rawRecord, commodity, state, district || market, fetchTime);
         normalized.status = 'LIVE';
 
         // Update in-memory cache
@@ -212,7 +213,7 @@ const getMandiPrice = async (commodity, state, market) => {
       if (dbRecord) {
         const jsonRec = dbRecord.toJSON();
         const fetchTime = jsonRec.created_at || jsonRec.date || new Date().toISOString();
-        const normalized = normalizeRecord(jsonRec, commodity, state, market, fetchTime);
+        const normalized = normalizeRecord(jsonRec, commodity, state, district || market, fetchTime);
         normalized.status = getFreshnessStatus(normalized.timestamp);
 
         memoryCache.set(cacheKey, normalized);
@@ -224,7 +225,7 @@ const getMandiPrice = async (commodity, state, market) => {
   }
 
   // 4. Return UNAVAILABLE with nulls (Requirement 5: DO NOT fabricate prices)
-  return buildUnavailableRecord(commodity, state, market);
+  return buildUnavailableRecord(commodity, state, district || market);
 };
 
 /**

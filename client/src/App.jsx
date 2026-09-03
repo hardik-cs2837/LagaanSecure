@@ -20,7 +20,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Disputes from './pages/Disputes';
 
 function App() {
-  const { isAuthenticated, isFarmer, isBuyer } = useContext(AuthContext);
+  const { isAuthenticated, isFarmer, isBuyer, user } = useContext(AuthContext);
 
   return (
     <div className="min-h-screen bg-cream">

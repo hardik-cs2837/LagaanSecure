@@ -29,7 +29,10 @@
     "farmer": "शेतकरी",
     "buyer": "व्यापारी",
     "noAccount": "खाते नाही?",
-    "registerLink": "इथे नोंदणी करा"
+    "registerLink": "इथे नोंदणी करा",
+    "state": "राज्य",
+    "district": "जिल्हा",
+    "select_state": "राज्य निवडा"
   },
   "farmer": {
     "dashboard": "शेतकरी डॅशबोर्ड",
@@ -111,5 +114,19 @@
     "loadingHealth": "सेवा आरोग्य तपासले जात आहे...",
     "loadingTransactions": "व्यवहार नोंदी लोड होत आहेत...",
     "loadingDisputes": "तक्रारी लोड होत आहेत..."
+  },
+  "listings": {
+    "unitQuintal": "क्विंटल",
+    "unitTon": "टन",
+    "unitKg": "किलो",
+    "selfDeclared": "स्वयं-घोषित",
+    "gradeA": "ग्रेड ए (प्रीमियम/निर्यात गुणवत्ता)",
+    "gradeB": "ग्रेड बी (मानक बाजार गुणवत्ता)",
+    "gradeC": "ग्रेड सी (प्रक्रिया/योग्य सरासरी)",
+    "additionalDetails": "खरेदीदारांसाठी अतिरिक्त माहिती"
+  },
+  "common": {
+    "marketplace_subtitle": "किसानकनेक्ट राष्ट्रीय बाजारपेठ",
+    "listening_command": "आदेश ऐकत आहे..."
   }
 }

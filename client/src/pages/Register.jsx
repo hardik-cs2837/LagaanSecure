@@ -247,20 +247,20 @@ const Register = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
-                      State <span className="text-red-500">*</span>
+                      {t('auth.state', 'State')} <span className="text-red-500">*</span>
                     </label>
                     <select
                       value={form.state || ''}
                       onChange={(e) => handleChange('state', e.target.value)}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-primary-500 transition-colors bg-white"
                     >
-                      <option value="">Select State</option>
+                      <option value="">{t('auth.select_state', 'Select State')}</option>
                       {INDIAN_STATES.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
-                      District <span className="text-red-500">*</span>
+                      {t('auth.district', 'District')} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"

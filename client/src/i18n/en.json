@@ -42,7 +42,10 @@
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "loginLink": "Login here",
-    "registerLink": "Register here"
+    "registerLink": "Register here",
+    "state": "State",
+    "district": "District",
+    "select_state": "Select State"
   },
   "farmer": {
     "dashboard": "Farmer Dashboard",
@@ -84,14 +87,19 @@
     "description": "Description",
     "active": "Active",
     "sold": "Sold",
-    "gradeA": "Grade A (Premium)",
-    "gradeB": "Grade B (Standard)",
-    "gradeC": "Grade C (Basic)",
+    "gradeA": "Grade A (Premium/Export Quality)",
+    "gradeB": "Grade B (Standard Market Quality)",
+    "gradeC": "Grade C (Processing/Fair Average)",
     "create": "Create Listing",
     "createSuccess": "Listing created successfully!",
     "selectCrop": "Select or type crop name",
     "uploadPhoto": "Upload Photo",
-    "farmerInfo": "Farmer Info"
+    "farmerInfo": "Farmer Info",
+    "unitQuintal": "Quintal",
+    "unitTon": "Ton",
+    "unitKg": "Kg",
+    "selfDeclared": "Self-Declared",
+    "additionalDetails": "Additional Details for Buyers"
   },
   "markup": {
     "title": "Intermediary Markup Calculator",
@@ -157,7 +165,9 @@
     "quintals": "quintals",
     "refresh": "Refresh",
     "all": "All",
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "marketplace_subtitle": "KisanConnect National Marketplace",
+    "listening_command": "Listening for command..."
   },
   "trends": {
     "title": "Sale-Window & Price Trend Signal",
@@ -194,13 +204,13 @@
     "buyer_savings": "Buyer Net Savings"
   },
   "demand": {
-    "title": "Live Platform Arrival Volumes & Supply",
-    "subtitle": "Real-time aggregated produce available directly from verified farmers & FPOs",
-    "lots": "lots",
-    "fpo_pooled": "FPO pooled",
-    "no_data": "No active lots listed currently.",
-    "coverage": "Covers direct farm listings across Maharashtra, Punjab, Karnataka & MP",
-    "live_status": "Live Market Aggregation"
+    "title": "AI Demand Forecasting & Sell Timing",
+    "subtitle": "Forward-looking demand projections, arrival trends & storage window advice",
+    "current_demand": "Current Demand Index",
+    "forecast_curve": "Forward Demand Shift",
+    "storage_window": "Post-Harvest Shelf Life",
+    "smart_action_title": "Smart Sell Timing Recommendation (\"Should I Sell Now?\")",
+    "key_drivers": "Underlying Market Drivers & Arrival Dynamics"
   },
   "storage": {
     "btn": "Cold Storage & Warehouses",
@@ -303,15 +313,6 @@
     "title": "Disintermediation & Impact Analytics",
     "subtitle": "Live transparency dashboard measuring direct farmer income enhancements, consumer price savings, and FPO aggregation outcomes.",
     "chart_title": "Value Unlocked per Commodity via Direct Trade (INR)"
-  },
-  "demand": {
-    "title": "AI Demand Forecasting & Sell Timing",
-    "subtitle": "Forward-looking demand projections, arrival trends & storage window advice",
-    "current_demand": "Current Demand Index",
-    "forecast_curve": "Forward Demand Shift",
-    "storage_window": "Post-Harvest Shelf Life",
-    "smart_action_title": "Smart Sell Timing Recommendation (\"Should I Sell Now?\")",
-    "key_drivers": "Underlying Market Drivers & Arrival Dynamics"
   },
   "matching": {
     "title": "Best Matched Direct Buyers for Your Produce",

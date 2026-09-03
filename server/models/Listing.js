@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
     price_per_unit: { type: DataTypes.FLOAT, allowNull: true },
     quality_grade: { type: DataTypes.ENUM('A', 'B', 'C'), defaultValue: 'B' },
     quality_checklist: { type: DataTypes.JSON, allowNull: true },
-    photo_url: { type: DataTypes.STRING },
+    photo_url: { type: DataTypes.TEXT },
     location: { type: DataTypes.STRING },
     latitude: { type: DataTypes.FLOAT, allowNull: true },
     longitude: { type: DataTypes.FLOAT, allowNull: true },

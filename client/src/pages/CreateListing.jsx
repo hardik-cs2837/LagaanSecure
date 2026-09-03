@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import { listings } from '../services/api';
 import toast from 'react-hot-toast';
-import { Mic, MicOff, Info, ArrowLeft, Volume2, ShieldCheck, HelpCircle, RefreshCw } from 'lucide-react';
+import { Camera, Trash, Mic, MicOff, Info, ArrowLeft, Volume2, ShieldCheck, HelpCircle, RefreshCw } from 'lucide-react';
 import TextToSpeechButton from '../components/TextToSpeechButton';
 import { motion } from 'framer-motion';
 
@@ -160,7 +160,7 @@ const CreateListing = () => {
             </button>
             <div>
               <h1 className="text-xl md:text-2xl font-bold">{t('farmer.add_produce', 'Publish Produce Listing')}</h1>
-              <p className="text-emerald-100 text-xs md:text-sm font-medium mt-0.5 tracking-wide uppercase">KisanConnect National Marketplace</p>
+              <p className="text-emerald-100 text-xs md:text-sm font-medium mt-0.5 tracking-wide uppercase">{t('common.marketplace_subtitle', 'KisanConnect National Marketplace')}</p>
             </div>
           </div>
           <TextToSpeechButton text={t('farmer.add_produce', 'Publish Produce Listing')} />
@@ -270,9 +270,9 @@ const CreateListing = () => {
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none font-medium bg-slate-50"
                     >
-                      <option value="quintal">Quintal</option>
-                      <option value="ton">Ton</option>
-                      <option value="kg">Kg</option>
+                      <option value="quintal">{t('listings.unitQuintal', 'Quintal')}</option>
+                      <option value="ton">{t('listings.unitTon', 'Ton')}</option>
+                      <option value="kg">{t('listings.unitKg', 'Kg')}</option>
                     </select>
                   </div>
                 </div>
@@ -280,7 +280,7 @@ const CreateListing = () => {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2 flex justify-between">
                     <span>{t('listings.quality_grade', 'Quality Grade')}</span>
-                    <span className="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded">Self-Declared</span>
+                    <span className="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded">{t('listings.selfDeclared', 'Self-Declared')}</span>
                   </label>
                   <select 
                     name="quality_grade" 
@@ -288,9 +288,9 @@ const CreateListing = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none font-bold text-slate-800 bg-slate-50"
                   >
-                    <option value="A">Grade A (Premium/Export Quality)</option>
-                    <option value="B">Grade B (Standard Market Quality)</option>
-                    <option value="C">Grade C (Processing/Fair Average)</option>
+                    <option value="A">{t('listings.gradeA', 'Grade A (Premium/Export Quality)')}</option>
+                    <option value="B">{t('listings.gradeB', 'Grade B (Standard Market Quality)')}</option>
+                    <option value="C">{t('listings.gradeC', 'Grade C (Processing/Fair Average)')}</option>
                   </select>
                 </div>
               </div>
@@ -374,7 +374,7 @@ const CreateListing = () => {
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2 flex justify-between items-center">
-                  <span>Additional Details for Buyers</span>
+                  <span>{t('listings.additionalDetails', 'Additional Details for Buyers')}</span>
                   <button 
                     type="button"
                     onClick={handleMicClick}

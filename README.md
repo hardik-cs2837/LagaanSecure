@@ -26,10 +26,10 @@ Lagaan Secure operates on a B2B2C marketplace model designed for scalability and
 
 ---
 
-## 🌟 Key Capabilities & Innovation
+## ⭐ Key Capabilities & Innovation
 
-- **Zero Mock Data Policy**: All market prices are fetched live from verified Government APIs (pi.data.gov.in). If data is unavailable, the system degrades gracefully. No fabricated transactions or fake metrics are displayed.
-- **AI Smart Sell Copilot**: Personalized agricultural intelligence powered by verified data. Analyzes crop, location, real-time prices, and logistics to provide actionable selling advice.
+- **Zero Mock Data Policy**: All market prices are fetched live from verified Government APIs (api.data.gov.in). If data is unavailable, the system degrades gracefully. No fabricated transactions or fake metrics are displayed.
+- **Gemini Smart Sell Advisor**: Personalized agricultural intelligence powered by Google Gemini 1.5 Flash. Analyzes crop, location, real-time prices, and logistics to provide actionable selling advice.
 - **Advanced Authentication & Security**: Secure JWT sessions, Google OAuth 2.0 integration, strict rate limiting against brute-force attacks, and complete OTP/Forgot Password workflows.
 - **Multilingual & Accessible**: Native support for 9 Indian regional languages with Text-to-Speech (TTS) capabilities for low-literacy users.
 - **Real-Time Platform Governance**: An administrative dashboard with live API health monitoring and real, database-driven KPIs. Dispute resolution and escrow logic placeholders built-in.
@@ -43,18 +43,18 @@ Lagaan Secure operates on a B2B2C marketplace model designed for scalability and
 - **Frontend**: React 18, Vite, Tailwind CSS, Framer Motion, Lucide Icons
 - **Backend**: Express.js (Serverless-ready for Vercel)
 - **Database**: PostgreSQL (Sequelize ORM)
-- **External Services**: Google OAuth (Identity), Gemini API (AI Copilot), data.gov.in (Market Prices)
+- **External Services**: Google OAuth (Identity), Google Gemini API (AI Advisor), data.gov.in (Market Prices)
 
 ---
 
-## 🛠️ Local Development & Quickstart
+## 🚀 Local Development & Quickstart
 
 ### Prerequisites
 - Node.js v18.x+
 - PostgreSQL v14.x+
 
 ### 1. Installation
-\\\ash
+```bash
 git clone https://github.com/hardik-cs2837/LagaanSecure.git
 cd LagaanSecure
 npm install
@@ -62,12 +62,12 @@ cd client && npm install && cd ..
 ```
 
 ### 2. Configuration
-Copy .env.example to .env and fill in your actual credentials.
-**Crucial**: You must provide a valid AGMARKNET_API_KEY to fetch live prices.
+Copy `.env.example` to `.env` and fill in your actual credentials.
+**Crucial**: You must provide a valid `AGMARKNET_API_KEY` and `AI_API_KEY` (Google Gemini) to run local features.
 
 ### 3. Database Initialization & Admin Provisioning
 ```bash
-createdb -U postgres lagaansecure
+createdb -U postgres kisaanconnect
 npm run seed
 ```
 
@@ -77,7 +77,7 @@ The `npm run seed` command automatically provisions a default Super Admin accoun
 - **Phone:** `0000000000` (Use this to login)
 - **Password:** `admin123`
 
-*⚠️ SECURITY WARNING: Admin accounts cannot be created via the public registration form. For production deployments, you MUST manually provision admin accounts directly in the PostgreSQL database or change the default seeded password immediately to prevent unauthorized access.*
+⚠️ **SECURITY WARNING:** *Admin accounts cannot be created via the public registration form. For production deployments, you MUST manually provision admin accounts directly in the PostgreSQL database or change the default seeded password immediately to prevent unauthorized access.*
 
 ### 4. Run Development Servers
 ```bash
@@ -86,7 +86,7 @@ npm run dev
 
 ---
 
-## 🛣️ Roadmap & Known Limitations
+## 🚀 Roadmap & Known Limitations
 
 ### Current Limitations
 - **Escrow Integration**: The current deal flow supports negotiation and "accepted" states, but actual fiat currency escrow is simulated pending a payment gateway integration (e.g., Razorpay/Stripe).

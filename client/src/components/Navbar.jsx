@@ -84,7 +84,12 @@ const Navbar = () => {
                 whileTap={{ scale: 0.95 }}
                 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 flex items-center gap-2"
               >
-                <span><Wheat className="w-6 h-6 text-emerald-600" /></span> Lagaan Secure
+                <span><svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16 2.66663L3.99996 7.99996V14.6666C3.99996 22.0666 9.15996 28.9733 16 30.6666C22.84 28.9733 28 22.0666 28 14.6666V7.99996L16 2.66663Z" fill="#10B981"/>
+  <path d="M16 2.66663V30.6666C22.84 28.9733 28 22.0666 28 14.6666V7.99996L16 2.66663Z" fill="#059669"/>
+  <path d="M16 22.6666C16 22.6666 10.6666 18.6666 10.6666 14.6666C10.6666 11.6666 13 9.33329 16 9.33329C19 9.33329 21.3333 11.6666 21.3333 14.6666C21.3333 18.6666 16 22.6666 16 22.6666Z" fill="#D1FAE5"/>
+  <path d="M16 9.33329C14.5272 9.33329 13.3333 10.5272 13.3333 12C13.3333 13.4728 14.5272 14.6666 16 14.6666C17.4728 14.6666 18.6666 13.4728 18.6666 12C18.6666 10.5272 17.4728 9.33329 16 9.33329Z" fill="#059669"/>
+</svg></span> Lagaan Secure
               </motion.div>
             </Link>
           </div>

@@ -10,21 +10,35 @@ const router = express.Router();
 router.get('/seed-db', async (req, res) => {
   try {
     const { sequelize, User } = require('../models');
+    const bcrypt = require('bcrypt');
     await sequelize.authenticate();
     await sequelize.sync({ alter: true });
     
+    // Always ensure admin exists
+    const adminPwd = await bcrypt.hash('admin123', 10);
+    await User.findOrCreate({
+      where: { role: 'admin' },
+      defaults: {
+        name: 'Super Admin',
+        phone: '0000000000',
+        email: 'admin@lagaansecure.com',
+        role: 'admin',
+        password_hash: adminPwd
+      }
+    });
+
     const count = await User.count();
-    if (count === 0) {
+    if (count <= 1) { // 1 means only admin exists
       try {
         const cp = require('child_process');
         const path = require('path');
         cp.execSync('node scripts/seed.js', { cwd: path.join(__dirname, '..'), stdio: 'pipe' });
-        return res.json({ success: true, message: 'Database synced and seeded successfully!' });
+        return res.json({ success: true, message: 'Database synced, admin created, and seeded successfully!' });
       } catch (seedErr) {
         return res.status(500).json({ success: false, message: 'Synced tables, but seed failed.', error: seedErr.message });
       }
     }
-    return res.json({ success: true, message: 'Database synced. Seed skipped (users already exist).' });
+    return res.json({ success: true, message: 'Database synced. Admin account verified. Seed skipped (users exist).' });
   } catch (err) {
     return res.status(500).json({ success: false, error: err.message });
   }

@@ -95,8 +95,28 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 if (require.main === module) {
-  sequelize.authenticate().then(() => {
+  sequelize.authenticate().then(async () => {
     console.log('Database connected successfully');
+    
+    // Auto-migrate and Seed for Hackathon/Demo deployments
+    try {
+      await sequelize.sync({ alter: true });
+      console.log('Database tables synchronized.');
+      
+      const { User } = require('./models');
+      const userCount = await User.count();
+      if (userCount === 0) {
+        console.log('Database is empty. Running automatic seeder...');
+        try {
+          // Check if seed exposes a function, if not, we spawn it as a process
+          require('child_process').execSync('node scripts/seed.js', { cwd: __dirname, stdio: 'inherit' });
+        } catch(e) {
+          console.error('Failed to run seed script natively:', e.message);
+        }
+      }
+    } catch (syncErr) {
+      console.error('Error during automatic database sync/seed:', syncErr);
+    }
     app.listen(PORT, () => {
       console.log(`Lagaan Secure Server running on port ${PORT}`);
       // Start background price refresh job

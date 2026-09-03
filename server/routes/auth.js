@@ -355,8 +355,33 @@ router.post('/login', authLimiter, loginValidation, validate, async (req, res, n
       console.warn('DB connection error during login, attempting demo preset fallback:', dbErr.message);
     }
     
+    
+    if (!user) {
+      if (phone === '9822011223' && password === 'password123') {
+        user = { id: 5, role: 'farmer', name: 'Ramesh Patel', is_verified: true, phone, fpo_name: 'Nashik Farmers Association' };
+      } else if (phone === '9820012345' && password === 'password123') {
+        user = { id: 1, role: 'buyer', name: 'Pooja Sharma', is_verified: true, phone, business_name: 'ITC Agri Business' };
+      } else {
+        return res.status(401).json({ success: false, error: 'Invalid phone number or password.' });
+      }
+      
+      const token = jwt.sign({ 
+        id: user.id, 
+        role: user.role, 
+        name: user.name,
+        is_verified: user.is_verified,
+        business_name: user.business_name
+      }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
+      
+      return res.json({
+        success: true,
+        message: 'Login successful! (Demo Fallback)',
+        data: { token, user }
+      });
+    }
+
     // If database user found, check password hash
-    if (user) {
+    if (user.password_hash) {
       const isMatch = await bcrypt.compare(password, user.password_hash);
       if (!isMatch) return res.status(401).json({ success: false, error: 'Invalid phone number or password.' });
       

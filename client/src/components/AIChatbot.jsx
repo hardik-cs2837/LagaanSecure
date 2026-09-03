@@ -18,8 +18,8 @@ export default function AIChatbot() {
     {
       role: 'bot',
       text: i18n.language === 'hi'
-        ? '👨‍🌾 नमस्ते! मैं आपका किसान सहायक (Kisaan Copilot) हूँ। मुझसे मंडी भाव, बिचौलियों की मार्जिन गणना, बिक्री समय या ढुलाई के बारे में पूछें।'
-        : "👨‍🌾 Hello! I am your Kisaan Copilot. Ask me about live mandi benchmarks, intermediary markup elimination, optimal sell timing ('Should I Sell Now?'), or rural logistics route planning.",
+        ? '👨‍🌾 नमस्ते! मैं आपका किसान सहायक (Gemini AI Assistant) हूँ। मुझसे मंडी भाव, बिचौलियों की मार्जिन गणना, बिक्री समय या ढुलाई के बारे में पूछें।'
+        : "👨‍🌾 Hello! I am your Gemini AI Assistant. Ask me about live mandi benchmarks, intermediary markup elimination, optimal sell timing ('Should I Sell Now?'), or rural logistics route planning.",
       engine: 'Lagaan Secure Agricultural Expert Engine'
     }
   ]);
@@ -52,7 +52,7 @@ export default function AIChatbot() {
       );
 
       const botReply = res.data?.data?.reply || "I'm analyzing the latest agricultural market data. Please verify your crop and location.";
-      const engine = res.data?.data?.engine || 'Lagaan Secure Agricultural Copilot';
+      const engine = res.data?.data?.engine || 'Lagaan Secure Gemini Assistant';
 
       setMessages((prev) => [
         ...prev,
@@ -86,14 +86,14 @@ export default function AIChatbot() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-primary-700 to-primary-600 hover:from-primary-800 hover:to-primary-700 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 border-2 border-white"
-        aria-label="Kisaan Copilot AI Assistant"
+        aria-label="Gemini AI Assistant AI Assistant"
       >
         {isOpen ? (
           <span className="text-2xl font-bold">✕</span>
         ) : (
           <div className="flex flex-col items-center">
             <span className="text-2xl">🤖</span>
-            <span className="text-[9px] font-black uppercase tracking-tighter">Copilot</span>
+            <span className="text-[9px] font-black uppercase tracking-tighter">Gemini</span>
           </div>
         )}
       </button>
@@ -109,7 +109,7 @@ export default function AIChatbot() {
               </div>
               <div>
                 <h3 className="font-extrabold text-sm flex items-center gap-1.5">
-                  Kisaan Copilot AI
+                  Gemini AI Assistant AI
                   <span className="bg-emerald-400/30 text-emerald-100 text-[9px] px-1.5 py-0.2 rounded font-bold">
                     ACTIVE
                   </span>
@@ -150,7 +150,7 @@ export default function AIChatbot() {
               <div className="flex justify-start">
                 <div className="bg-white rounded-2xl rounded-bl-none p-3 shadow-sm border border-gray-200">
                   <div className="flex gap-1.5 items-center">
-                    <span className="text-[10px] text-gray-500 font-bold">Copilot is thinking</span>
+                    <span className="text-[10px] text-gray-500 font-bold">Gemini is thinking</span>
                     <div className="w-1.5 h-1.5 bg-primary-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <div className="w-1.5 h-1.5 bg-primary-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                     <div className="w-1.5 h-1.5 bg-primary-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />

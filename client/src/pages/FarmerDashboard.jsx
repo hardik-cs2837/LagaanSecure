@@ -158,7 +158,7 @@ const FarmerDashboard = () => {
             className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 rounded-xl hover:from-emerald-500 hover:to-indigo-500 transition-all shadow-md hover:shadow-emerald-500/25 overflow-hidden"
           >
             <SparklesIcon className="w-4 h-4 text-amber-300 animate-pulse" />
-            <span>{t('farmer.actions.aiCopilot', 'AI Sell Copilot')}</span>
+            <span>{t('farmer.actions.aiCopilot', 'Gemini Sell Advisor')}</span>
           </button>
 
           <button
@@ -223,7 +223,7 @@ const FarmerDashboard = () => {
         ))}
       </motion.div>
 
-      {/* AI Smart Sell Copilot Featured Section */}
+      {/* Gemini Smart Sell Advisor Featured Section */}
       <motion.div variants={itemVariants}>
         <div className="bg-gradient-to-r from-slate-900 via-teal-950 to-emerald-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-emerald-800/40 relative overflow-hidden mb-6">
           <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -234,7 +234,7 @@ const FarmerDashboard = () => {
                 Government Verified Mandi Intelligence
               </div>
               <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-                AI Smart Sell Copilot
+                Gemini Smart Sell Advisor
               </h2>
               <p className="text-slate-300 text-sm font-medium leading-relaxed">
                 6-step interactive workflow: Get verified government mandi price benchmarks, expected net realization, and data-backed sell/store recommendations.
@@ -245,7 +245,7 @@ const FarmerDashboard = () => {
               onClick={() => setShowCopilotModal(true)}
               className="shrink-0 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold px-7 py-3.5 rounded-2xl shadow-lg hover:shadow-emerald-500/30 transition-all flex items-center gap-2 text-sm sm:text-base group"
             >
-              <span>Launch Copilot Workflow 🚀</span>
+              <span>Launch Gemini Workflow 🚀</span>
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
@@ -432,7 +432,7 @@ const FarmerDashboard = () => {
         userLocation={user?.location || 'Nashik Farm Hub'}
       />
 
-      {/* AI Smart Sell Copilot Modal */}
+      {/* Gemini Smart Sell Advisor Modal */}
       <AnimatePresence>
         {showCopilotModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-md overflow-y-auto">

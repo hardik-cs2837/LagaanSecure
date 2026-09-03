@@ -221,7 +221,7 @@ export default function AISmartSellCopilot({ onClose, isModal = false }) {
         price: benchmarkPrice,
         location: `${district}, ${stateName}`,
         harvest_date: harvestDate,
-        description: `AI Copilot Recommendation (${recommendationBadge}): Verified government benchmark rate of ₹${benchmarkPrice}/qtl (${grade} Grade) in ${district}, ${stateName}.`
+        description: `Gemini AI Recommendation (${recommendationBadge}): Verified government benchmark rate of ₹${benchmarkPrice}/qtl (${grade} Grade) in ${district}, ${stateName}.`
       }
     });
   };
@@ -251,7 +251,7 @@ export default function AISmartSellCopilot({ onClose, isModal = false }) {
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1 text-white">
-                AI Smart Sell Copilot
+                Gemini Smart Sell Advisor
               </h2>
             </div>
           </div>
@@ -736,7 +736,7 @@ export default function AISmartSellCopilot({ onClose, isModal = false }) {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">
-                      Copilot Analysis Report
+                      Gemini Analysis Report
                     </span>
                   </div>
                   <h3 className="text-2xl font-black text-slate-900 mt-1">

@@ -165,24 +165,4 @@ router.get('/transactions', async (req, res, next) => {
   }
 });
 
-
-    
-    const count = await User.count();
-    if (count === 0) {
-      // Need to run seed script
-      try {
-        const cp = require('child_process');
-        const path = require('path');
-        cp.execSync('node scripts/seed.js', { cwd: path.join(__dirname, '..'), stdio: 'pipe' });
-        return res.json({ success: true, message: 'Database synced and seeded successfully!' });
-      } catch (seedErr) {
-        return res.status(500).json({ success: false, message: 'Synced tables, but seed failed.', error: seedErr.message });
-      }
-    }
-    return res.json({ success: true, message: 'Database synced. Seed skipped (users already exist).' });
-  } catch (err) {
-    return res.status(500).json({ success: false, error: err.message });
-  }
-});
-
 module.exports = router;

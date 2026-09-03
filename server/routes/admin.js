@@ -12,7 +12,7 @@ router.use(verifyToken, requireRole('admin'));
 // System KPIs derived from actual database data
 router.get('/kpis', async (req, res, next) => {
   try {
-    const totalUsers = await User.count();
+    const totalUsers = await User.count({ where: { role: { [Op.ne]: 'admin' } } });
     const farmerCount = await User.count({ where: { role: 'farmer' } });
     const buyerCount = await User.count({ where: { role: 'buyer' } });
     const activeListings = await Listing.count({ where: { status: 'active' } });

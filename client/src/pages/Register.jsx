@@ -34,7 +34,8 @@ const Register = () => {
     password: '',
     confirmPassword: '',
     role: preselectedRole || 'farmer',
-    location: '',
+    state: '',
+    district: '',
   });
 
   // Password Visibility Toggles
@@ -117,7 +118,7 @@ const Register = () => {
         phone: form.phone,
         password: form.password,
         role: form.role,
-        location: form.location,
+        location: `${form.district}, ${form.state}`,
       });
       const user = data?.user;
       if (user?.role === 'farmer') {
@@ -242,19 +243,34 @@ const Register = () => {
                 {errors.phone && <p className="text-red-500 text-xs mt-1 font-medium">{errors.phone}</p>}
               </div>
 
-              {/* Location */}
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
-                  {t('auth.location', 'Location (City, State)')}
-                </label>
-                <input
-                  type="text"
-                  value={form.location}
-                  onChange={(e) => handleChange('location', e.target.value)}
-                  placeholder="e.g. Pune, Maharashtra"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-primary-500 transition-colors"
-                />
-              </div>
+                {/* State & District */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
+                      State <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      value={form.state || ''}
+                      onChange={(e) => handleChange('state', e.target.value)}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-primary-500 transition-colors bg-white"
+                    >
+                      <option value="">Select State</option>
+                      {INDIAN_STATES.map(s => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
+                      District <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={form.district || ''}
+                      onChange={(e) => handleChange('district', e.target.value)}
+                      placeholder="e.g. Pune"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-primary-500 transition-colors"
+                    />
+                  </div>
+                </div>
 
               {/* Password */}
               <div>

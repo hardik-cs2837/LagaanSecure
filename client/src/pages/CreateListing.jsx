@@ -79,7 +79,7 @@ const CreateListing = () => {
     recognition.interimResults = false;
     
     // Set language based on current i18n language
-    const currentLang = localStorage.getItem('i18nextLng') || 'en';
+    const currentLang = localStorage.getItem('language') || 'en';
     if (currentLang === 'hi') recognition.lang = 'hi-IN';
     else if (currentLang === 'mr') recognition.lang = 'mr-IN';
     else if (currentLang === 'te') recognition.lang = 'te-IN';

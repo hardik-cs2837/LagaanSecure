@@ -45,7 +45,7 @@ router.post('/send-otp', authLimiter, async (req, res, next) => {
         const waitSeconds = Math.ceil((RESEND_COOLDOWN_MS - (Date.now() - new Date(existing.last_sent).getTime())) / 1000);
         return res.status(429).json({
           success: false,
-          error: \`Please wait \${waitSeconds} seconds before requesting a new code.\`
+          error: `Please wait ${waitSeconds} seconds before requesting a new code.`
         });
       }
       const otp = generate6DigitOtp();
@@ -176,7 +176,7 @@ router.post('/forgot-password', authLimiter, async (req, res, next) => {
         const waitSeconds = Math.ceil((RESEND_COOLDOWN_MS - (Date.now() - new Date(existing.last_sent).getTime())) / 1000);
         return res.status(429).json({
           success: false,
-          error: \`Please wait \${waitSeconds} seconds before requesting a new code.\`
+          error: `Please wait ${waitSeconds} seconds before requesting a new code.`
         });
       }
       const otp = generate6DigitOtp();

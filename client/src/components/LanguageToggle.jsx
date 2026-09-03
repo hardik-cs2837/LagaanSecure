@@ -1,3 +1,4 @@
+import { Globe, Check, ChevronDown } from 'lucide-react';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,7 +18,7 @@ const LanguageToggle = () => {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
-  const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
+  const currentLang = languages.find(l => i18n.language?.startsWith(l.code)) || languages[0];
 
   const handleSelect = (code) => {
     i18n.changeLanguage(code);
@@ -34,9 +35,7 @@ const LanguageToggle = () => {
       >
         <span>🌐</span>
         <span>{currentLang.name}</span>
-        <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <ChevronDown className="w-4 h-4 text-gray-400" />
       </button>
 
       {isOpen && (
@@ -47,11 +46,11 @@ const LanguageToggle = () => {
                 key={lang.code}
                 onClick={() => handleSelect(lang.code)}
                 className={`w-full text-left px-4 py-2.5 text-xs font-medium flex items-center justify-between transition-colors ${
-                  i18n.language === lang.code ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-gray-700 hover:bg-gray-50'
+                  i18n.language?.startsWith(lang.code) ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 <span>{lang.name}</span>
-                {i18n.language === lang.code && <span className="text-emerald-600 font-bold">✓</span>}
+                {i18n.language?.startsWith(lang.code) && <Check className="w-4 h-4 text-emerald-600" />}
               </button>
             ))}
           </div>

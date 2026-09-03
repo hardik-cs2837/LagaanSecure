@@ -122,7 +122,7 @@ const Login = () => {
     loaderSetter(true);
     try {
       const data = await login(phoneStr, passStr);
-      navigate(data.user?.role === 'farmer' ? '/farmer/dashboard' : '/buyer/dashboard');
+      if (data.user?.role === 'admin') { navigate('/admin'); } else { navigate(data.user?.role === 'farmer' ? '/farmer/dashboard' : '/buyer/dashboard'); }
     } catch {
       // Error handled by AuthContext
     } finally {

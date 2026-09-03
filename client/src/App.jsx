@@ -31,14 +31,14 @@ function App() {
           path="/"
           element={
             isAuthenticated ? (
-              <Navigate to={isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace />
+              <Navigate to={user?.role === 'admin' ? '/admin' : isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace />
             ) : (
               <Landing />
             )
           }
         />
-        <Route path="/login" element={isAuthenticated ? <Navigate to={isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace /> : <Login />} />
-        <Route path="/register" element={isAuthenticated ? <Navigate to={isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace /> : <Register />} />
+        <Route path="/login" element={isAuthenticated ? <Navigate to={user?.role === 'admin' ? '/admin' : isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace /> : <Login />} />
+        <Route path="/register" element={isAuthenticated ? <Navigate to={user?.role === 'admin' ? '/admin' : isFarmer ? '/farmer/dashboard' : '/buyer/dashboard'} replace /> : <Register />} />
         <Route path="/impact" element={<ImpactAnalytics />} />
         <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
         <Route path="/disputes" element={<ProtectedRoute><Disputes /></ProtectedRoute>} />

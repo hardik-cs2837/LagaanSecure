@@ -136,9 +136,9 @@ const Login = () => {
   };
 
   const handleDemo = (role) => {
-    const p = role === 'farmer' ? '9876543210' : '9123456780';
+    const p = role === 'farmer' ? '9822011223' : '9820012345';
     setDemoLoading(role);
-    executeLogin(p, 'password123', () => setDemoLoading(null));
+    executeLogin(p, 'password123', (isLoading) => setDemoLoading(isLoading ? role : null));
   };
 
   // Forgot Password Step 1: Send OTP

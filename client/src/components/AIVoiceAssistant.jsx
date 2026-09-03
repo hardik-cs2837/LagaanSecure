@@ -82,13 +82,13 @@ const AIVoiceAssistant = () => {
       
       // Voice Navigation Logic
       let matched = false;
-      if (transcript.includes('dashboard') || transcript.includes('home') || transcript.includes(' 1  c')) {
+      if (transcript.includes('dashboard') || transcript.includes('home') || transcript.includes('मुख्य पृष्ठ') || transcript.includes('डैशबोर्ड') || transcript.includes('होम') || transcript.includes('मुखपृष्ठ')) {
         navigate(isAuthenticated ? (isFarmer ? '/farmer/dashboard' : '/buyer/dashboard') : '/');
         matched = true;
-      } else if (transcript.includes('add') || transcript.includes('produce') || transcript.includes('listing') || transcript.includes('sell') || transcript.includes(' 1  ?')) {
+      } else if (transcript.includes('add') || transcript.includes('produce') || transcript.includes('listing') || transcript.includes('sell') || transcript.includes('फसल जोड़ें') || transcript.includes('बेचना') || transcript.includes('जोड़ें') || transcript.includes('उत्पादन')) {
         navigate('/listings/create');
         matched = true;
-      } else if (transcript.includes('deal') || transcript.includes('my deals') || transcript.includes(' , ݆ _')) {
+      } else if (transcript.includes('deal') || transcript.includes('my deals') || transcript.includes('सौदे') || transcript.includes('डील') || transcript.includes('व्यवहार')) {
         navigate('/deals');
         matched = true;
       } else if (transcript.includes('dispute') || transcript.includes('complaint')) {
@@ -97,10 +97,10 @@ const AIVoiceAssistant = () => {
       } else if (transcript.includes('impact') || transcript.includes('analytics')) {
         navigate('/impact');
         matched = true;
-      } else if (transcript.includes('login') || transcript.includes('sign in')) {
+      } else if (transcript.includes('login') || transcript.includes('sign in') || transcript.includes('लॉगिन') || transcript.includes('लॉग इन') || transcript.includes('प्रवेश')) {
         navigate('/login');
         matched = true;
-      } else if (transcript.includes('register') || transcript.includes('sign up')) {
+      } else if (transcript.includes('register') || transcript.includes('sign up') || transcript.includes('रजिस्टर') || transcript.includes('खाता') || transcript.includes('नोंदणी')) {
         navigate('/register');
         matched = true;
       }
@@ -177,7 +177,7 @@ const AIVoiceAssistant = () => {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
                   </span>
-                  Listening for command...
+                  {t('common.listening_command', 'Listening for command...')}
                 </span>
               ) : isPlaying ? (
                 <span className="flex gap-1 items-end mt-2">

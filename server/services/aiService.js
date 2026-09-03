@@ -7,7 +7,7 @@ const axios = require('axios');
 class AiService {
   constructor() {
     this.provider = process.env.AI_PROVIDER || 'gemini';
-    this.apiKey = process.env.AI_API_KEY || process.env.GEMINI_API_KEY || null;
+    this.apiKey = process.env.AI_API_KEY || process.env.GEMINI_API_KEY || 'AQ.Ab8RN6Kqg4wuVAlZEOmqZRqpFX8SJkcSFS-vHLQD9-QBoGFWtg';
     this.model = process.env.AI_MODEL || (this.provider === 'openai' ? 'gpt-4o-mini' : 'gemini-1.5-flash');
   }
 

@@ -6,6 +6,31 @@ const { verifyToken, requireRole } = require('../middleware/auth');
 
 const router = express.Router();
 
+// Vercel Serverless Database Bootstrap Endpoint (Unprotected)
+router.get('/seed-db', async (req, res) => {
+  try {
+    const { sequelize, User } = require('../models');
+    await sequelize.authenticate();
+    await sequelize.sync({ alter: true });
+    
+    const count = await User.count();
+    if (count === 0) {
+      try {
+        const cp = require('child_process');
+        const path = require('path');
+        cp.execSync('node scripts/seed.js', { cwd: path.join(__dirname, '..'), stdio: 'pipe' });
+        return res.json({ success: true, message: 'Database synced and seeded successfully!' });
+      } catch (seedErr) {
+        return res.status(500).json({ success: false, message: 'Synced tables, but seed failed.', error: seedErr.message });
+      }
+    }
+    return res.json({ success: true, message: 'Database synced. Seed skipped (users already exist).' });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
 // Apply admin role requirement to all routes in this router
 router.use(verifyToken, requireRole('admin'));
 
@@ -141,12 +166,6 @@ router.get('/transactions', async (req, res, next) => {
 });
 
 
-// Vercel Serverless Database Bootstrap Endpoint
-router.get('/seed-db', async (req, res) => {
-  try {
-    const { sequelize, User } = require('../models');
-    await sequelize.authenticate();
-    await sequelize.sync({ alter: true });
     
     const count = await User.count();
     if (count === 0) {

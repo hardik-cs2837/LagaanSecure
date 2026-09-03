@@ -25,7 +25,7 @@ const healthStats = {
  * Helper to retrieve API key from environment variables
  */
 const getApiKey = () => {
-  return process.env.AGMARKNET_API_KEY || '579b464db66ec23bdd000001ff1cb683fb5a44fb7d3dd9c2b4f5fc99';
+  return process.env.AGMARKNET_API_KEY || process.env.DATA_GOV_IN_API_KEY || '';
 };
 
 /**

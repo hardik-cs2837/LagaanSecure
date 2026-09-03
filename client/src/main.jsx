@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import App from "./App.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import "./i18n/index.js";
 import "./index.css";
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <GoogleOAuthProvider clientId={googleClientId}>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <AuthProvider>
-          <App />
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
           <Toaster position="top-center" />
         </AuthProvider>
       </BrowserRouter>

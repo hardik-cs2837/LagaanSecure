@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/seed-db', async (req, res) => {
   try {
     const { sequelize, User } = require('../models');
-    const bcrypt = require('bcrypt');
+    const bcrypt = require('bcryptjs');
     await sequelize.authenticate();
     await sequelize.sync({ alter: true });
     

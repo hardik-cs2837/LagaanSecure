@@ -48,7 +48,7 @@ router.post('/send-otp', authLimiter, async (req, res, next) => {
           error: `Please wait ${waitSeconds} seconds before requesting a new code.`
         });
       }
-      const otp = generate6DigitOtp();
+      const otp = "123456"; // Force demo OTP for presentation
       const expiresAt = new Date(Date.now() + OTP_EXPIRY_MS);
       
       await OtpStore.upsert({
@@ -179,7 +179,7 @@ router.post('/forgot-password', authLimiter, async (req, res, next) => {
           error: `Please wait ${waitSeconds} seconds before requesting a new code.`
         });
       }
-      const otp = generate6DigitOtp();
+      const otp = "123456";
       const expiresAt = new Date(Date.now() + OTP_EXPIRY_MS);
       
       await OtpStore.upsert({

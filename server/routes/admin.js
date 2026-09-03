@@ -135,7 +135,7 @@ router.get('/health', async (req, res, next) => {
             latencyMs: aiHealth.latencyMs,
             uptimePct: 100.0,
             lastChecked: new Date().toISOString(),
-            details: aiHealth.configured ? 'API Key configured and model loaded' : 'API Key missing or invalid'
+            details: aiHealth.configured ? 'API Key configured and model loaded' : 'API Key missing or invalid. Seen Env Keys: ' + Object.keys(process.env).filter(k => k.includes('AI') || k.includes('GEMINI')).join(', ') + '. Val length: ' + (process.env.AI_API_KEY ? process.env.AI_API_KEY.length : 0)
           },
           {
             id: 'mandi_api',

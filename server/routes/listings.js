@@ -492,6 +492,17 @@ router.post('/', verifyToken, requireRole('farmer'), listingValidation, validate
   } catch (err) { next(err); }
 });
 
+// Get logged-in farmer's listings
+router.get('/my', verifyToken, requireRole('farmer'), async (req, res, next) => {
+  try {
+    const listings = await Listing.findAll({
+      where: { farmer_id: req.user.id },
+      order: [['created_at', 'DESC']]
+    });
+    res.json({ success: true, data: listings });
+  } catch (err) { next(err); }
+});
+
 router.get('/:id', async (req, res, next) => {
   try {
     const listing = await Listing.findByPk(req.params.id, {

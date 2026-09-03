@@ -558,7 +558,7 @@ router.post('/:id/markup-check', async (req, res, next) => {
       }
     }
     
-    const mandiData = await marketDataService.getMandiPrice(listing.crop_name, targetState, targetMarket);
+    const mandiData = await marketDataService.getMandiPrice(listing.crop_name, targetState, null, targetMarket);
     if (!mandiData) return res.status(404).json({ success: false, error: 'Mandi price not available' });
     
     const advice = await advisorService.getAdvice({ 

@@ -109,8 +109,7 @@ router.get('/health', async (req, res, next) => {
     let aiHealth = { status: 'DEGRADED', latencyMs: 0, configured: false };
     try {
       const aiStart = Date.now();
-      const aiService = require('../services/aiService');
-      const ai = new aiService();
+      const ai = require('../services/aiService');
       aiHealth.configured = (ai.apiKey && ai.apiKey.trim() !== '' && !ai.apiKey.includes('your_'));
       aiHealth.status = aiHealth.configured ? 'OK' : 'DEGRADED';
       aiHealth.latencyMs = Date.now() - aiStart + 45; // simulated ping
@@ -135,7 +134,7 @@ router.get('/health', async (req, res, next) => {
             latencyMs: aiHealth.latencyMs,
             uptimePct: 100.0,
             lastChecked: new Date().toISOString(),
-            details: aiHealth.configured ? 'API Key configured and model loaded' : 'API Key missing or invalid. Seen Env Keys: ' + Object.keys(process.env).filter(k => k.includes('AI') || k.includes('GEMINI')).join(', ') + '. Val length: ' + (process.env.AI_API_KEY ? process.env.AI_API_KEY.length : 0)
+            details: aiHealth.configured ? 'API Key configured and model loaded' : 'API Key missing or invalid'
           },
           {
             id: 'mandi_api',
